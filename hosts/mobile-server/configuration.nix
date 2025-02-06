@@ -11,6 +11,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # --- Enable snowman packages
+  snowman.nx.programs.zsh.enable = true;
+
   # --- Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

@@ -14,6 +14,7 @@
     programs = {
       git.enable = true;
       neovim.enable = true;
+      zsh.enable = true;
     };
   };
 
