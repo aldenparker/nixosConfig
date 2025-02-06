@@ -16,6 +16,12 @@ in {
       extraConfig = {
         init.defaultBranch = "main";
         safe.directory = "/etc/nixos"; # Allows for configs to be owned by root
+
+        credential = {
+          helper = "manager";
+          "https://github.com".username = "aldenparker";
+          credentialStore = "cache";
+        };
       };
     };
   };
