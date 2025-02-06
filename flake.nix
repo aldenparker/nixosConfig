@@ -12,10 +12,10 @@
     nvf = {
       url = "github:notashelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
-    }
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: 
+  outputs = { nixpkgs, home-manager, ... } @ inputs: 
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -28,6 +28,7 @@
     nixosConfigurations = {
       mobile-server = lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit inputs; };
         modules = [
           # Setup dependencies
           home-manager.nixosModules.home-manager
@@ -36,7 +37,6 @@
             home-manager.useUserPackages = true;
             home-manager.users.msroot = import ./hosts/mobile-server/home.nix;
           }
-          nvf.homeManagerModules.default
 
           # Import main configuration file
           ./hosts/mobile-server/configuration.nix

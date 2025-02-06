@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # --- Setup snowman
   imports = [
+    # Setup all home manager imports before snowman import
+    inputs.nvf.homeManagerModules.default
     ../../modules/home-manager
   ];
 
