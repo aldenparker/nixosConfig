@@ -5,7 +5,7 @@ with lib;
 let 
   cfg = config.snowman.hm.programs.git;
 in {
-  options.snowman.hm.programs.git.enable = mkEnableOption "Enables Git for Profile";
+  options.snowman.hm.programs.git.enable = mkEnableOption "Enables Git for host";
 
   # --- Simple setup for Git
   config = mkIf cfg.enable {

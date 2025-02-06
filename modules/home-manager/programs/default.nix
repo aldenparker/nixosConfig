@@ -2,9 +2,10 @@
 
 {
   imports = [
-    # --- Import all individual features
+    # --- Import all individual programs
     ./git.nix
+    ./neovim.nix
 
-    # --- Import all spread features (features that run multiple nix files)
+    # --- Import all spread programs (programs that need multiple nix files)
   ];
 }

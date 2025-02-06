@@ -8,6 +8,11 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    }
   };
 
   outputs = { nixpkgs, home-manager, ... }: 
@@ -24,13 +29,17 @@
       mobile-server = lib.nixosSystem {
         inherit system;
         modules = [
-          ./hosts/mobile-server/configuration.nix
+          # Setup dependencies
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.msroot = import ./hosts/mobile-server/home.nix;
           }
+          nvf.homeManagerModules.default
+
+          # Import main configuration file
+          ./hosts/mobile-server/configuration.nix
         ];
       };
     };
