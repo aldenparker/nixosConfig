@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, ... }:
 
 with lib;
 
@@ -19,7 +19,7 @@ in {
 
         credential = {
           helper = "manager";
-          "https://github.com".username = environment.sessionVariables.GIT_TOKEN;
+          "https://github.com".username = "$GIT_TOKEN";
           credentialStore = "cache";
         };
       };
