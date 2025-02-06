@@ -18,9 +18,8 @@ in {
         safe.directory = "/etc/nixos"; # Allows for configs to be owned by root
 
         credential = {
-          helper = "manager";
-          "https://github.com".username = "$GIT_TOKEN";
-          credentialStore = "cache";
+          helper = "store";
+          "https://github.com".username = "aldenparker";
         };
       };
     };
