@@ -19,7 +19,7 @@ in {
 
         credential = {
           helper = "manager";
-          "https://github.com".username = "aldenparker";
+          "https://github.com".username = environment.sessionVariables.GIT_TOKEN;
           credentialStore = "cache";
         };
       };
