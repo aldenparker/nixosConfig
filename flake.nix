@@ -10,18 +10,26 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, ... }: 
-  {
+  outputs = { nixpkgs, home-manager, ... }: 
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
+    lib = nixpkgs.lib;
+  in {
     # --- Set configurations
     nixosConfigurations = {
-      mobile-server = nixpkgs.lib.nixosSystem {
+      mobile-server = lib.nixosSystem {
+        inherit system;
         modules = [
-          ./profiles/mobile-server/configuration.nix
+          ./hosts/mobile-server/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.msroot = import ./profiles/mobile-server/home.nix;
+            home-manager.users.msroot = import ./hosts/mobile-server/home.nix;
           }
         ];
       };
