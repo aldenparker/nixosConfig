@@ -15,7 +15,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... } @ inputs: 
+  outputs = { nixpkgs, home-manager, nvf, ... }: 
   let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -28,18 +28,15 @@
     nixosConfigurations = {
       mobile-server = lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs; };
         modules = [
-          # Setup dependencies
+          ./hosts/mobile-server/configuration.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.msroot = import ./hosts/mobile-server/home.nix;
+            home-manager.extraSpecialArgs = { inherit nvf; };
           }
-
-          # Import main configuration file
-          ./hosts/mobile-server/configuration.nix
         ];
       };
     };
