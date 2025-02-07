@@ -45,3 +45,21 @@ Welcome to my nixOS configuration. The premise behind the "snowman" architecture
 
 In this way, services and programs can get their own modules, but predefined configuration of many modules can be loaded through bundles. NO MODULES SHOULD LOAD AUTOMATICALLY. Every module should have an enable option.
 There is also a templates folder holding templates for the how different nix files in this structure.
+
+## Modules
+### git
+A home manager module that installs git and auto sets up my user details. It is also set to store credentials, but an access key will be needed on first authentification.
+```snowman.hm.programs.git.enable = true```
+
+### nvim
+A home manager module that uses the nfv flake to setup nvim for nix coding.
+```snowman.hm.programs.nvim.enable = true```
+
+### zsh
+A home manager and nixos module that is used to setup zsh with basic features and aliases for nixos. The nixos module makes zsh the default use shell while the home manager one sets up the config.
+```snowman.hm.programs.zsh.enable = true```
+```snowman.nx.programs.zsh.enable = true```
+
+### tailscale
+A nixos module that enables tailscale and has some options for configuring the firewall based on tailscale. Authentication will still need to be done the first time with ```sudo tailscale up``` command and all that entails.
+```snowmanm.nx.services.tailscale.enable = true```
