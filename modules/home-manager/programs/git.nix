@@ -24,7 +24,10 @@ in {
 
         credential = {
           helper = "store";
-          "https://github.com".username = secrets.github.oauth_token;
+          "https://github.com" = {
+            username = "aldenparker";
+            password = secrets.github.oauth_token;
+          };
         };
       };
     };
