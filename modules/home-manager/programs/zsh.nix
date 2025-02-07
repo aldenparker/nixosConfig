@@ -34,7 +34,12 @@ in {
 
       # Aliases
       shellAliases = {
-        nix-up = "(){ sudo nixos-rebuild switch --flake /etc/nixos/#$1 ;}";
+        nix-up = "(){ 
+                       today=`date +%m.%d.%Y-%H:%M`
+                       branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')`
+                       sudo nixos-rebuild switch --profile-name $today.$branch --flake /etc/nixos/#$1
+                  ;}";
+        nix-up-labeled = "(){ sudo nixos-rebuild switch --profile-name $1 --flake /etc/nixos/#$2 ;}";
         nix-init-mod = "(){ sudo cp /etc/nixos/templates/module.nix ./$1 ;}";
       };
     };

@@ -22,11 +22,10 @@ in {
         init.defaultBranch = "main";
         safe.directory = "/etc/nixos"; # Allows for configs to be owned by root
 
-        credential = {
-          helper = "store";
-          "https://github.com" = {
-            username = "aldenparker";
-            password = secrets.github.oauth_token;
+        # Oauth setup
+        url = {
+          "https://oauth2:${secrets.github.oauth_token}@github.com" = {
+            insteadOf = "https://github.com";
           };
         };
       };
