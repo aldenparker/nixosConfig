@@ -15,15 +15,17 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, nvf, ... }: 
+  outputs = { self, nixpkgs, home-manager, nvf, ... }: 
   let
     system = "x86_64-linux";
     lib = nixpkgs.lib;
+    secrets = builtins.fromJSON (builtins.readFile "${self}/secrets.json");
   in {
     # --- Set configurations
     nixosConfigurations = {
       mobile-server = lib.nixosSystem {
         inherit system;
+        specialArgs = { inherit secrets; };
         modules = [
           ./hosts/mobile-server/configuration.nix
           home-manager.nixosModules.home-manager
@@ -31,7 +33,10 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.msroot = import ./hosts/mobile-server/home.nix;
-            home-manager.extraSpecialArgs = { inherit nvf; };
+            home-manager.extraSpecialArgs = { 
+              inherit nvf; 
+              inherit secrets;
+            };
           }
         ];
       };

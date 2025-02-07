@@ -12,7 +12,19 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # --- Enable snowman packages
-  snowman.nx.programs.zsh.enable = true;
+  snowman.nx = {
+    programs = {
+      git-crypt.enable = true;
+      zsh.enable = true;
+    };
+
+    services = {
+      tailscale = {
+        enable = true;
+        isExitNode = true;
+      };
+    };
+  };
 
   # --- Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

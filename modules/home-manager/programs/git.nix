@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, secrets, ... }:
 
 with lib;
 
@@ -24,7 +24,7 @@ in {
 
         credential = {
           helper = "store";
-          "https://github.com".username = "aldenparker";
+          "https://github.com".username = secrets.github.oauth_token;
         };
       };
     };
