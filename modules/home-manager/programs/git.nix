@@ -2,13 +2,18 @@
 
 with lib;
 
-let 
-  cfg = config.snowman.hm.programs.git;
+let
+  module-type = "hm"; # home-manager (hm) vs nixos (nx)
+  module-category = "programs"; # category the module falls in, usually the name of the folder it is in
+  module-name = "git"; # Name of the module
 in {
-  options.snowman.hm.programs.git.enable = mkEnableOption "Enables Git for host";
+  # --- Set options
+  options.snowman.${module-type}.${module-category}.${module-name} = {
+    enable = mkEnableOption "Enables ${module-name} for host";
+  };
 
-  # --- Simple setup for Git
-  config = mkIf cfg.enable {
+  # --- Set configuration
+  config = mkIf config.snowman.${module-type}.${module-category}.${module-name}.enable {
     programs.git = {
       enable = true;
       userName = "Alden Parker";

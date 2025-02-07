@@ -18,6 +18,9 @@ Welcome to my nixOS configuration. The premise behind the "snowman" architecture
       services/
         service-module.nix
         ...
+      overlays/
+        overlay-module.nix
+        ...
     home-manager/
       default.nix
       packages/
@@ -29,6 +32,16 @@ Welcome to my nixOS configuration. The premise behind the "snowman" architecture
       services/
         service-module.nix
         ...
+      overlays/
+        overlay-module.nix
+        ...
+  hosts/
+    hostname/
+      configuration.nix
+      hardware-configuration.nix
+      home.nix
+    ...
 ```
 
-In this way, services and programs can get their own modules, but predefined configuration of many modules can be loaded through bundles. NO MODULES SHOULD LOAD AUTOMATICALLY. Every module should have an enable option.:
+In this way, services and programs can get their own modules, but predefined configuration of many modules can be loaded through bundles. NO MODULES SHOULD LOAD AUTOMATICALLY. Every module should have an enable option.
+There is also a templates folder holding templates for the how different nix files in this structure.

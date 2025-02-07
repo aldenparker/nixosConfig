@@ -2,13 +2,20 @@
 
 with lib;
 
-let 
-  cfg = config.snowman.hm.programs.zsh;
-in {
-  options.snowman.hm.programs.zsh.enable = mkEnableOption "Enables zsh for host";
 
-  # --- Simple setup for Git
-  config = mkIf cfg.enable {
+let
+  module-type = "hm"; # home-manager (hm) vs nixos (nx)
+  module-category = "programs"; # category the module falls in, usually the name of the folder it is in
+  module-name = "zsh"; # Name of the module
+in {
+  # --- Set options
+  options.snowman.${module-type}.${module-category}.${module-name} = {
+    enable = mkEnableOption "Enables ${module-name} for host";
+  };
+
+  # --- Set configuration
+  config = mkIf config.snowman.${module-type}.${module-category}.${module-name}.enable {
+    # Configure zsh, must enable nixos package version as well for default shell behavior
     programs.zsh = {
       # Basic Config values
       enable = true;
@@ -28,6 +35,7 @@ in {
       # Aliases
       shellAliases = {
         nix-up = "(){ sudo nixos-rebuild switch --flake /etc/nixos/#$1 ;}";
+        nix-init-mod = "(){ sudo cp /etc/nixos/templates/module.nix ./$1 ;}";
       };
     };
   };

@@ -2,14 +2,19 @@
 
 with lib;
 
-let 
-  cfg = config.snowman.nx.programs.zsh;
+let
+  module-type = "nx"; # home-manager (hm) vs nixos (nx)
+  module-category = "programs"; # category the module falls in, usually the name of the folder it is in
+  module-name = "zsh"; # Name of the module
 in {
-  options.snowman.nx.programs.zsh.enable = mkEnableOption "Make zsh the default user shell";
+  # --- Set options
+  options.snowman.${module-type}.${module-category}.${module-name} = {
+    enable = mkEnableOption "Enables ${module-name} for host";
+  };
 
-  # --- Simple setup for zsh
-  config = mkIf cfg.enable {
-    programs.zsh.enable = true;
+  # --- Set configuration
+  config = mkIf config.snowman.${module-type}.${module-category}.${module-name}.enable {
+    programs.zsh.enable = true; # Module makes zsh the default shell for system
     users.defaultUserShell = pkgs.zsh;
   };
 }

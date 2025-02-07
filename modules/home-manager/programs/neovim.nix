@@ -3,12 +3,18 @@
 with lib;
 
 let 
-  cfg = config.snowman.hm.programs.neovim;
+  module-type = "hm"; # home-manager (hm) vs nixos (nx)
+  module-category = "programs"; # category the module falls in, usually the name of the folder it is in
+  module-name = "neovim"; # Name of the module
 in {
-  options.snowman.hm.programs.neovim.enable = mkEnableOption "Enables Neovim for host";
+  # --- Set options
+  options.snowman.${module-type}.${module-category}.${module-name} = {
+    enable = mkEnableOption "Enables ${module-name} for host";
+  };
 
-  # --- Simple setup for Neovim using nvf
-  config = mkIf cfg.enable {
+  # --- Set configuration
+  config = mkIf config.snowman.${module-type}.${module-category}.${module-name}.enable {
+    # Uses nvf to install and configure neovim
     programs.nvf = {
       enable = true;
       settings = {
