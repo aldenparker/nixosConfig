@@ -3,24 +3,19 @@
 with lib;
 
 let
-  module-type = "nx"; # home-manager (hm) vs nixos (nx)
-  module-category =
-    "services"; # category the module falls in, usually the name of the folder it is in
-  module-name = "tailscale"; # Name of the module
-  tailscale-cmd = 
-    if config.snowman.${module-type}.${module-category}.${module-name}.isExitNode
-    then "${pkgs.tailscale}/bin/tailscale up --login-server=${secrets.tailscale.loginServer} --auth-key=${secrets.tailscale.authkey} --advertise-exit-node"
-    else "${pkgs.tailscale}/bin/tailscale up --login-server=${secrets.tailscale.loginServer} --auth-key=${secrets.tailscale.authkey}";
+  tailscale-args =
+    if config.isExitNode
+    then "--advertise-exit-node"
+    else "";
 in {
   # --- Set options
-  options.snowman.${module-type}.${module-category}.${module-name} = {
-    enable = mkEnableOption "Enables ${module-name} for host";
+  options = {
+    enable = mkEnableOption "Installs tailscale on the host and authenticates to the server";
     isExitNode = mkEnableOption "Makes this host an exit node";
   };
 
   # --- Set configuration
-  config = mkIf
-    config.snowman.${module-type}.${module-category}.${module-name}.enable {
+  config = mkIf config.enable {
       # Make the tailscale command usable to users
       environment.systemPackages = [ pkgs.tailscale ];
 
@@ -30,24 +25,15 @@ in {
       # Setup correct firewall rules
       networking = {
         firewall = {
-          # Enable the firewall (if not enabled elsewhere)
-          enable = true;
-
-          # Always allow traffic from your Tailscale network
-          trustedInterfaces = [ "tailscale0" ];
-
-          # Allow the Tailscale UDP port through the firewall
-          allowedUDPPorts = [ config.services.tailscale.port ];
-
-          # Lets you SSH in over tailscale
-          allowedTCPPorts = [ 22 ];
+          enable = true; # Enable the firewall (if not enabled elsewhere)
+          trustedInterfaces = [ "tailscale0" ]; # Always allow traffic from your Tailscale network
+          allowedUDPPorts = [ config.services.tailscale.port ]; # Allow the Tailscale UDP port through the firewall
         };
 
         # Fix IPv6 for exit nodes
-        nftables = mkIf
-          config.snowman.${module-type}.${module-category}.${module-name}.isExitNode {
+        nftables = mkIf config.isExitNode {
             enable = true;
-          };
+        };
       };
 
       # Create a oneshot job to authenticate to Tailscale
@@ -74,7 +60,7 @@ in {
               fi
 
               # Otherwise authenticate with tailscale
-              ${tailscale-cmd}
+              ${pkgs.tailscale}/bin/tailscale up --login-server=${secrets.tailscale.loginServer} --auth-key=${secrets.tailscale.authkey} ${tailscale-args}
             '';
       };
     };

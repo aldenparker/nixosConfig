@@ -2,20 +2,14 @@
 
 with lib;
 
-let
-  module-type = "hm"; # home-manager (hm) vs nixos (nx)
-  module-category =
-    "programs"; # category the module falls in, usually the name of the folder it is in
-  module-name = "neovim"; # Name of the module
-in {
+{
   # --- Set options
-  options.snowman.${module-type}.${module-category}.${module-name} = {
-    enable = mkEnableOption "Enables ${module-name} for host";
+  options = {
+    enable = mkEnableOption "Enables Neovim for host";
   };
 
   # --- Set configuration
-  config = mkIf
-    config.snowman.${module-type}.${module-category}.${module-name}.enable {
+  config = mkIf config.enable {
       # Uses nvf to install and configure neovim
       programs.nvf = {
         enable = true;
@@ -26,7 +20,7 @@ in {
               tabstop = 2;
               shiftwidth = 2;
             };
-            
+
             # Setup aliases
             viAlias = false;
             vimAlias = true;

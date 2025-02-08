@@ -2,15 +2,11 @@
 
 with lib;
 
-let
-  module-type = "nx"; # home-manager (hm) vs nixos (nx)
-  module-category =
-    "services"; # category the module falls in, usually the name of the folder it is in
-  module-name = "glance"; # Name of the module
-in {
+{
   # --- Set options
-  options.snowman.${module-type}.${module-category}.${module-name} = {
-    enable = mkEnableOption "Enables ${module-name} for host";
+  options = {
+    enable = mkEnableOption "Installs glance on host and runs it on startup";
+
     configPath = mkOption {
       type = lib.types.str;
       default = ""; # Need to define path or else won't run 
@@ -19,14 +15,13 @@ in {
   };
 
   # --- Set configuration
-  config = mkIf
-    config.snowman.${module-type}.${module-category}.${module-name}.enable {
+  config = mkIf config.enable {
       # Install Glance
       environment.systemPackages = [ pkgs.unstable.glance ];
 
-      # Enable and open up firewall
+      # Enable and open up firewall (if not enabled elsewhere)
       networking.firewall = {
-        enable = true;
+        enable = true; # Enable firewall if not enabled elsewhere
         allowedTCPPorts = [ 80 ]; # Serving on port 80
       };
 
@@ -40,8 +35,8 @@ in {
 
         serviceConfig = {
           Type = "simple";
-          ExecStart = ''${pkgs.unstable.glance}/bin/glance --config ${config.snowman.${module-type}.${module-category}.${module-name}.configPath}'';
-        wants = [ "network.target" ];
+          ExecStart = ''${pkgs.unstable.glance}/bin/glance --config ${config.snowman.${module-category}.${module-name}.configPath}'';
+          wants = [ "network.target" ];
         };
       };
   };

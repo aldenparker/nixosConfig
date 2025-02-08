@@ -1,6 +1,6 @@
-{ ... }:
-
-{
-  # --- Import each subfolder
-  imports = [ ./programs ./services ];
+{ ... }: {
+  # --- Import each subfolder as a namespace in snowman
+  snowman = {
+    programs = import ./programs;
+  };
 }
