@@ -1,11 +1,4 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
+{ inputs, outputs, lib, config, pkgs, ... }: {
   nixpkgs = {
     # Add overlays for home-manager
     overlays = [
@@ -16,12 +9,10 @@
     ];
 
     # Configure your nixpkgs instance
-    config = {
-      allowUnfree = true;
-    };
+    config = { allowUnfree = true; };
   };
 
-   # Nicely reload system units when changing configs
+  # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
   # Let Home Manager install and manage itself.

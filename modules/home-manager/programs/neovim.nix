@@ -14,41 +14,41 @@ in {
 
   # --- Set configuration
   config = mkIf cfg.enable {
-      # Uses nvf to install and configure neovim
-      programs.nvf = {
-        enable = true;
-        settings = {
-          vim = {
-            # Set tab size
-            options = {
-              tabstop = 2;
-              shiftwidth = 2;
-            };
+    # Uses nvf to install and configure neovim
+    programs.nvf = {
+      enable = true;
+      settings = {
+        vim = {
+          # Set tab size
+          options = {
+            tabstop = 2;
+            shiftwidth = 2;
+          };
 
-            # Setup aliases
-            viAlias = false;
-            vimAlias = true;
+          # Setup aliases
+          viAlias = false;
+          vimAlias = true;
 
-            # Setup theme
-            theme = {
-              enable = true;
-              name = "gruvbox";
-              style = "dark";
-            };
+          # Setup theme
+          theme = {
+            enable = true;
+            name = "gruvbox";
+            style = "dark";
+          };
 
-            # Setup basic needs
-            statusline.lualine.enable = true;
-            telescope.enable = true;
-            autocomplete.nvim-cmp.enable = true;
+          # Setup basic needs
+          statusline.lualine.enable = true;
+          telescope.enable = true;
+          autocomplete.nvim-cmp.enable = true;
 
-            languages = {
-              enableLSP = true;
-              enableTreesitter = true;
+          languages = {
+            enableLSP = true;
+            enableTreesitter = true;
 
-              nix.enable = true;
-            };
+            nix.enable = true;
           };
         };
       };
     };
+  };
 }

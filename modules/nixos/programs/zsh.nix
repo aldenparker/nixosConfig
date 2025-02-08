@@ -9,13 +9,14 @@ let
 in {
   # --- Set options
   options.snowman.${module-category}.${module-name} = {
-    enable = mkEnableOption "Installs zsh for host and makes it the default shell";
+    enable =
+      mkEnableOption "Installs zsh for host and makes it the default shell";
   };
 
   # --- Set configuration
   config = mkIf cfg.enable {
-      # Module installs and makes zsh the default shell for system
-      environment.systemPackages = with pkgs; [ zsh ];
-      users.defaultUserShell = pkgs.zsh;
-    };
+    # Module installs and makes zsh the default shell for system
+    programs.zsh.enable = true;
+    users.defaultUserShell = pkgs.zsh;
+  };
 }

@@ -1,39 +1,30 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
+{ inputs, outputs, lib, config, pkgs, ... }: {
   imports = [
     # Import custom modules
-    outputs.homeManagerModules
+    outputs.nixosModules
 
     # Import generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
 
-     # Import base NixOS module
+    # Import base NixOS module
     ../base.nix
   ];
 
   # --- Setup snowman modules (my custom modules)
   snowman = {
-        programs = {
-            zsh.enable = true;
-        };
+    programs = { zsh.enable = true; };
 
-        services = {
-            glance = {
-                enable = true;
-                configPath = "/home/msroot/.glance/config.yml";
-            };
+    services = {
+      glance = {
+        enable = true;
+        configPath = "/home/msroot/.glance/config.yml";
+      };
 
-            tailscale = {
-                enable = true;
-                isExitNode = true;
-            };
-        };
+      tailscale = {
+        enable = true;
+        isExitNode = true;
+      };
+    };
   };
 
   # --- Use the systemd-boot EFI boot loader. WARNING: HERE BE DRAGONS
@@ -83,8 +74,11 @@
   # Define the user accounts
   users.users = {
     msroot = {
-        isNormalUser = true;
-        extraGroups = [ "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user and add netowrk managing
+      isNormalUser = true;
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ]; # Enable ‘sudo’ for the user and add netowrk managing
     };
   };
 

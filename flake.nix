@@ -19,68 +19,63 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
+  outputs = { self, nixpkgs, home-manager, nvf, ... }@inputs:
+    let
+      inherit (self) outputs;
 
-    # Supported systems for your flake packages, shell, etc.
-    systems = [
-      "aarch64-linux"
-      "i686-linux"
-      "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
-    ];
+      # Supported systems for your flake packages, shell, etc.
+      systems = [
+        "aarch64-linux"
+        "i686-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
 
-    # This is a function that generates an attribute by calling a function you
-    # pass to it, with each system as an argument
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+      # This is a function that generates an attribute by calling a function you
+      # pass to it, with each system as an argument
+      forAllSystems = nixpkgs.lib.genAttrs systems;
 
-    # Import all secrets used in config
-    secrets = builtins.fromJSON (builtins.readFile "${self}/secrets.json");
-  in {
-    # Custom packages
-    # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      # Import all secrets used in config
+      secrets = builtins.fromJSON (builtins.readFile "${self}/secrets.json");
+    in {
+      # Custom packages
+      # Accessible through 'nix build', 'nix shell', etc
+      packages =
+        forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
-    # Formatter for your nix files, available through 'nix fmt'
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+      # Formatter for your nix files, available through 'nix fmt'
+      formatter =
+        forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
 
-    # Custom packages and modifications, exported as overlays
-    overlays = import ./overlays {inherit inputs;};
+      # Custom packages and modifications, exported as overlays
+      overlays = import ./overlays { inherit inputs; };
 
-    # Reusable system level nixos modules. This stuff can be configured, but is never user specific.
-    nixosModules = import ./modules/nixos;
+      # Reusable system level nixos modules. This stuff can be configured, but is never user specific.
+      nixosModules = import ./modules/nixos;
 
-    # Reusable user level home-manager modules. This stuff can be configured, but is never user specific.
-    homeManagerModules = import ./modules/home-manager;
+      # Reusable user level home-manager modules. This stuff can be configured, but is never user specific.
+      homeManagerModules = import ./modules/home-manager;
 
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#hostname' or the alias 'nix-up'
-    nixosConfigurations = {
-      mobile-server = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs secrets;};
-        modules = [
-          ./nixos/mobile-server/configuration.nix
-        ];
+      # NixOS configuration entrypoint
+      # Available through 'nixos-rebuild --flake .#hostname' or the alias 'nix-up'
+      nixosConfigurations = {
+        mobile-server = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs secrets; };
+          modules = [ ./nixos/mobile-server/configuration.nix ];
+        };
+      };
+
+      # Standalone home-manager configuration entrypoint
+      # Available through 'home-manager --flake .#username@hostname' or the alias 'home-up'
+      homeConfigurations = {
+        "msroot@mobile-host" = home-manager.lib.homeManagerConfiguration {
+          pkgs =
+            nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { inherit inputs outputs secrets nvf; };
+          modules = [ ./home-manager/msroot.nix ];
+        };
       };
     };
-
-    # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#username@hostname' or the alias 'home-up'
-    homeConfigurations = {
-      "msroot@mobile-host" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs secrets nvf;};
-        modules = [
-          ./home-manager/msroot.nix
-        ];
-      };
-    };
-  };
 }
 

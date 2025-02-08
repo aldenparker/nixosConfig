@@ -1,12 +1,4 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  nvf,
-  ...
-}: {
+{ inputs, outputs, lib, config, pkgs, nvf, ... }: {
   imports = [
     # Import custom modules
     outputs.homeManagerModules
