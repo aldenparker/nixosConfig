@@ -2,7 +2,5 @@
 
 {
   # --- Import each subfolder
-  imports = [
-    ./programs
-  ];
+  imports = [ ./programs ./services ];
 }

@@ -2,10 +2,10 @@
 
 with lib;
 
-
 let
   module-type = "hm"; # home-manager (hm) vs nixos (nx)
-  module-category = "programs"; # category the module falls in, usually the name of the folder it is in
+  module-category =
+    "programs"; # category the module falls in, usually the name of the folder it is in
   module-name = "zsh"; # Name of the module
 in {
   # --- Set options
@@ -14,38 +14,39 @@ in {
   };
 
   # --- Set configuration
-  config = mkIf config.snowman.${module-type}.${module-category}.${module-name}.enable {
-    # Configure zsh, must enable nixos package version as well for default shell behavior
-    programs.zsh = {
-      # Basic Config values
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-
-      # Enable oh-my-zsh
-      oh-my-zsh = {
+  config = mkIf
+    config.snowman.${module-type}.${module-category}.${module-name}.enable {
+      # Configure zsh, must enable nixos package version as well for default shell behavior
+      programs.zsh = {
+        # Basic Config values
         enable = true;
-        plugins = [ 
-          "git"
-        ];
-        theme = "robbyrussell";
-      };
+        enableCompletion = true;
+        autosuggestion.enable = true;
+        syntaxHighlighting.enable = true;
 
-      # Aliases
-      shellAliases = {
-        nix-up = "(){ 
-                       today=`date +%m.%d.%Y-%H.%M`
-                       branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')`
-                       sudo nixos-rebuild switch --profile-name $today.$branch --flake /etc/nixos/#$1
-                  ;}";
-        nix-up-labeled = "(){ 
-                             today=`date +%m.%d.%Y-%H.%M`
-                             branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^\* / { s|^\* ||; p; }')`
-                             sudo nixos-rebuild switch --profile-name $today.$branch.$1 --flake /etc/nixos/#$2
-                          ;}";
-        nix-init-mod = "(){ sudo cp /etc/nixos/templates/module.nix ./$1 ;}";
+        # Enable oh-my-zsh
+        oh-my-zsh = {
+          enable = true;
+          plugins = [ "git" ];
+          theme = "robbyrussell";
+        };
+
+        # Aliases
+        shellAliases = {
+          nix-up = ''
+            (){ 
+                                   today=`date +%m.%d.%Y-%H.%M`
+                                   branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^* / { s|^* ||; p; }')`
+                                   sudo nixos-rebuild switch --profile-name $today.$branch --flake /etc/nixos/#$1
+                              ;}'';
+          nix-up-labeled = ''
+            (){ 
+                                         today=`date +%m.%d.%Y-%H.%M`
+                                         branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^* / { s|^* ||; p; }')`
+                                         sudo nixos-rebuild switch --profile-name $today.$branch.$1 --flake /etc/nixos/#$2
+                                      ;}'';
+          nix-init-mod = "(){ sudo cp /etc/nixos/templates/module.nix ./$1 ;}";
+        };
       };
     };
-  };
 }

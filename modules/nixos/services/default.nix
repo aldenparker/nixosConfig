@@ -1,7 +1,8 @@
 { ... }:
 
 {
-  imports = [
-    ./tailscale.nix
-  ];  
+  imports = [ 
+    ./tailscale.nix 
+    ./glance
+  ];
 }

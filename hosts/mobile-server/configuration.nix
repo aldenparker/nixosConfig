@@ -1,11 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      ../../modules/nixos
-    ];
+  imports = [ ./hardware-configuration.nix ../../modules/nixos ];
 
   # --- Use the systemd-boot EFI boot loader. WANRING: HERE BE DRAGONS
   boot.loader.systemd-boot.enable = true;
@@ -19,6 +15,7 @@
     };
 
     services = {
+      glance.enable = true;
       tailscale = {
         enable = true;
         isExitNode = true;
@@ -31,10 +28,11 @@
 
   # --- Networking
   networking.hostName = "mobile-server"; # Define your hostname.
-  
+
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable =
+    true; # Easiest to use and most distros use this by default.
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -76,11 +74,7 @@
   # --- System Package Settings
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    curl
-  ];
+  environment.systemPackages = with pkgs; [ vim wget curl ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

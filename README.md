@@ -76,3 +76,8 @@ snowman.nx.services.tailscale = {
 }
 ```
 
+### glance
+A nixos module that adds a glance homepage instance to the host.
+```
+snoman.nx.services.glance.enable = true;
+```

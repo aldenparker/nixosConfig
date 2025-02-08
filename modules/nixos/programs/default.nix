@@ -1,8 +1,5 @@
 { ... }:
 
 {
-  imports = [
-    ./zsh.nix
-    ./git-crypt.nix
-  ];
+  imports = [ ./zsh.nix ./git-crypt.nix ];
 }
