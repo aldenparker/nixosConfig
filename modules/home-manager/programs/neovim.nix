@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, pkgs, nvf, ... }:
 
 with lib;
 
@@ -7,6 +7,9 @@ let
   module-name = "neovim"; # Name of the module
   cfg = config.snowman.${module-category}.${module-name}; # Config path
 in {
+  # --- Import nvf
+  imports = [ nvf.homeManagerModules.default ];
+
   # --- Set options
   options.snowman.${module-category}.${module-name} = {
     enable = mkEnableOption "Installs and configures neovim for host";

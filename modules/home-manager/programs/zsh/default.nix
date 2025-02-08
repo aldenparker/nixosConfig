@@ -31,20 +31,16 @@ in {
 
       # Aliases
       shellAliases = {
-        nix-up = ''
-          (){ 
-              today=`date +%m.%d.%Y-%H.%M`
-              branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^* / { s|^* ||; p; }')`
-              nixos-rebuild switch --profile-name $today.$branch --flake /etc/nixos/#$1
-          ;}'';
-        nix-up-labeled = ''
-          (){ 
-              today=`date +%m.%d.%Y-%H.%M`
-              branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^* / { s|^* ||; p; }')`
-              nixos-rebuild switch --profile-name $today.$branch.$1 --flake /etc/nixos/#$2
-          ;}'';
-        nix-init-mod = "(){ cp /etc/nixos/templates/module.nix ./$1 ;}";
+        nix-up-all = "nix-up; home-up";
+        nix-clean = "sudo nix-collect-garbage --delete-older-than 10d";
+        nix-clean-all = "sudo nix-collect-garbage -d";
       };
+
+      # Source functions in env
+      envExtra = "source .config/zsh/custom-zsh-functions";
     };
+
+    # Add zsh functions to home folder
+    home.file.".config/zsh/custom-zsh-functions".source = ./zsh-functions;
   };
 }

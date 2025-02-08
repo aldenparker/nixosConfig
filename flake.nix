@@ -67,9 +67,9 @@
       };
 
       # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager --flake .#username@hostname' or the alias 'home-up'
+      # Available through 'home-manager --flake .#username' or the alias 'home-up'
       homeConfigurations = {
-        "msroot@mobile-host" = home-manager.lib.homeManagerConfiguration {
+        "msroot" = home-manager.lib.homeManagerConfiguration {
           pkgs =
             nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = { inherit inputs outputs secrets nvf; };
