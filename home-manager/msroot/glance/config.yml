@@ -121,6 +121,9 @@ pages:
           - type: reddit
             subreddit: selfhosted
 
+          - type: reddit
+            subreddit: NixOS
+
       - size: small
         widgets:
           - type: weather
