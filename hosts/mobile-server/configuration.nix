@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ../../modules/nixos ];
@@ -15,7 +15,10 @@
     };
 
     services = {
-      glance.enable = true;
+      glance = {
+        enable = true;
+        configPath = "/home/msroot/.glance/config.yml";
+      };
       tailscale = {
         enable = true;
         isExitNode = true;

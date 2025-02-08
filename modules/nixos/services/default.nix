@@ -3,6 +3,6 @@
 {
   imports = [ 
     ./tailscale.nix 
-    ./glance
+    ./glance.nix
   ];
 }

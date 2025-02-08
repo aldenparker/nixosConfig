@@ -7,11 +7,15 @@ let
   module-category =
     "services"; # category the module falls in, usually the name of the folder it is in
   module-name = "glance"; # Name of the module
-  config-file = ./glance.yml; # Config path
 in {
   # --- Set options
   options.snowman.${module-type}.${module-category}.${module-name} = {
     enable = mkEnableOption "Enables ${module-name} for host";
+    configPath = mkOption {
+      type = lib.types.str;
+      default = ""; # Need to define path or else won't run 
+      description = "The path to the config file";
+    };
   };
 
   # --- Set configuration
@@ -36,7 +40,7 @@ in {
 
         serviceConfig = {
           Type = "simple";
-          ExecStart = ''${pkgs.unstable.glance}/bin/glance --config ${config-file}'';
+          ExecStart = ''${pkgs.unstable.glance}/bin/glance --config ${config.snowman.${module-type}.${module-category}.${module-name}.configPath}'';
         wants = [ "network.target" ];
         };
       };
