@@ -2,14 +2,18 @@
 
 with lib;
 
-{
+let
+  module-category = "programs"; # Category the module falls in
+  module-name = "neovim"; # Name of the module
+  cfg = config.snowman.${module-category}.${module-name}; # Config path
+in {
   # --- Set options
-  options = {
-    enable = mkEnableOption "Enables Neovim for host";
+  options.snowman.${module-category}.${module-name} = {
+    enable = mkEnableOption "Installs and configures neovim for host";
   };
 
   # --- Set configuration
-  config = mkIf config.enable {
+  config = mkIf cfg.enable {
       # Uses nvf to install and configure neovim
       programs.nvf = {
         enable = true;

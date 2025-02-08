@@ -1,7 +1,5 @@
 { ... }: {
   # Import folders into namespace
-  snowman = {
-    programs = ./programs;
-    services = ./services;
-  };
+  programs = ./programs;
+  services = ./services;
 }

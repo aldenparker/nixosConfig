@@ -2,9 +2,13 @@
 
 with lib;
 
-{
+let
+  module-category = "services"; # Category the module falls in
+  module-name = "glance"; # Name of the module
+  cfg = config.snowman.${module-category}.${module-name}; # Config path
+in {
   # --- Set options
-  options = {
+  options.snowman.${module-category}.${module-name} = {
     enable = mkEnableOption "Installs glance on host and runs it on startup";
 
     configPath = mkOption {
@@ -15,7 +19,7 @@ with lib;
   };
 
   # --- Set configuration
-  config = mkIf config.enable {
+  config = mkIf cfg.enable {
       # Install Glance
       environment.systemPackages = [ pkgs.unstable.glance ];
 
@@ -35,7 +39,7 @@ with lib;
 
         serviceConfig = {
           Type = "simple";
-          ExecStart = ''${pkgs.unstable.glance}/bin/glance --config ${config.snowman.${module-category}.${module-name}.configPath}'';
+          ExecStart = ''${pkgs.unstable.glance}/bin/glance --config ${cfg.configPath}'';
           wants = [ "network.target" ];
         };
       };

@@ -2,14 +2,18 @@
 
 with lib;
 
-{
+let
+  module-category = "programs"; # Category the module falls in
+  module-name = "zsh"; # Name of the module
+  cfg = config.snowman.${module-category}.${module-name}; # Config path
+in {
   # --- Set options
-  options = {
-    enable = mkEnableOption "Configures Zsh for host";
+  options.snowman.${module-category}.${module-name} = {
+    enable = mkEnableOption "Configures zsh for host";
   };
 
   # --- Set configuration
-  config = mkIf config.enable {
+  config = mkIf cfg.enable {
       # Configure zsh, must enable nixos package version as well for default shell behavior
       programs.zsh = {
         # Basic Config values

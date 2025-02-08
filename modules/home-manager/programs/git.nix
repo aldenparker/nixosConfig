@@ -2,14 +2,18 @@
 
 with lib;
 
-{
+let
+  module-category = "programs"; # Category the module falls in
+  module-name = "git"; # Name of the module
+  cfg = config.snowman.${module-category}.${module-name}; # Config path
+in {
   # --- Set options
-  options = {
-    enable = mkEnableOption "Enables Git for host";
+  options.snowman.${module-category}.${module-name} = {
+    enable = mkEnableOption "Configures git for host";
   };
 
   # --- Set configuration
-  config = mkIf config.enable {
+  config = mkIf cfg.enable {
       programs.git = {
         enable = true;
         userName = "Alden Parker";

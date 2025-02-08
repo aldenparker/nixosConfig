@@ -3,19 +3,22 @@
 with lib;
 
 let
+  module-category = "services"; # Category the module falls in
+  module-name = "tailscale"; # Name of the module
+  cfg = config.snowman.${module-category}.${module-name}; # Config path
   tailscale-args =
     if config.isExitNode
     then "--advertise-exit-node"
     else "";
 in {
   # --- Set options
-  options = {
+  options.snowman.${module-category}.${module-name} = {
     enable = mkEnableOption "Installs tailscale on the host and authenticates to the server";
     isExitNode = mkEnableOption "Makes this host an exit node";
   };
 
   # --- Set configuration
-  config = mkIf config.enable {
+  config = mkIf cfg.enable {
       # Make the tailscale command usable to users
       environment.systemPackages = [ pkgs.tailscale ];
 
@@ -31,7 +34,7 @@ in {
         };
 
         # Fix IPv6 for exit nodes
-        nftables = mkIf config.isExitNode {
+        nftables = mkIf cfg.isExitNode {
             enable = true;
         };
       };
