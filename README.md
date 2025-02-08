@@ -39,11 +39,19 @@ Welcome to my nixOS configuration. The premise behind the "snowman" architecture
       overlays/
         overlay-module.nix
         ...
-  hosts/
+  nixos/
+    base.nix
     hostname/
       configuration.nix
       hardware-configuration.nix
-      home.nix
+    ...
+  home-manager/
+    base.nix
+    user.nix
+    ...
+  pkgs/
+    ...
+  overlays/
     ...
 ```
 
@@ -56,21 +64,22 @@ The flake uses ```git-crypt``` and a ```secrets.json``` to hold secrets like a g
 ## Modules
 ### git
 A home manager module that installs git and auto sets up my user details. It is also set to store credentials, but an access key will be needed on first authentification.
-```snowman.hm.programs.git.enable = true;```
+```snowman.programs.git.enable = true;```
 
 ### nvim
 A home manager module that uses the nfv flake to setup nvim for nix coding.
-```snowman.hm.programs.nvim.enable = true;```
+```snowman.programs.nvim.enable = true;```
 
 ### zsh
 A home manager and nixos module that is used to setup zsh with basic features and aliases for nixos. The nixos module makes zsh the default use shell while the home manager one sets up the config.
-```snowman.hm.programs.zsh.enable = true;```
-```snowman.nx.programs.zsh.enable = true;```
+
+The below command goes in both the configuration and home files.
+```snowman.programs.zsh.enable = true;```
 
 ### tailscale
 A nixos module that enables tailscale and has some options for configuring the firewall based on tailscale. Authentication will still need to be done the first time with ```sudo tailscale up``` command and all that entails.
 ```
-snowman.nx.services.tailscale = {
+snowman.services.tailscale = {
   enable = true;
   isExitNode = true; # To make it an exit node
 }
@@ -79,5 +88,12 @@ snowman.nx.services.tailscale = {
 ### glance
 A nixos module that adds a glance homepage instance to the host.
 ```
-snoman.nx.services.glance.enable = true;
+snoman.services.glance = {
+  enable = true;
+  configPath = ""; # Path to config file
+}
 ```
+
+### htop
+A nixos modules for installing and configuring htop.
+```snowman.programs.htop.enable = true;```

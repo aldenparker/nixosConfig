@@ -4,7 +4,7 @@
     outputs.homeManagerModules
 
     # Import base
-    ./base.nix
+    ../base.nix
   ];
 
   # --- Configure snowman modules (my custom modules)
@@ -15,6 +15,12 @@
       neovim.enable = true;
       zsh.enable = true;
     };
+  };
+
+  # --- Configure glance folder
+  home.file.".glance" = { 
+    source = ./glance;
+    recursive = true;
   };
 
   # --- User setup

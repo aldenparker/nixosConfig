@@ -41,7 +41,6 @@ in {
         Type = "simple";
         ExecStart =
           "${pkgs.unstable.glance}/bin/glance --config ${cfg.configPath}";
-        wants = [ "network.target" ];
       };
     };
   };

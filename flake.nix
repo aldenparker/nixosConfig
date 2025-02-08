@@ -73,7 +73,7 @@
           pkgs =
             nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = { inherit inputs outputs secrets nvf; };
-          modules = [ ./home-manager/msroot.nix ];
+          modules = [ ./home-manager/msroot/home.nix ];
         };
       };
     };
