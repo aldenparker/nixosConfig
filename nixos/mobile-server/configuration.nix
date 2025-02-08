@@ -12,7 +12,10 @@
 
   # --- Setup snowman modules (my custom modules)
   snowman = {
-    programs = { zsh.enable = true; };
+    programs = { 
+      zsh.enable = true; 
+      htop.enable = true;
+    };
 
     services = {
       glance = {
