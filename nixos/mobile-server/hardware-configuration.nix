@@ -23,6 +23,17 @@
     options = [ "fmask=0077" "dmask=0077" ];
   };
 
+  # Secondary HDD
+  systemd.tmpfiles.rules = [
+    "d /mnt 0755 root root"
+    "d /mnt/data 0777"
+  ];
+
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-uuid/edb2a7a6-93e5-4ad5-b887-95b2c6a211ce";
+    fsType = "ext4";
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

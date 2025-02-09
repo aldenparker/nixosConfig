@@ -1,4 +1,4 @@
-{ lib, config, pkgs, secrets, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 
@@ -11,8 +11,19 @@ in {
   # --- Set options
   options.snowman.${module-category}.${module-name} = {
     enable = mkEnableOption
-      "Installs tailscale on the host and authenticates to the server";
+      "Installs ${module-name} on the host and authenticates to the server. Specifically used for headscale servers.";
+    
     isExitNode = mkEnableOption "Makes this host an exit node";
+
+    loginServer = mkOption {
+      type = types.str;
+      description = "The login server to use";
+    };
+
+    preAuthKey = mkOption {
+      type = types.str;
+      description = "The preauth key used for authentification with the server";
+    };
   };
 
   # --- Set configuration
@@ -62,7 +73,7 @@ in {
         fi
 
         # Otherwise authenticate with tailscale
-        ${pkgs.tailscale}/bin/tailscale up --login-server=${secrets.tailscale.loginServer} --auth-key=${secrets.tailscale.authkey} ${tailscale-args}
+        ${pkgs.tailscale}/bin/tailscale up --login-server=${cfg.loginServer} --auth-key=${cfg.preAuthKey} ${tailscale-args}
       '';
     };
   };

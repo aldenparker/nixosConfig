@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{ inputs, outputs, lib, config, pkgs, secrets, ... }: {
   imports = [
     # Import custom modules
     outputs.homeManagerModules
@@ -11,7 +11,12 @@
   snowman = {
     # --- Configure individual packages
     programs = {
-      git.enable = true;
+      git = {
+        enable = true;
+        userName = "Alden Parker";
+        userEmail = "ajparker1401@gmail.com";
+        userGithubToken = secrets.git.githubToken;
+      };
       neovim.enable = true;
       zsh.enable = true;
     };

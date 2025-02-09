@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }: {
+{ inputs, outputs, lib, config, pkgs, secrets, ... }: {
   imports = [
     # Import custom modules
     outputs.nixosModules
@@ -21,11 +21,14 @@
       glance = {
         enable = true;
         configPath = "/home/msroot/.glance/config.yml";
+        port = 80;
       };
 
       tailscale = {
         enable = true;
         isExitNode = true;
+        loginServer = secrets.tailscale.loginServer;
+        preAuthKey = secrets.tailscale.preAuthKey;
       };
     };
   };
