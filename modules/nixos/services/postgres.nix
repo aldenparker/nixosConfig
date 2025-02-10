@@ -21,7 +21,7 @@ in {
   # --- Set configuration
   config = mkIf cfg.enable {
     # Setup file permisions for dataPath
-    systemd.tmpfiles.rules = [ "d ${cfg.dataPath} 0755 postgres postgres" ];
+    systemd.tmpfiles.rules = [ "d ${cfg.dataPath} 0750 postgres postgres" ];
 
     # Setup postgres database
     services.postgresql = {

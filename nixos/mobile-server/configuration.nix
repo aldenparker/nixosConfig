@@ -50,9 +50,16 @@
     };
   };
 
-  # --- Use the systemd-boot EFI boot loader. WARNING: HERE BE DRAGONS
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # --- Use the grub EFI boot loader. WARNING: HERE BE DRAGONS
+  boot.loader.grub = {
+    enable = true;
+    device = "nodev";
+    efiSupport = true;
+  };
+  boot.loader.efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot";
+  };
 
   # --- Networking
   networking.hostName = "mobile-server"; # Define your hostname.
