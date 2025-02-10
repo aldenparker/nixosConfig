@@ -31,6 +31,11 @@
         preAuthKey = secrets.tailscale.preAuthKey;
       };
 
+      postgres = {
+        enable = true;
+        dataPath = "/mnt/data/postgres";
+      };
+
       gitea = {
         enable = true;
         siteName = "SheltieVCS";
@@ -38,7 +43,6 @@
         port = 8000;
         passwordFile = "/mnt/data/gitea/.db-password";
         dataPath = "/mnt/data/gitea/state";
-        dbDataPath = "/mnt/data/gitea/database";
       };
     };
   };

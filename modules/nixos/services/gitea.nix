@@ -35,11 +35,6 @@ in {
       type = types.str;
       description = "Path to Gitea data folder";
     };
-
-    dbDataPath = mkOption {
-      type = types.str;
-      description = "Path for the postgres databse used for Gitea";
-    };
   };
 
   # --- Set configuration
@@ -52,6 +47,12 @@ in {
       };
     };
 
+    # Setup directory permisions for database path
+    systemd.tmpfiles.rules = [
+      "d ${cfg.dataPath} 0755 gitea gitea"
+    ];
+
+
     # Setup postgres database for gitea
     services.postgresql = {
       ensureDatabases = [ config.services.gitea.user ];
@@ -61,8 +62,6 @@ in {
           ensureDBOwnership = true;
         }
       ];
-
-      dataDir = cfg.dbDataPath;
     };
 
     # Setup gitea
@@ -78,17 +77,12 @@ in {
       settings = {
         server = {
           DOMAIN = cfg.domain;
-          ROOT_URL = "http://${cfg.domain}:8000/";
+          ROOT_URL = "http://${cfg.domain}:${builtins.toString cfg.port}/";
           HTTP_PORT = cfg.port;
-        };
-
-        service = {
-          DISABLE_REGISTRATION = true;
         };
       };
 
       stateDir = cfg.dataPath;
-      useWizard = true; # For initial setup
     };
   };
 }

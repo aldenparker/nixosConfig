@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./tailscale.nix ./glance.nix ./gitea.nix ]; }
+{ ... }: { imports = [ ./tailscale.nix ./glance.nix ./postgres.nix ./gitea.nix ]; }
