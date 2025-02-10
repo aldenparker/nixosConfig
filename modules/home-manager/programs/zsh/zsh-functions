@@ -1,24 +1,16 @@
-get-new-nix-label() {
-  local today=`date +%m.%d.%Y-%H.%M`
-  local branch=`(cd /etc/nixos ; git branch 2>/dev/null | sed -n '/^* / { s|^* ||; p; }')`
-  echo $today.$branch
-}
-
 nix-up() {
-  local label=`(get-new-nix-label)`
-  if [[ $# = 0 ]]; then 
-    sudo nixos-rebuild switch --profile-name $label --flake /etc/nixos/
+  if [[ $# = 0 ]]; then
+    sudo nixos-rebuild switch --flake /etc/nixos/
   elif [[ $# = 1 ]]; then 
-    sudo nixos-rebuild switch --profile-name $label --flake /etc/nixos/#$1
+    sudo nixos-rebuild switch --flake /etc/nixos/#$1
   fi
 }
         
 nix-up-labeled() { 
-  local label=`(get-new-nix-label)`
   if [[ $# = 1 ]]; then 
-    sudo nixos-rebuild switch --profile-name $label.$1 --flake /etc/nixos/
+    sudo nixos-rebuild switch -p $1 --flake /etc/nixos/
   elif [[ $# = 2 ]]; then 
-    sudo nixos-rebuild switch --profile-name $label.$1 --flake /etc/nixos/#$2
+    sudo nixos-rebuild switch -p $1 --flake /etc/nixos/#$2
   fi
 }
 
