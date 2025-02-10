@@ -17,26 +17,26 @@ pages:
             title: Services
             sites:
               - title: Gitea
-                url: http://mobile-server.headscale.com:8000/
+                url: http://yggdrasil.headscale.com:8000/
                 icon: /assets/gitea.svg
               - title: Filebrowser
-                url: http://mobile-server.headscale.com:8002/
+                url: http://yggdrasil.headscale.com:8002/
                 check-url: http://filebrowser:80
                 icon: /assets/filebrowser.svg
               - title: qBittorrent
-                url: http://mobile-server.headscale.com:8004/
+                url: http://yggdrasil.headscale.com:8004/
                 check-url: http://qbittorrent:8080
                 icon: /assets/qbittorrent.png
               - title: Bitcoin Node Manager
-                url: http://mobile-server.headscale.com:8001/
+                url: http://yggdrasil.headscale.com:8001/
                 check-url: http://172.17.0.1:8001
                 icon: /assets/bitcoin.png
               - title: Portainer
-                url: http://mobile-server.headscale.com:9000/
+                url: http://yggdrasil.headscale.com:9000/
                 check-url: http://172.17.0.1:9000
                 icon: /assets/portainer.png
               - title: Firefly
-                url: http://mobile-server.headscale.com:8005/
+                url: http://yggdrasil.headscale.com:8005/
                 check-url: http://firefly:8080
                 icon: /assets/firefly.png
 

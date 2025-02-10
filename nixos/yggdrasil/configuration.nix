@@ -41,7 +41,7 @@
       gitea = {
         enable = true;
         siteName = "SheltieVCS";
-        domain = "mobile-server.headscale.com";
+        domain = "yggdrasil.headscale.com";
         port = 8000;
         passwordFile = "/mnt/data/gitea/.db-password";
         dataPath = "/mnt/data/gitea/state";
