@@ -1,5 +1,5 @@
 server:
-  assets-path: /home/msroot/.dotfiles/glance/assets
+  assets-path: /home/msroot/.glance/assets
   port: 80
 
 pages:
@@ -16,10 +16,9 @@ pages:
             cache: 1m
             title: Services
             sites:
-              - title: Memos
-                url: http://mobile-server.headscale.com:8003/
-                check-url: http://memos:5230/
-                icon: /assets/memos.png
+              - title: Gitea
+                url: http://mobile-server.headscale.com:8000/
+                icon: /assets/gitea.svg
               - title: Filebrowser
                 url: http://mobile-server.headscale.com:8002/
                 check-url: http://filebrowser:80
