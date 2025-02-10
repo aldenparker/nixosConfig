@@ -1,5 +1,5 @@
 server:
-  assets-path: /home/msroot/.glance/assets
+  assets-path: /home/yggdrasil/.glance/assets
   port: 80
 
 pages:
