@@ -23,7 +23,7 @@
   };
 
   # --- Configure glance folder
-  home.file.".glance" = { 
+  home.file.".glance" = {
     source = ./glance;
     recursive = true;
   };

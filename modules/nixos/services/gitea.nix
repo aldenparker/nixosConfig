@@ -10,7 +10,7 @@ in {
   # --- Set options
   options.snowman.${module-category}.${module-name} = {
     enable = mkEnableOption "Enables ${module-name} for host";
-    
+
     siteName = mkOption {
       type = types.str;
       description = "Name for the site";
@@ -39,7 +39,8 @@ in {
     runnerToken = mkOption {
       type = types.str;
       default = "";
-      description = "The token used by the runner for the gitea instance. YOU WILL HAVE TO SET THIS AFTER YOU RUN GITEA THE FIRST TIME.";
+      description =
+        "The token used by the runner for the gitea instance. YOU WILL HAVE TO SET THIS AFTER YOU RUN GITEA THE FIRST TIME.";
     };
   };
 
@@ -47,11 +48,12 @@ in {
   config = mkIf cfg.enable (mkMerge [ # Merge all structures together
     # Add warning about the runner
     (mkIf (cfg.runnerToken == "") {
-      warnings = [ ''The runnerToken is not set for Gitea. 
-                     After setting up the Gitea server, add the runner by setting runnerToken to the token generated to enable this feature. 
-                     '' ];
+      warnings = [''
+        The runnerToken is not set for Gitea. 
+                             After setting up the Gitea server, add the runner by setting runnerToken to the token generated to enable this feature. 
+      ''];
     })
-    
+
     # Add default configuration stuff
     {
       # Set firewall port 
@@ -63,20 +65,15 @@ in {
       };
 
       # Setup directory permisions for database path
-      systemd.tmpfiles.rules = [
-        "d ${cfg.dataPath} 0755 gitea gitea"
-      ];
-
+      systemd.tmpfiles.rules = [ "d ${cfg.dataPath} 0755 gitea gitea" ];
 
       # Setup postgres database for gitea
       services.postgresql = {
         ensureDatabases = [ config.services.gitea.user ];
-        ensureUsers = [
-          {
-            name = config.services.gitea.database.user;
-            ensureDBOwnership = true;
-          }
-        ];
+        ensureUsers = [{
+          name = config.services.gitea.database.user;
+          ensureDBOwnership = true;
+        }];
       };
 
       # Setup gitea

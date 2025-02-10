@@ -12,7 +12,7 @@ in {
   options.snowman.${module-category}.${module-name} = {
     enable = mkEnableOption
       "Installs ${module-name} on the host and authenticates to the server. Specifically used for headscale servers.";
-    
+
     isExitNode = mkEnableOption "Makes this host an exit node";
 
     loginServer = mkOption {

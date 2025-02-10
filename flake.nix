@@ -37,7 +37,8 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
 
       # Import all secrets used in config
-      secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
+      secrets =
+        builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
     in {
       # Custom packages
       # Accessible through 'nix build', 'nix shell', etc

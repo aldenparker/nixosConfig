@@ -1,9 +1,4 @@
-{ ... }: { 
-  imports = [ 
-    ./podman.nix
-    ./tailscale.nix
-    ./glance.nix 
-    ./postgres.nix 
-    ./gitea.nix 
-  ]; 
+{ ... }: {
+  imports =
+    [ ./podman.nix ./tailscale.nix ./glance.nix ./postgres.nix ./gitea.nix ];
 }

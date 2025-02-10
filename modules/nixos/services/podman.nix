@@ -19,13 +19,15 @@ in {
       podman = {
         enable = true;
         dockerCompat = true; # Create docker alias for podman
-        defaultNetwork.settings.dns_enabled = true; # Requires that compose containers can talk to each other
+        defaultNetwork.settings.dns_enabled =
+          true; # Requires that compose containers can talk to each other
       };
     };
 
     # Useful other development tools
-    environment.systemPackages = with pkgs; [
-      podman-compose # start group of containers for dev
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        podman-compose # start group of containers for dev
+      ];
   };
 }

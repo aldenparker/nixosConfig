@@ -24,10 +24,8 @@
   };
 
   # Secondary HDD
-  systemd.tmpfiles.rules = [
-    "d /mnt 0755 root root"
-    "d /mnt/data 0755 root root"
-  ];
+  systemd.tmpfiles.rules =
+    [ "d /mnt 0755 root root" "d /mnt/data 0755 root root" ];
 
   fileSystems."/mnt/data" = {
     device = "/dev/disk/by-uuid/edb2a7a6-93e5-4ad5-b887-95b2c6a211ce";
