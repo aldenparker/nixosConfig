@@ -61,20 +61,20 @@
       # NixOS configuration entrypoint
       # Available through 'nixos-rebuild --flake .#hostname' or the alias 'nix-up'
       nixosConfigurations = {
-        mobile-server = nixpkgs.lib.nixosSystem {
+        yggdrasil = nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs secrets; };
-          modules = [ ./nixos/mobile-server/configuration.nix ];
+          modules = [ ./nixos/yggdrasil/configuration.nix ];
         };
       };
 
       # Standalone home-manager configuration entrypoint
       # Available through 'home-manager --flake .#username' or the alias 'home-up'
       homeConfigurations = {
-        "msroot" = home-manager.lib.homeManagerConfiguration {
+        "yggdrasil" = home-manager.lib.homeManagerConfiguration {
           pkgs =
             nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = { inherit inputs outputs secrets nvf; };
-          modules = [ ./home-manager/msroot/home.nix ];
+          modules = [ ./home-manager/yggdrasil/home.nix ];
         };
       };
     };

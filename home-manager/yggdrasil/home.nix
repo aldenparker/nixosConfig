@@ -29,8 +29,8 @@
   };
 
   # --- User setup
-  home.username = "msroot";
-  home.homeDirectory = "/home/msroot";
+  home.username = "yggdrasil";
+  home.homeDirectory = "/home/yggdrasil";
 
   # --- Home Manager Version -  WARNING: HERE BE DRAGONS
   home.stateVersion = "24.11";

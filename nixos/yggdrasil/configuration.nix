@@ -22,7 +22,7 @@
 
       glance = {
         enable = true;
-        configPath = "/home/msroot/.glance/config.yml";
+        configPath = "/home/yggdrasil/.glance/config.yml";
         port = 80;
       };
 
@@ -62,7 +62,7 @@
   };
 
   # --- Networking
-  networking.hostName = "mobile-server"; # Define your hostname.
+  networking.hostName = "yggdrasil"; # Define your hostname.
   networking.networkmanager.enable = true; # Enable netowrkmanager
 
   # Enable firewall
@@ -103,7 +103,7 @@
   # --- User Settings
   # Define the user accounts
   users.users = {
-    msroot = {
+    yggdrasil = {
       isNormalUser = true;
       extraGroups = [
         "networkmanager"
