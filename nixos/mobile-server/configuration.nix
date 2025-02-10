@@ -30,6 +30,16 @@
         loginServer = secrets.tailscale.loginServer;
         preAuthKey = secrets.tailscale.preAuthKey;
       };
+
+      gitea = {
+        enable = true;
+        siteName = "SheltieVCS";
+        domain = "mobile-server.headscale.com";
+        port = 8000;
+        passwordFile = "/mnt/data/gitea/.db-password";
+        dataPath = "/mnt/data/gitea/state";
+        dbDataPath = "/mnt/data/gitea/database";
+      };
     };
   };
 

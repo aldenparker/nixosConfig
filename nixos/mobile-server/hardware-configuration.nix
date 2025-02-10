@@ -26,7 +26,7 @@
   # Secondary HDD
   systemd.tmpfiles.rules = [
     "d /mnt 0755 root root"
-    "d /mnt/data 0777"
+    "d /mnt/data 0755 root root"
   ];
 
   fileSystems."/mnt/data" = {
