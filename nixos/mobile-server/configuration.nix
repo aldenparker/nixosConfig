@@ -18,6 +18,8 @@
     };
 
     services = {
+      podman.enable = true;
+
       glance = {
         enable = true;
         configPath = "/home/msroot/.glance/config.yml";
@@ -43,6 +45,7 @@
         port = 8000;
         passwordFile = "/mnt/data/gitea/.db-password";
         dataPath = "/mnt/data/gitea/state";
+        runnerToken = secrets.gitea.runnerToken;
       };
     };
   };
