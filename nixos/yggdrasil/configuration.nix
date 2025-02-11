@@ -26,6 +26,12 @@
         port = 80;
       };
 
+      filebrowser = {
+        enable = true;
+        port = 8001;
+        dataPath = "/mnt/data/filebrowser";
+      };
+
       tailscale = {
         enable = true;
         isExitNode = true;

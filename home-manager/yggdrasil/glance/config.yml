@@ -20,8 +20,7 @@ pages:
                 url: http://yggdrasil.headscale.com:8000/
                 icon: /assets/gitea.svg
               - title: Filebrowser
-                url: http://yggdrasil.headscale.com:8002/
-                check-url: http://filebrowser:80
+                url: http://yggdrasil.headscale.com:8001/
                 icon: /assets/filebrowser.svg
               - title: qBittorrent
                 url: http://yggdrasil.headscale.com:8004/
