@@ -65,6 +65,11 @@
           specialArgs = { inherit inputs outputs secrets; };
           modules = [ ./nixos/yggdrasil/configuration.nix ];
         };
+
+        heimdallur = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs secrets; };
+          modules = [ ./nixos/heimdallur/configuration.nix ];
+        };
       };
 
       # Standalone home-manager configuration entrypoint
@@ -75,6 +80,13 @@
             nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
           extraSpecialArgs = { inherit inputs outputs secrets nvf; };
           modules = [ ./home-manager/yggdrasil/home.nix ];
+        };
+
+        "heimdallur" = home-manager.lib.homeManagerConfiguration {
+          pkgs =
+            nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          extraSpecialArgs = { inherit inputs outputs secrets nvf; };
+          modules = [ ./home-manager/heimdallur/home.nix ];
         };
       };
     };
