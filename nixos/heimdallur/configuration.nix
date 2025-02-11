@@ -1,4 +1,5 @@
 { inputs, outputs, lib, config, pkgs, secrets, ... }: {
+  # This is the config for RPI 3B+ tailscale exit nodes, hence heimdallur as a reference to the bifrost
   imports = [
     # Import custom modules
     outputs.nixosModules
@@ -18,51 +19,22 @@
     };
 
     services = {
-      podman.enable = true;
-
-      glance = {
-        enable = true;
-        configPath = "/home/yggdrasil/.glance/config.yml";
-        port = 80;
-      };
-
       tailscale = {
         enable = true;
         isExitNode = true;
         loginServer = secrets.tailscale.loginServer;
         preAuthKey = secrets.tailscale.preAuthKey;
       };
-
-      postgres = {
-        enable = true;
-        dataPath = "/mnt/data/postgres";
-      };
-
-      gitea = {
-        enable = true;
-        siteName = "SheltieVCS";
-        domain = "yggdrasil.headscale.com";
-        port = 8000;
-        passwordFile = "/mnt/data/gitea/.db-password";
-        dataPath = "/mnt/data/gitea/state";
-        runnerToken = secrets.gitea.runnerToken;
-      };
     };
   };
 
   # --- Use the grub EFI boot loader. WARNING: HERE BE DRAGONS
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    efiSupport = true;
-  };
-  boot.loader.efi = {
-    canTouchEfiVariables = true;
-    efiSysMountPoint = "/boot";
-  };
+  boot.loader.grub.enable = false;
+  boot.loader.generic-extlinux-compatible.enable = true;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   # --- Networking
-  networking.hostName = "yggdrasil"; # Define your hostname.
+  networking.hostName = "heimdallur"; # Define your hostname.
   networking.networkmanager.enable = true; # Enable netowrkmanager
 
   # Enable firewall
@@ -103,16 +75,19 @@
   # --- User Settings
   # Define the user accounts
   users.users = {
-    yggdrasil = {
+    heimdallur = {
       isNormalUser = true;
       extraGroups = [
         "networkmanager"
         "wheel"
-      ]; # Enable ‘sudo’ for the user and add netowrk managing
+      ]; # Enable ‘sudo’ for the user and add network managing
     };
   };
 
-  # ---- NixOS Settings. WARNING: HERE BE DRAGONS
+  # --- RPI Specific
+  hardware.enableRedistributableFirmware = true;
+
+  # --- NixOS Settings. WARNING: HERE BE DRAGONS
   system.stateVersion = "24.11";
 
 }
