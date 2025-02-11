@@ -4,28 +4,35 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  # Needed for the virtual console to work on the RPi 3, as the default of 16M doesn't seem to be enough.
-  # If X.org behaves weirdly (I only saw the cursor) then try increasing this to 256M.
-  # On a Raspberry Pi 4 with 4 GB, you should either disable this parameter or increase to at least 64M if you want the USB ports to work.
+  imports =
+    [ (modulesPath + "/installer/scan/not-detected.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ ];
+  boot.extraModulePackages = [ ];
   boot.kernelParams = [ "cma=256M" ];
 
-  # File systems configuration for using the installer's partition layout
-  fileSystems = {
-    # Prior to 19.09, the boot partition was hosted on the smaller first partition
-    # Starting with 19.09, the /boot folder is on the main bigger partition.
-    # The following is to be used only with older images.
-    /*
-      "/boot" = {
-      device = "/dev/disk/by-label/NIXOS_BOOT";
-      fsType = "vfat";
-      };
-    */
-    "/" = {
-      device = "/dev/disk/by-label/NIXOS_SD";
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/44444444-4444-4444-8888-888888888888";
       fsType = "ext4";
     };
-  };
 
-  # Adding a swap file is optional, but strongly recommended!
-  swapDevices = [{ device = "/swapfile"; size = 1024; }];
+  swapDevices = [
+    { 
+      device = "/swapfile"; 
+      size = 4096; 
+    }
+  ];
+
+  # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
+  # (the default) this is the recommended approach. When using systemd-networkd it's
+  # still possible to use this option, but it's recommended to use it in conjunction
+  # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enu1u1u1.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }
