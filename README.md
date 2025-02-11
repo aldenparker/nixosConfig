@@ -1,29 +1,27 @@
 # SNOWMAN
-Welcome to my nixOS configuration. The premise behind the "snowman" architecture is that all modules are loaded in by the flake and then all custom modules are configured under the snowman namespace. The file structure goes like this:
+Welcome to my nixOS configuration. The reason behind the name, "snowman" is because it is a structured (snow)flake used to manage all of my machines. The structure relys on nixos and home-manager at the core, so you need to use both of these to get the entire value.
+Below is a quick overview of the file structure:
 
 ```
 /
   flake.nix
   flake.lock
   secrets.json
-  templates/
+  templates/ # Templates used for making new nix files
     module.nix
     ...
   modules/
     default.nix
     nixos/
       default.nix
-      packages/
+      packages/ # Individual packages with base configuration
         pkg-module.nix
         ...
-      bundles/
+      bundles/ # Bundles of multiple packages and services
         bundle-module.nix
         ...
-      services/
+      services/ # Non user facing services or platforms
         service-module.nix
-        ...
-      overlays/
-        overlay-module.nix
         ...
     home-manager/
       default.nix
@@ -36,29 +34,23 @@ Welcome to my nixOS configuration. The premise behind the "snowman" architecture
       services/
         service-module.nix
         ...
-      overlays/
-        overlay-module.nix
-        ...
   nixos/
-    base.nix
+    base.nix # Base configuration I use for all my machines
     hostname/
       configuration.nix
       hardware-configuration.nix
     ...
   home-manager/
-    base.nix
+    base.nix # Base configuration I use for all of my users
     user/
       home.nix
       ...
     ...
-  pkgs/
+  pkgs/ # Custom built packages
     ...
-  overlays/
+  overlays/ # Overlays for existing repos
     ...
 ```
-
-In this way, services and programs can get their own modules, but predefined configuration of many modules can be loaded through bundles. NO MODULES SHOULD LOAD AUTOMATICALLY. Every module should have an enable option.
-There is also a templates folder holding templates for the how different nix files in this structure.
 
 ## Secrets
 The flake uses ```git-crypt``` and a ```secrets.json``` to hold secrets like a github auth token or the auth token and server url for tailscale. 
