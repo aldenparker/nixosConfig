@@ -100,7 +100,7 @@ in {
 
     # Setup gitea action runner only if token is set
     (mkIf (cfg.runnerToken != "") {
-      services.gitea-actions-runner.instances."gitea" = {
+      services.gitea-actions-runner.instances."gitea-runner" = {
         enable = true;
         name = "Gitea Runner";
         url = "http://${cfg.domain}:${builtins.toString cfg.port}/";
