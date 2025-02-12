@@ -30,13 +30,13 @@ in {
 
     # Setup correct firewall rules
     networking.firewall = {
-        enable = true; # Enable the firewall (if not enabled elsewhere)
-        allowedTCPPorts = [ cfg.port ];
+      enable = true; # Enable the firewall (if not enabled elsewhere)
+      allowedTCPPorts = [ cfg.port ];
     };
 
     # Setup directory for dataPath
-    systemd.tmpfiles.rules = [ 
-      "d ${cfg.dataPath} 0755 root root" 
+    systemd.tmpfiles.rules = [
+      "d ${cfg.dataPath} 0755 root root"
       "d ${cfg.dataPath}/root 0755 root root"
     ];
 
@@ -54,11 +54,11 @@ in {
         Type = "simple";
         Restart = "on-failure";
       };
-      
-      script = "
-        cd ${cfg.dataPath}
-        ${pkgs.filebrowser}/bin/filebrowser -p ${builtins.toString cfg.port} -a 0.0.0.0 -r ${cfg.dataPath}/root
-      ";
+
+      script =
+        "\n        cd ${cfg.dataPath}\n        ${pkgs.filebrowser}/bin/filebrowser -p ${
+                  builtins.toString cfg.port
+                } -a 0.0.0.0 -r ${cfg.dataPath}/root\n      ";
     };
   };
 }

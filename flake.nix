@@ -34,7 +34,7 @@
 
       # This is a function that generates an attribute by calling a function you
       # pass to it, with each system as an argument
-      forAllSystems = nixpkgs.lib.genAttrs systems;
+      eachSystem = nixpkgs.lib.genAttrs systems;
 
       # Import all secrets used in config
       secrets =
@@ -43,11 +43,10 @@
       # Custom packages
       # Accessible through 'nix build', 'nix shell', etc
       packages =
-        forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+        eachSystem (system: import ./pkgs nixpkgs.legacyPackages.${system});
 
       # Formatter for your nix files, available through 'nix fmt'
-      formatter =
-        forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+      formatter = eachSystem (system: nixpkgs.legacyPackages.${system}.nixfmt);
 
       # Custom packages and modifications, exported as overlays
       overlays = import ./overlays { inherit inputs; };
@@ -76,15 +75,13 @@
       # Available through 'home-manager --flake .#username' or the alias 'home-up'
       homeConfigurations = {
         "yggdrasil" = home-manager.lib.homeManagerConfiguration {
-          pkgs =
-            nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = { inherit inputs outputs secrets nvf; };
           modules = [ ./home-manager/yggdrasil/home.nix ];
         };
 
         "heimdallur" = home-manager.lib.homeManagerConfiguration {
-          pkgs =
-            nixpkgs.legacyPackages.aarch64-linux; # Home-manager requires 'pkgs' instance
+          pkgs = nixpkgs.legacyPackages.aarch64-linux;
           extraSpecialArgs = { inherit inputs outputs secrets nvf; };
           modules = [ ./home-manager/heimdallur/home.nix ];
         };
