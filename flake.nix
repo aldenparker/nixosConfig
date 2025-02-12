@@ -6,6 +6,9 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
+    # Import flake-parts
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     # Home-manager to use with home folders and user configs
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
@@ -19,73 +22,78 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nvf, ... }@inputs:
+  outputs = { self, flake-parts, ... }@inputs:
     let
+      # Grab outputs to pass to modules
       inherit (self) outputs;
 
-      # Supported systems for your flake packages, shell, etc.
-      systems = [
-        "aarch64-linux"
-        "i686-linux"
-        "x86_64-linux"
-        "aarch64-darwin"
-        "x86_64-darwin"
+      # Import all secrets used in config
+      secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
+
+    in flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        
       ];
 
-      # This is a function that generates an attribute by calling a function you
-      # pass to it, with each system as an argument
-      eachSystem = nixpkgs.lib.genAttrs systems;
+      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
 
-      # Import all secrets used in config
-      secrets =
-        builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
-    in {
-      # Custom packages
-      # Accessible through 'nix build', 'nix shell', etc
-      packages =
-        eachSystem (system: import ./pkgs nixpkgs.legacyPackages.${system});
+      perSystem = { config, pkgs, system, ... }: {
+        # Set correct version of pkgs and add unstable
+        _module.args.pkgs = import self.inputs.nixpkgs { 
+          inherit system; 
 
-      # Formatter for your nix files, available through 'nix fmt'
-      formatter = eachSystem (system: nixpkgs.legacyPackages.${system}.nixfmt);
+          overlays = [
+            (final: _prev: {
+              unstable = import inputs.nixpkgs-unstable {
+                system = final.system;
+                config.allowUnfree = true;
+              };
+            })
+          ]; 
 
-      # Custom packages and modifications, exported as overlays
-      overlays = import ./overlays { inherit inputs; };
-
-      # Reusable system level nixos modules. This stuff can be configured, but is never user specific.
-      nixosModules = import ./modules/nixos;
-
-      # Reusable user level home-manager modules. This stuff can be configured, but is never user specific.
-      homeManagerModules = import ./modules/home-manager;
-
-      # NixOS configuration entrypoint
-      # Available through 'nixos-rebuild --flake .#hostname' or the alias 'nix-up'
-      nixosConfigurations = {
-        yggdrasil = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs secrets; };
-          modules = [ ./nixos/yggdrasil/configuration.nix ];
+          config.allowUnfree = true; 
         };
 
-        heimdallur = nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs secrets; };
-          modules = [ ./nixos/heimdallur/configuration.nix ];
-        };
-      };
+        # Formatter for your nix files, available through 'nix fmt'
+        formatter = pkgs.nixfmt;
 
-      # Standalone home-manager configuration entrypoint
-      # Available through 'home-manager --flake .#username' or the alias 'home-up'
-      homeConfigurations = {
-        "yggdrasil" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs secrets nvf; };
-          modules = [ ./home-manager/yggdrasil/home.nix ];
+        # Setup home-manager configurations
+        packages.homeConfigurations = {
+            "yggdrasil" = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              extraSpecialArgs = { inherit inputs outputs secrets nvf; };
+              modules = [ ./home-manager/yggdrasil/home.nix ];
+            };
+
+            "heimdallur" = home-manager.lib.homeManagerConfiguration {
+              inherit pkgs;
+              extraSpecialArgs = { inherit inputs outputs secrets nvf; };
+              modules = [ ./home-manager/heimdallur/home.nix ];
+            };
+          };
         };
 
-        "heimdallur" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-linux;
-          extraSpecialArgs = { inherit inputs outputs secrets nvf; };
-          modules = [ ./home-manager/heimdallur/home.nix ];
+        flake = {
+          # Reusable system level nixos modules. This stuff can be configured, but is never user specific.
+          nixosModules = import ./modules/nixos;
+
+          # Reusable user level home-manager modules. This stuff can be configured, but is never user specific.
+          homeManagerModules = import ./modules/home-manager;
+
+          # NixOS configuration entrypoint
+          # Available through 'nixos-rebuild --flake .#hostname' or the alias 'nix-up'
+          nixosConfigurations = {
+            yggdrasil = nixpkgs.lib.nixosSystem {
+              specialArgs = { inherit inputs outputs secrets; };
+              modules = [ ./nixos/yggdrasil/configuration.nix ];
+            };
+
+            heimdallur = nixpkgs.lib.nixosSystem {
+              specialArgs = { inherit inputs outputs secrets; };
+              modules = [ ./nixos/heimdallur/configuration.nix ];
+            };
+          };
         };
-      };
     };
 }
 
