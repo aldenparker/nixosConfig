@@ -1,99 +1,97 @@
 {
-  description = "1024bit's NixOS Config";
+  description = "Snowman";
 
   inputs = {
-    # Both the stable and unstable version of Nix is needed
+    # NixPkgs and Unstable
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Import flake-parts
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    # Hardware Configurations
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    # Home-manager to use with home folders and user configs
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Home Manager
+    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # NVF for easy vim setup
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Snowfall Lib
+    snowfall-lib.url = "github:snowfallorg/lib?ref=v3.0.3";
+    snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Snowfall Flake
+    flake.url = "github:snowfallorg/flake?ref=v1.4.1";
+    flake.inputs.nixpkgs.follows = "unstable";
+
+    # NVF for easy neovim setup
+    nvf.url = "github:notashelf/nvf?ref=v0.7";
+    nvf.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, flake-parts, ... }@inputs:
+  outputs =
+    inputs:
     let
-      # Grab outputs to pass to modules
-      inherit (self) outputs;
-
       # Import all secrets used in config
       secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
 
-    in flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        
-      ];
+      # Setup internal library
+      lib = inputs.snowfall-lib.mkLib {
+        inherit inputs;
+        src = ./.;
 
-      systems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
-
-      perSystem = { config, pkgs, system, ... }: {
-        # Set correct version of pkgs and add unstable
-        _module.args.pkgs = import self.inputs.nixpkgs { 
-          inherit system; 
-
-          overlays = [
-            (final: _prev: {
-              unstable = import inputs.nixpkgs-unstable {
-                system = final.system;
-                config.allowUnfree = true;
-              };
-            })
-          ]; 
-
-          config.allowUnfree = true; 
-        };
-
-        # Formatter for your nix files, available through 'nix fmt'
-        formatter = pkgs.nixfmt;
-
-        # Setup home-manager configurations
-        packages.homeConfigurations = {
-            "yggdrasil" = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              extraSpecialArgs = { inherit inputs outputs secrets nvf; };
-              modules = [ ./home-manager/yggdrasil/home.nix ];
-            };
-
-            "heimdallur" = home-manager.lib.homeManagerConfiguration {
-              inherit pkgs;
-              extraSpecialArgs = { inherit inputs outputs secrets nvf; };
-              modules = [ ./home-manager/heimdallur/home.nix ];
-            };
+        snowfall = {
+          meta = {
+            name = "snowman";
+            title = "Snowman";
           };
+
+          namespace = "snowman";
+        };
+      };
+    in
+    # Setup flake
+    lib.mkFlake
+      {
+        # Configure nixpkgs
+        channels-config = {
+          allowUnfree = true;
+          permittedInsecurePackages = [];
         };
 
-        flake = {
-          # Reusable system level nixos modules. This stuff can be configured, but is never user specific.
-          nixosModules = import ./modules/nixos;
+        # External overlay import
+        overlays = with inputs; [];
 
-          # Reusable user level home-manager modules. This stuff can be configured, but is never user specific.
-          homeManagerModules = import ./modules/home-manager;
+        # External module import for all hosts
+        systems.modules.nixos = with inputs; [
+          home-manager.nixosModules.home-manager
+        ];
 
-          # NixOS configuration entrypoint
-          # Available through 'nixos-rebuild --flake .#hostname' or the alias 'nix-up'
-          nixosConfigurations = {
-            yggdrasil = nixpkgs.lib.nixosSystem {
-              specialArgs = { inherit inputs outputs secrets; };
-              modules = [ ./nixos/yggdrasil/configuration.nix ];
-            };
-
-            heimdallur = nixpkgs.lib.nixosSystem {
-              specialArgs = { inherit inputs outputs secrets; };
-              modules = [ ./nixos/heimdallur/configuration.nix ];
-            };
-          };
+        # Pass special args to hosts
+        systems.hosts.yggdrasil.specialArgs = {
+          inherit secrets;
         };
+
+        systems.hosts.heimdallur.specialArgs = {
+          inherit secrets;
+        };
+
+        # External module import for all homes
+        homes.modules = with inputs; [
+          nvf.homeManagerModules.default
+        ];
+
+        homes.users."yggdrasil@yggdrasil".specialArgs = {
+          inherit secrets;
+        };
+
+        homes.users."heimdallur@heimdallur".specialArgs = {
+          inherit secrets;
+        };
+
+        # Import hardware packages for raspberry pi into the heimdallur device config
+        systems.hosts.heimdallur.modules = with inputs; [
+          nixos-hardware.nixosModules.raspberry-pi-3
+        ];
+      }
+    // {
+      self = inputs.self;
     };
 }
-
