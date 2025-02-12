@@ -1,6 +1,6 @@
 { inputs, lib, config, pkgs, ... }: {
   # Enable flakes 
-  settings.experimental-features = "nix-command flakes"; 
+  nix.settings.experimental-features = "nix-command flakes"; 
 
   # --- System Package Settings
   # Must have system packages to get anything done

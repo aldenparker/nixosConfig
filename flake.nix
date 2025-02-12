@@ -30,7 +30,7 @@
     inputs:
     let
       # Import all secrets used in config
-      secrets = builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
+      secrets = builtins.fromJSON (builtins.readFile "${inputs.self}/secrets/secrets.json");
 
       # Setup internal library
       lib = inputs.snowfall-lib.mkLib {
