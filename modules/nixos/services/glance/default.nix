@@ -23,7 +23,7 @@ in {
   # --- Set configuration
   config = mkIf cfg.enable {
     # Install Glance
-    environment.systemPackages = [ pkgs.unstable.glance ];
+    environment.systemPackages = [ pkgs.glance ];
 
     # Enable and open up firewall (if not enabled elsewhere)
     networking.firewall = {
@@ -43,7 +43,7 @@ in {
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${pkgs.unstable.glance}/bin/glance --config ${cfg.configPath}";
+        ExecStart = "${pkgs.glance}/bin/glance --config ${cfg.configPath}";
       };
     };
   };
