@@ -62,7 +62,9 @@
         ];
 
         # External module import for all hosts
-        systems.modules.nixos = with inputs; [];
+        systems.modules.nixos = with inputs; [
+          home-manager.nixosModules.home-manager
+        ];
 
         # Pass special args to hosts
         systems.hosts.yggdrasil.specialArgs = {

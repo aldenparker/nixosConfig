@@ -83,9 +83,6 @@
     };
   };
 
-  # Decouple home-manger from snowfall
-  snowfallorg.users.heimdallur.home.enable = false;
-
   # --- NixOS Settings. WARNING: HERE BE DRAGONS
   system.stateVersion = "24.11";
 
