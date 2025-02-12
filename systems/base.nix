@@ -10,5 +10,6 @@
     curl
     git
     git-crypt
+    snowfallorg.flake
   ];
 }

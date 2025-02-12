@@ -113,6 +113,9 @@
     ]; # Enable ‘sudo’ for the user and add network managing
   };
 
+  # Decouple home manager from snowflake lib
+  snowfallorg.users.yggdrasil.home.enable = false;
+
   # ---- NixOS Settings. WARNING: HERE BE DRAGONS
   system.stateVersion = "24.11";
 

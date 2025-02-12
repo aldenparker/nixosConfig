@@ -57,12 +57,12 @@
         };
 
         # External overlay import
-        overlays = with inputs; [];
+        overlays = with inputs; [
+          flake.overlays.default
+        ];
 
         # External module import for all hosts
-        systems.modules.nixos = with inputs; [
-          home-manager.nixosModules.home-manager
-        ];
+        systems.modules.nixos = with inputs; [];
 
         # Pass special args to hosts
         systems.hosts.yggdrasil.specialArgs = {
