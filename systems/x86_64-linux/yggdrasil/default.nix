@@ -103,6 +103,16 @@
   # Select internationalization properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # --- User Settings
+  # Define the user accounts
+  users.users.yggdrasil = {
+    isNormalUser = true;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ]; # Enable ‘sudo’ for the user and add network managing
+  };
+
   # ---- NixOS Settings. WARNING: HERE BE DRAGONS
   system.stateVersion = "24.11";
 

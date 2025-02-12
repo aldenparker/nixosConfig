@@ -72,6 +72,17 @@
   # --- RPI Specific
   hardware.enableRedistributableFirmware = true;
 
+  # --- User Settings
+  users.users = {
+    heimdallur = {
+      isNormalUser = true;
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ]; # Enable ‘sudo’ for the user and add network managing
+    };
+  };
+
   # --- NixOS Settings. WARNING: HERE BE DRAGONS
   system.stateVersion = "24.11";
 

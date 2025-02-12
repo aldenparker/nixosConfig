@@ -4,17 +4,6 @@
     ../../base.nix
   ];
 
-  # --- User Settings
-  users.users = {
-    heimdallur = {
-      isNormalUser = true;
-      extraGroups = [
-        "networkmanager"
-        "wheel"
-      ]; # Enable ‘sudo’ for the user and add network managing
-    };
-  };
-
   # --- Configure snowman modules (my custom modules)
   snowman = {
     # --- Configure individual packages
