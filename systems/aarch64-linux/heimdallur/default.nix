@@ -13,6 +13,7 @@
     programs = {
       zsh.enable = true;
       htop.enable = true;
+      kitty.enable = true;
     };
 
     services = {
