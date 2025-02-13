@@ -13,7 +13,7 @@ in {
   # --- Set configuration
   config = mkIf cfg.enable {
     # Install neofetch for startup
-    home.packages = with pkgs; [ neofetch ];
+    home.packages = with pkgs; [ fastfetch ];
 
     # Configure zsh, must enable nixos package version as well for default shell behavior
     programs.zsh = {
@@ -22,7 +22,7 @@ in {
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      initExtra = "neofetch"; # Neofetch runs on terminal startup
+      initExtra = "fastfetch"; # fastfetch runs on terminal startup
 
       # Enable oh-my-zsh
       oh-my-zsh = {
