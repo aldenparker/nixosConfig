@@ -17,10 +17,6 @@
     snowfall-lib.url = "github:snowfallorg/lib?ref=v3.0.3";
     snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Snowfall Flake
-    flake.url = "github:snowfallorg/flake?ref=v1.4.1";
-    flake.inputs.nixpkgs.follows = "unstable";
-
     # NVF for easy neovim setup
     nvf.url = "github:notashelf/nvf?ref=v0.7";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
@@ -57,9 +53,7 @@
         };
 
         # External overlay import
-        overlays = with inputs; [
-          flake.overlays.default
-        ];
+        overlays = with inputs; [];
 
         # External module import for all hosts
         systems.modules.nixos = with inputs; [
