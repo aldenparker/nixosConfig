@@ -20,6 +20,17 @@
     # NVF for easy neovim setup
     nvf.url = "github:notashelf/nvf?ref=v0.7";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
+
+    # Hyprland
+    hyprland.url = "github:hyprwm/Hyprland?ref=v0.47.2";
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    # Stylix
+    stylix.url = "github:danth/stylix/release-24.11";
   };
 
   outputs =
@@ -58,6 +69,7 @@
         # External module import for all hosts
         systems.modules.nixos = with inputs; [
           home-manager.nixosModules.home-manager
+          stylix.nixosModules.stylix
         ];
 
         # Pass special args to hosts

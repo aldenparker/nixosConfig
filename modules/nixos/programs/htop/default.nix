@@ -7,7 +7,7 @@ let
 in {
   # --- Set options
   options.${namespace}.programs.htop = {
-    enable = mkEnableOption "Enables ${module-name} for host";
+    enable = mkEnableOption "Enables htop for host";
   };
 
   # --- Set configuration
