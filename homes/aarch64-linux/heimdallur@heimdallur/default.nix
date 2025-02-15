@@ -16,6 +16,7 @@
       };
       
       zsh.enable = true;
+      kitty.enable = true;
     };
   };
 

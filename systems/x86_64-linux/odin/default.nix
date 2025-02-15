@@ -18,7 +18,7 @@
   snowman = {
     bundles = {
       audio.enable = true;
-      bluetooth {
+      bluetooth = {
         enable = true;
         enableAudio = true;
       };

@@ -71,7 +71,9 @@
         };
 
         # External overlay import
-        overlays = with inputs; [];
+        overlays = with inputs; [
+          inputs.hyprpanel.overlay
+        ];
 
         # External module import for all hosts
         systems.modules.nixos = with inputs; [
@@ -80,6 +82,10 @@
         ];
 
         # Pass special args to hosts
+        systems.hosts.odin.specialArgs = {
+          inherit secrets;
+        };  
+
         systems.hosts.yggdrasil.specialArgs = {
           inherit secrets;
         };
@@ -93,6 +99,10 @@
           nvf.homeManagerModules.default
           inputs.hyprpanel.homeManagerModules.hyprpanel
         ];
+
+        homes.users."odin@odin".specialArgs = {
+          inherit secrets;
+        };
 
         homes.users."yggdrasil@yggdrasil".specialArgs = {
           inherit secrets;
