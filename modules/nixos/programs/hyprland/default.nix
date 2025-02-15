@@ -18,6 +18,12 @@ in {
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
 
+    # Get swww and waypaper
+    environment.systemPackages = [
+      inputs.swww.packages.${pkgs.system}.swww
+      pkgs.waypaper
+    ];
+
     programs.hyprland = {
       enable = true;
       # set the flake package

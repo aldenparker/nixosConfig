@@ -29,6 +29,13 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hyprpanel = {
+      url = "github:jas-singhfsu/hyprpanel";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    swww.url = "github:LGFae/swww";
+
     # Stylix
     stylix.url = "github:danth/stylix/release-24.11";
   };
@@ -84,6 +91,7 @@
         # External module import for all homes
         homes.modules = with inputs; [
           nvf.homeManagerModules.default
+          inputs.hyprpanel.homeManagerModules.hyprpanel
         ];
 
         homes.users."yggdrasil@yggdrasil".specialArgs = {
