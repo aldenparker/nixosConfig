@@ -9,7 +9,6 @@
     # --- Configure individual packages
     programs = {
       hyprland.enable = true;
-      hyprpanel.enable = true;
       librewolf.enable = true;
 
       git = {
