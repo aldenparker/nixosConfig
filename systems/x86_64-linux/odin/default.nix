@@ -10,7 +10,7 @@
   # --- Stylix Theme
   stylix = {
     enable = true;
-    image = ./wizards-journey.jpg; # Required for some reason, does not set wallpaper
+    image = ../../../assets/wallhaven/wizards-journey.jpg; # Required for some reason, does not set wallpaper
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
   };
 
@@ -18,6 +18,8 @@
   snowman = {
     bundles = {
       audio.enable = true;
+      hyprland.enable = true;
+      
       bluetooth = {
         enable = true;
         enableAudio = true;
@@ -28,7 +30,6 @@
       zsh.enable = true;
       htop.enable = true;
       keymapp.enable = true;
-      hyprland.enable = true;
     };
 
     services = {

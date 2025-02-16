@@ -6,9 +6,12 @@
 
   # --- Configure snowman modules (my custom modules)
   snowman = {
+    bundles = {
+      hyprland.enable = true;
+    };
+
     # --- Configure individual packages
     programs = {
-      hyprland.enable = true;
       librewolf.enable = true;
 
       git = {

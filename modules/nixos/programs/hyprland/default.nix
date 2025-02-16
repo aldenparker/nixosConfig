@@ -20,15 +20,6 @@ in {
       variant = "";
     };
 
-    # Enable gdm
-    services.xserver.displayManager.gdm.enable = true;
-
-    # Get swww and waypaper
-    environment.systemPackages = [
-      inputs.swww.packages.${pkgs.system}.swww
-      pkgs.waypaper
-    ];
-
     programs.hyprland = {
       enable = true;
       xwayland.enable = true;
