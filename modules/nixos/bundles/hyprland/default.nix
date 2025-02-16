@@ -16,7 +16,6 @@ in {
       gdm.enable = true;
       hyprland.enable = true;
       swww.enable = true;
-      waybar.enable = true;
     };
   };
 }

@@ -10,7 +10,7 @@
   # --- Stylix Theme
   stylix = {
     enable = true;
-    image = ../../../assets/wallhaven/wizards-journey.jpg; # Required for some reason, does not set wallpaper
+    image = ../../../assets/Wallpapers/Wallhaven/wizards-journey.jpg; # Required for some reason, does not set wallpaper
     base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
   };
 

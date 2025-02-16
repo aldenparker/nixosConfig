@@ -31,7 +31,7 @@ in {
         enable_audio_bell = "no";
         window_padding_width = 10;
         hide_window_decorations = "yes";
-        background_opacity = 0.7;
+        background_opacity = mkForce 0.7;
         dynamic_background_opacity = "yes";
         confirm_os_window_close = 0;
         selection_foreground = "none";
