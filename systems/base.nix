@@ -7,6 +7,11 @@
     FLAKE = "/etc/nixos";
   };
 
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    jetbrains-mono
+  ];
+
   # --- System Package Settings
   # Must have system packages to get anything done
   environment.systemPackages = with pkgs; [

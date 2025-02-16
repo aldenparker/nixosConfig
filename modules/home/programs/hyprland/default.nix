@@ -27,6 +27,7 @@ in {
       	exec-once = [
       		"killall -q swww-daemon; sleep .5 && swww-daemon"
           "killall -q waybar; sleep .5 && waybar"
+          "killall -q nm-applet; sleep .5 && nm-applet"
       	];
       };
     };

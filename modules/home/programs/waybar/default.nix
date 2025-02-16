@@ -465,7 +465,7 @@ in {
       };
       style = ''
         * {
-          font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+          font-family: "JetBrainsMono Nerd Font";
           border: none;
           border-radius: 0px;
         }
