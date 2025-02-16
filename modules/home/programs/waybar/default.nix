@@ -1,4 +1,4 @@
-,{ lib, inputs, config, pkgs, namespace, ... }:
+{ lib, inputs, config, pkgs, namespace, ... }:
 
 with lib;
 
@@ -104,7 +104,7 @@ in {
               "(.*) - Chromium" = "$1";
               "(.*) - Brave Search" = "$1";
               "(.*) - Outlook" = "$1";
-              "(.*) Microsoft Teams" = "$1"
+              "(.*) Microsoft Teams" = "$1";
             };
             "separate-outputs" = true;
           };
@@ -343,7 +343,7 @@ in {
               "custom/cliphist"
               "custom/hypridle"
               "custom/hyprshade"
-            ]
+            ];
           };
 
           # Group Links
@@ -367,7 +367,7 @@ in {
               "custom/settings"
               "custom/waybarthemes"
               "custom/wallpaper"
-            ]
+            ];
           };
 
           # Network
