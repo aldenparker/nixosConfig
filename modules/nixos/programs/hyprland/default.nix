@@ -3,7 +3,7 @@
 with lib;
 
 let
-  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+  #hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.${namespace}.programs.hyprland; # Config path
 in {
   # --- Set options
@@ -13,12 +13,6 @@ in {
 
   # --- Set configuration
   config = mkIf cfg.enable {
-    # Setup hyprland cache
-    nix.settings = {
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-    };
-
     # Enable sddm
     services.displayManager.sddm = {
       enable = true;
@@ -31,12 +25,12 @@ in {
       pkgs.waypaper
     ];
 
-    hardware.graphics = {
-      package = hyprland-pkgs.mesa.drivers;
+    # hardware.graphics = {
+    #   package = hyprland-pkgs.mesa.drivers;
 
-      driSupport32Bit = true;
-      package32 = hyprland-pkgs.pkgsi686Linux.mesa.drivers;
-    };
+    #   driSupport32Bit = true;
+    #   package32 = hyprland-pkgs.pkgsi686Linux.mesa.drivers;
+    # };
 
     programs.hyprland = {
       enable = true;
