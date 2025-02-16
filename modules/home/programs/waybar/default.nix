@@ -1,4 +1,4 @@
-{ lib, inputs, config, pkgs, namespace, ... }:
+,{ lib, inputs, config, pkgs, namespace, ... }:
 
 with lib;
 
@@ -21,442 +21,925 @@ in {
       enable = true;
       settings = {
         mainBar = {
-          # layer = "top"; # Waybar at top layer
-          # position = "bottom"; # Waybar position (top|bottom|left|right)
-          "height" = 30; # Waybar height (to be removed for auto height)
-          # width = 1280; # Waybar width
-          "spacing" = 4; # Gaps between modules (4px)
-          # Choose the order of the modules
-          "modules-left" = ["hyprland/workspaces"];
-          "modules-center" = ["hyprland/window"];
-          "modules-right" = ["mpd" "idle_inhibitor" "pulseaudio" "network" "cpu" "memory" "temperature" "backlight" "keyboard-state" "sway/language" "battery" "battery#bat2" "clock" "tray"];
-          # Modules configuration
+          # General Settings
+          "layer" = "top";
+          "margin-top" = 14;
+          "margin-bottom" = 0;
+          "margin-left" = 14;
+          "margin-right" = 14;    
+          "spacing" = 0;
+
+          # Modules Left
+          "modules-left" = [
+              "custom/appmenu"
+              "group/links"
+              #"wlr/taskbar"
+              "group/quicklinks"
+              "hyprland/window"
+              "custom/empty"
+          ];
+
+          # Modules Center
+          "modules-center" = [
+              "hyprland/workspaces"
+          ];
+
+          # Modules Right    
+          "modules-right" = [
+              "custom/updates"
+              "pulseaudio"
+              #"backlight"
+              "bluetooth"
+              "battery"
+              "network"
+              "group/hardware"
+              "group/tools"
+              "tray"
+              "custom/notification"
+              "custom/exit"
+              "custom/ml4w-welcome"
+              "clock"
+          ];
+
+          # --- Modules
+          # Workspaces
+          "hyprland/workspaces" = {
+            "on-scroll-up" = "hyprctl dispatch workspace r-1";
+            "on-scroll-down" = "hyprctl dispatch workspace r+1";
+            "on-click" = "activate";
+            "active-only" = false;
+            "all-outputs" = true;
+            "format" = "{}";
+            "format-icons" = {
+              "urgent" = "";
+              "active" = "";
+              "default" = "";
+            };
+            "persistent-workspaces" = {
+              "*" = 5;
+            };
+          };
+
+          # Taskbar
+          "wlr/taskbar" = {
+            "format" = "{icon}";
+            "icon-size" = 18;
+            "tooltip-format" = "{title}";
+            "on-click" = "activate";
+            "on-click-middle" = "close";
+            "ignore-list" = ["Alacritty" "kitty"];
+            "app_ids-mapping" = {
+              "firefoxdeveloperedition" = "firefox-developer-edition";
+            };
+            "rewrite" = {
+              "Firefox Web Browser" = "Firefox";
+              "Foot Server" = "Terminal";
+            };
+          };
+
+          # Hyprland Window
+          "hyprland/window" = {
+            "rewrite" = {
+              "(.*) - Brave" = "$1";
+              "(.*) - Chromium" = "$1";
+              "(.*) - Brave Search" = "$1";
+              "(.*) - Outlook" = "$1";
+              "(.*) Microsoft Teams" = "$1"
+            };
+            "separate-outputs" = true;
+          };
+
+          # ML4W Welcome App
+          "custom/ml4w-welcome" = {
+            "on-click" = "flatpak run com.ml4w.sidebar";
+            "format" = " ";
+            "tooltip-format" = "Open ML4W Sidebar App";
+          };
+
+          # Empty
+          "custom/empty" = {
+            "format" = "";
+          };
+
+            # Tools
+          "custom/tools" = {
+            "format" = "";
+            "tooltip-format" = "Tools";
+          };
+
+          # Cliphist
+          "custom/cliphist" = {
+            "format" = "";
+            "on-click" = "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh";
+            "on-click-right" = "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh d";
+            "on-click-middle" = "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh w";
+            "tooltip-format" = "Left: Open clipboard Manager\nRight: Delete an entry\nMiddle: Clear list";
+          };
+
+          # Updates Count
+          "custom/updates" = {
+            "format" = "  {}";
+            "escape" = true;
+            "return-type" = "json";
+            "exec" = "~/.config/ml4w/scripts/updates.sh";
+            "interval" = 1800;
+            "on-click" = "$(cat ~/.config/ml4w/settings/terminal.sh) --class dotfiles-floating -e ~/.config/ml4w/scripts/installupdates.sh";
+            "on-click-right" = "~/.config/ml4w/settings/software.sh";
+          };
+
+          # Wallpaper
+          "custom/wallpaper" = {
+            "format" = "";
+            "on-click" = "bash -c waypaper &";
+            "on-click-right" = "~/.config/hypr/scripts/wallpaper-effects.sh";
+            "tooltip-format" = "Left: Select a wallpaper\nRight: Select wallpaper effect";
+          };
+
+          # Waybar Themes
+          "custom/waybarthemes" = {
+            "format" = "";
+            "on-click" = "~/.config/waybar/themeswitcher.sh";
+            "tooltip-format" = "Select a waybar theme";
+          };
+
+          # Settings
+          "custom/settings" = {
+            "format" = "";
+            "on-click" = "sleep 0.1 && com.ml4w.dotfilessettings";
+            "tooltip-format" = "ML4W Dotfiles Settings";
+          };
+
+          # Keybindings
+          "custom/keybindings" = {
+            "format" = "";
+            "on-click" = "~/.config/hypr/scripts/keybindings.sh";
+            "tooltip" = false;
+          };
+
+          # ChatGPT Launcher
+          "custom/chatgpt" = {
+            "format" = " ";
+            "on-click" = "~/.config/ml4w/settings/ai.sh";
+            "tooltip-format" = "AI Support";
+          };
+
+          # Calculator
+          "custom/calculator" = {
+            "format" = "";
+            "on-click" = "qalculate-gtk";
+            "tooltip-format" = "Open calculator";
+          };
+
+          # Windows VM
+          "custom/windowsvm" = {
+            "format" = "";
+            "on-click" = "~/.config/ml4w/scripts/launchvm.sh";
+            "tooltip" = false;
+          };
+
+          # Rofi Application Launcher
+          "custom/appmenu" = {
+            # START APPS LABEL
+            "format" = "Apps";
+            # END APPS LABEL
+            "on-click" = "sleep 0.2;pkill rofi || rofi -show drun -replace";
+            "on-click-right" = "~/.config/hypr/scripts/keybindings.sh";
+            "tooltip-format" = "Left: Open the application launcher\nRight: Show all keybindings";
+          };
+
+          # Rofi Application Launcher
+          "custom/appmenuicon" = {
+            "format" = "";
+            "on-click" = "sleep 0.2;rofi -show drun -replace";
+            "on-click-right" = "~/.config/hypr/scripts/keybindings.sh";
+            "tooltip-format" = "Left: Open the application launcher\nRight: Show all keybindings";
+          };
+
+          # Power Menu
+          "custom/exit" = {
+            "format" = "";
+            "on-click" = "~/.config/ml4w/scripts/wlogout.sh";
+            "on-click-right" = "hyprlock";
+            "tooltip-format" = "Left: Power menu\nRight: Lock screen";
+          };
+
+          # SwayNC
+          "custom/notification" = {
+            "tooltip-format" = "Left: Notifications\nRight: Do not disturb";
+            "format" = "{icon}";
+            "format-icons" = {
+              "notification" = "<span foreground='red'><sup></sup></span>";
+              "none" = "";
+              "dnd-notification" = "<span foreground='red'><sup></sup></span>";
+              "dnd-none" = "";
+              "inhibited-notification" = "<span foreground='red'><sup></sup></span>";
+              "inhibited-none" = "";
+              "dnd-inhibited-notification" = "<span foreground='red'><sup></sup></span>";
+              "dnd-inhibited-none" = "";
+            };
+            "return-type" = "json";
+            "exec-if" = "which swaync-client";
+            "exec" = "swaync-client -swb";
+            "on-click" = "swaync-client -t -sw";
+            "on-click-right" = "swaync-client -d -sw";
+            "escape" = true;
+          };
+
+          # Hyprshade
+          "custom/hyprshade" = {
+            "format" = "";
+            "tooltip-format" = "Toggle Screen Shader";
+            "on-click" = "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh";
+            "on-click-right" = "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh rofi";
+          };
+
+          # Hypridle inhibitor
+          "custom/hypridle" = {
+            "format" = "";
+            "return-type" = "json";
+            "escape" = true;
+            "exec-on-event" = true;
+            "interval" = 60;
+            "exec" = "~/.config/hypr/scripts/hypridle.sh status";
+            "on-click" = "~/.config/hypr/scripts/hypridle.sh toggle";
+          };
+
+          # Keyboard State
           "keyboard-state" = {
-              "numlock" = true;
-              "capslock" = true;
-              "format" = "{name} {icon}";
-              "format-icons" = {
-                  "locked" = "";
-                  "unlocked" = "";
-              };
+            "numlock" = true;
+            "capslock" = true;
+            "format" = "{name} {icon}";
+            "format-icons" = {
+              "locked" = "";
+              "unlocked" = "";
+            };
           };
-          "sway/mode" = {
-              format = "<span style=\"italic\">{}</span>";
-          };
-          "sway/scratchpad" = {
-              format = "{icon} {count}";
-              show-empty = false;
-              format-icons = ["" ""];
-              tooltip = true;
-              tooltip-format = "{app} = {title}";
-          };
-          "mpd" = {
-              "format" = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
-              "format-disconnected" = "Disconnected ";
-              "format-stopped" = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
-              "unknown-tag" = "N/A";
-              "interval" = 2;
-              "consume-icons" = {
-                  "on" = " ";
-              };
-              "random-icons" = {
-                  "off" = "<span color=\"#f53c3c\"></span> ";
-                  "on" = " ";
-              };
-              "repeat-icons" = {
-                  "on" = " ";
-              };
-              "single-icons" = {
-                  "on" = "1 ";
-              };
-              "state-icons" = {
-                  "paused" = "";
-                  "playing" = "";
-              };
-              "tooltip-format" = "MPD (connected)";
-              "tooltip-format-disconnected" = "MPD (disconnected)";
-          };
-          "idle_inhibitor" = {
-              "format" = "{icon}";
-              "format-icons" = {
-                  "activated" = "";
-                  "deactivated" = "";
-              };
-          };
+
+          # System tray
           "tray" = {
-              "spacing" = 10;
+            "icon-size" = 21;
+            "spacing" = 10;
           };
+
+          # Clock
           "clock" = {
-              # "timezone" = "America/New_York";
-              "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
-              "format-alt" = "{:%Y-%m-%d}";
+            "format" = "{:%H:%M %a}";
+            "on-click" = "flatpak run com.ml4w.calendar";
+            "timezone" = "";
+            "tooltip" = false;
           };
+
+          # System
+          "custom/system" = {
+            "format" = "";
+            "tooltip" = false;
+          };
+
+          # CPU
           "cpu" = {
-              "format" = "{usage}% ";
-              "tooltip" = false;
+            "format" = "/ C {usage}% ";
+            "on-click" = "~/.config/ml4w/settings/system-monitor.sh";
           };
+
+          # Memory
           "memory" = {
-              "format" = "{}% ";
+            "format" = "/ M {}% ";
+            "on-click" = "~/.config/ml4w/settings/system-monitor.sh";
           };
-          "temperature" = {
-              "critical-threshold" = 80;
-              # "format-critical" = "{temperatureC}°C {icon}";
-              "format" = "{temperatureC}°C {icon}";
-              "format-icons" = ["" "" ""];
+
+          # Harddisc space used
+          "disk" = {
+            "interval" = 30;
+            "format" = "D {percentage_used}% ";
+            "path" = "/";
+            "on-click" = "~/.config/ml4w/settings/system-monitor.sh";
           };
-          "backlight" = {
-              # "device" = "acpi_video1";
-              "format" = "{percent}% {icon}";
-              "format-icons" = ["" "" "" "" "" "" "" "" ""];
+
+          "hyprland/language" = {
+            "format" = "/ K {short}";
           };
-          "battery" = {
-              "states" = {
-                  # "good" = 95;
-                  "warning" = 30;
-                  "critical" = 15;
-              };
-              "format" = "{capacity}% {icon}";
-              "format-charging" = "{capacity}% ";
-              "format-plugged" = "{capacity}% ";
-              "format-alt" = "{time} {icon}";
-              # "format-good" = ""; # An empty format will hide the module
-              # "format-full" = "";
-              "format-icons" = ["" "" "" "" ""];
+
+          # Group Hardware
+          "group/hardware" = {
+            "orientation" = "inherit";
+            "drawer" = {
+              "transition-duration" = 300;
+              "children-class" = "not-memory";
+              "transition-left-to-right" = false;
+            };
+            "modules" = ["custom/system" "disk" "cpu" "memory" "hyprland/language"];
           };
-          "battery#bat2" = {
-              "bat" = "BAT2";
+
+          # Group Tools
+          "group/tools" = {
+            "orientation" = "inherit";
+            "drawer" = {
+              "transition-duration" = 300;
+              "children-class" = "not-memory";
+              "transition-left-to-right" = false;
+            };
+            "modules" = [
+              "custom/tools"
+              "custom/cliphist"
+              "custom/hypridle"
+              "custom/hyprshade"
+            ]
           };
+
+          # Group Links
+          "group/links" = {
+            "orientation" = "horizontal";
+            "modules" = [
+              "custom/chatgpt"
+              "custom/empty"
+            ];
+          };
+
+          # Group Settings
+          "group/settings" = {
+            "orientation" = "inherit";
+            "drawer" = {
+              "transition-duration" = 300;
+              "children-class" = "not-memory";
+              "transition-left-to-right" = true;
+            };
+            "modules" = [
+              "custom/settings"
+              "custom/waybarthemes"
+              "custom/wallpaper"
+            ]
+          };
+
+          # Network
           "network" = {
-              # "interface" = "wlp2*"; # (Optional) To force the use of this interface
-              "format-wifi" = "{essid} ({signalStrength}%) ";
-              "format-ethernet" = "{ipaddr}/{cidr} ";
-              "tooltip-format" = "{ifname} via {gwaddr} ";
-              "format-linked" = "{ifname} (No IP) ";
-              "format-disconnected" = "Disconnected ⚠";
-              "format-alt" = "{ifname} = {ipaddr}/{cidr}";
+            "format" = "{ifname}";
+            "format-wifi" = " {essid} ({signalStrength}%)";
+            "format-ethernet" = "  {ifname}";
+            "format-disconnected" = "Disconnected ⚠";
+            "tooltip-format" = " {ifname} via {gwaddri}";
+            "tooltip-format-wifi" = "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}";
+            "tooltip-format-ethernet" = " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}";
+            "tooltip-format-disconnected" = "Disconnected";
+            "max-length" = 50;
+            "on-click" = "~/.config/ml4w/settings/networkmanager.sh";
+            "on-click-right" = "~/.config/ml4w/scripts/nm-applet.sh toggle";
           };
+
+          # Battery
+          "battery" = {
+            "states" = {
+              # "good" = 95;
+              "warning" = 30;
+              "critical" = 15;
+            };
+            "format" = "{icon} {capacity}%";
+            "format-charging" = "  {capacity}%";
+            "format-plugged" = "  {capacity}%";
+            "format-alt" = "{icon}  {time}";
+            # "format-good" = ""; # An empty format will hide the module
+            # "format-full" = "";
+            "format-icons" = [" " " " " " " " " "];
+          };
+
+          # Pulseaudio
           "pulseaudio" = {
-              # "scroll-step" = 1; # %; can be a float
-              "format" = "{volume}% {icon} {format_source}";
-              "format-bluetooth" = "{volume}% {icon} {format_source}";
-              "format-bluetooth-muted" = " {icon} {format_source}";
-              "format-muted" = " {format_source}";
-              "format-source" = "{volume}% ";
-              "format-source-muted" = "";
-              "format-icons" = {
-                  "headphone" = "";
-                  "hands-free" = "";
-                  "headset" = "";
-                  "phone" = "";
-                  "portable" = "";
-                  "car" = "";
-                  "default" = ["" "" ""];
-              };
-              "on-click" = "pavucontrol";
+            # "scroll-step" = 1; # % can be a float
+            "format" = "{icon}  {volume}%";
+            "format-bluetooth" = "{volume}% {icon} {format_source}";
+            "format-bluetooth-muted" = " {icon} {format_source}";
+            "format-muted" = " {format_source}";
+            "format-source" = "{volume}% ";
+            "format-source-muted" = "";
+            "format-icons" = {
+              "headphone" = " ";
+              "hands-free" = " ";
+              "headset" = " ";
+              "phone" = " ";
+              "portable" = " ";
+              "car" = " ";
+              "default" = ["" "" ""];
+            };
+            "on-click" = "pavucontrol";
           };
-          "custom/media" = {
-              "format" = "{icon} {}";
-              "return-type" = "json";
-              "max-length" = 40;
-              "format-icons" = {
-                  "spotify" = "";
-                  "default" = "🎜";
-              };
-              "escape" = true;
-              "exec" = "$HOME/.config/waybar/mediaplayer.py 2> /dev/null"; # Script in resources folder
-              # "exec" = "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" # Filter player based on name
+
+          # Bluetooth
+          "bluetooth" = {
+            "format" = " {status}";
+            "format-disabled" = "";
+            "format-off" = "";
+            "interval" = 30;
+            "on-click" = "blueman-manager";
+            "format-no-controller" = "";
+          };
+
+          # Other
+          "user" = {
+            "format" = "{user}";
+            "interval" = 60;
+            "icon" = false;
+          };
+
+          # backlight:
+          "backlight" = {
+            "format" = "{icon} {percent}%";
+            "format-icons" = [
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+              ""
+            ];
+            "scroll-step" = 1;
           };
         };
       };
       style = ''
         * {
-          /* `otf-font-awesome` is required to be installed for icons */
-          font-family: "Fira Sans Semibold", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-          font-size: 13px;
+          font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+          border: none;
+          border-radius: 0px;
         }
 
         window#waybar {
-          background-color: rgba(43, 48, 59, 0.5);
-          border-bottom: 3px solid rgba(100, 114, 125, 0.5);
-          color: #ffffff;
+          background-color: rgba(0,0,0,0.8);
+          border-bottom: 0px solid #ffffff;
+          /* color: #FFFFFF; */
+          background: transparent;
           transition-property: background-color;
           transition-duration: .5s;
         }
 
-        window#waybar.hidden {
-          opacity: 0.2;
-        }
+        /* -----------------------------------------------------
+        * Workspaces
+        * ----------------------------------------------------- */
 
-        /*
-        window#waybar.empty {
-          background-color: transparent;
-        }
-        window#waybar.solo {
-          background-color: #FFFFFF;
-        }
-        */
-
-        window#waybar.termite {
-          background-color: #3F3F3F;
-        }
-
-        window#waybar.chromium {
-          background-color: #000000;
-          border: none;
-        }
-
-        #custom-ml4w-welcome {
-          margin-right: 15px;
-          background-image: url("../assets/ml4w-icon-20.png");
-          background-repeat: no-repeat;
-          background-position: center;
-          padding-right: 20px;
-          margin-right: 0px;
-        }
-
-        button {
-          /* Use box-shadow instead of border so the text isn't offset */
-          box-shadow: inset 0 -3px transparent;
-          /* Avoid rounded borders under each button name */
-          border: none;
-          border-radius: 0;
-        }
-
-        /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-        button:hover {
-          background: inherit;
-          box-shadow: inset 0 -3px #ffffff;
+        #workspaces {
+            background: @workspacesbackground1;
+            margin: 2px 1px 3px 1px;
+            padding: 0px 1px;
+            border-radius: 15px;
+            border: 0px;
+            font-weight: bold;
+            font-style: normal;
+            opacity: 0.8;
+            font-size: 16px;
+            color: @textcolor1;
         }
 
         #workspaces button {
-          padding: 0 5px;
-          background-color: transparent;
-          color: #ffffff;
+            padding: 0px 5px;
+            margin: 4px 3px;
+            border-radius: 15px;
+            border: 0px;
+            color: @textcolor1;
+            background-color: @workspacesbackground2;
+            transition: all 0.3s ease-in-out;
+            opacity: 0.4;
+        }
+
+        #workspaces button.active {
+            color: @textcolor1;
+            background: @workspacesbackground2;
+            border-radius: 15px;
+            min-width: 40px;
+            transition: all 0.3s ease-in-out;
+            opacity:1.0;
         }
 
         #workspaces button:hover {
-          background: rgba(0, 0, 0, 0.2);
+            color: @textcolor1;
+            background: @workspacesbackground2;
+            border-radius: 15px;
+            opacity:0.7;
         }
 
-        #workspaces button.focused {
-          background-color: #64727D;
-          box-shadow: inset 0 -3px #ffffff;
+        /* -----------------------------------------------------
+        * Tooltips
+        * ----------------------------------------------------- */
+
+        tooltip {
+            border-radius: 16px;
+            background-color: @backgroundlight;
+            opacity:0.9;
+            padding:20px;
+            margin:0px;
         }
 
-        #workspaces button.urgent {
-          background-color: #eb4d4b;
+        tooltip label {
+            color: @textcolor2;
         }
 
-        #mode {
-          background-color: #64727D;
-          border-bottom: 3px solid #ffffff;
+        /* -----------------------------------------------------
+        * Window
+        * ----------------------------------------------------- */
+
+        #window {
+            background: @backgroundlight;
+            margin: 5px 15px 5px 0px;
+            padding: 2px 10px 0px 10px;
+            border-radius: 12px;
+            color:@textcolor2;
+            font-size:16px;
+            font-weight:normal;
+            opacity:0.8;
         }
 
-        #clock,
-        #battery,
-        #cpu,
-        #memory,
-        #disk,
-        #temperature,
-        #backlight,
-        #network,
-        #pulseaudio,
-        #wireplumber,
-        #custom-media,
-        #tray,
-        #mode,
-        #idle_inhibitor,
-        #scratchpad,
-        #mpd {
-          padding: 0 10px;
-          color: #ffffff;
+        window#waybar.empty #window {
+            background-color:transparent;
         }
 
-        #window,
-        #workspaces {
-          margin: 0 4px;
+        /* -----------------------------------------------------
+        * Taskbar
+        * ----------------------------------------------------- */
+
+        #taskbar {
+            background: @backgroundlight;
+            margin: 3px 15px 3px 0px;
+            padding:0px;
+            border-radius: 15px;
+            font-weight: normal;
+            font-style: normal;
+            opacity:0.8;
+            border: 3px solid @backgroundlight;
         }
 
-        /* If workspaces is the leftmost module, omit left margin */
+        #taskbar button {
+            margin:0;
+            border-radius: 15px;
+            padding: 0px 5px 0px 5px;
+        }
+
+        #taskbar.empty {
+            background:transparent;
+            border:0;
+            padding:0;
+            margin:0;
+        }
+
+        /* -----------------------------------------------------
+        * Modules
+        * ----------------------------------------------------- */
+
         .modules-left > widget:first-child > #workspaces {
-          margin-left: 0;
+            margin-left: 0;
         }
 
-        /* If workspaces is the rightmost module, omit right margin */
         .modules-right > widget:last-child > #workspaces {
-          margin-right: 0;
+            margin-right: 0;
         }
 
-        #clock {
-          background-color: #64727D;
+        /* -----------------------------------------------------
+        * Custom Quicklinks
+        * ----------------------------------------------------- */
+
+        #custom-brave,
+        #custom-browser,
+        #custom-keybindings,
+        #custom-outlook,
+        #custom-filemanager,
+        #custom-teams,
+        #custom-chatgpt,
+        #custom-calculator,
+        #custom-windowsvm,
+        #custom-cliphist,
+        #custom-settings,
+        #custom-wallpaper,
+        #custom-system,
+        #custom-hyprshade,
+        #custom-hypridle,
+        #custom-tools,
+        #custom-quicklink_chromium,
+        #custom-quicklink_edge,
+        #custom-quicklink_firefox,
+        #custom-quicklink_browser,
+        #custom-quicklink_filemanager,
+        #custom-quicklink_email,
+        #custom-quicklink_thunderbird,
+        #custom-quicklink_calculator,
+        #custom-quicklink1,
+        #custom-quicklink2,
+        #custom-quicklink3,
+        #custom-quicklink4,
+        #custom-quicklink5,
+        #custom-quicklink6,
+        #custom-quicklink7,
+        #custom-quicklink8,
+        #custom-quicklink9,
+        #custom-quicklink10,
+        #custom-waybarthemes {
+            margin-right: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 0.8;
+            color: @iconcolor;
         }
 
-        #battery {
-          background-color: #ffffff;
-          color: #000000;
+        #custom-quicklink_chromium,
+        #custom-quicklink_edge,
+        #custom-quicklink_firefox,
+        #custom-quicklink_browser,
+        #custom-quicklink_filemanager,
+        #custom-quicklink_email,
+        #custom-quicklink_thunderbird,
+        #custom-quicklink_calculator,
+        #custom-quicklink1,
+        #custom-quicklink2,
+        #custom-quicklink3,
+        #custom-quicklink4,
+        #custom-quicklink5,
+        #custom-quicklink6,
+        #custom-quicklink7,
+        #custom-quicklink8,
+        #custom-quicklink9,
+        #custom-quicklink10 {
+            margin-right: 18px;
         }
 
-        #battery.charging, #battery.plugged {
-          color: #ffffff;
-          background-color: #26A65B;
+        #custom-tools {
+            margin-right:12px;
         }
 
-        @keyframes blink {
-          to {
-            background-color: #ffffff;
-            color: #000000;
-          }
+        #custom-hypridle.active {
+            color: @iconcolor;
         }
 
-        #battery.critical:not(.charging) {
-          background-color: #f53c3c;
-          color: #ffffff;
-          animation-name: blink;
-          animation-duration: 0.5s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-direction: alternate;
+        #custom-hypridle.notactive {
+            color: #dc2f2f;
         }
 
-        label:focus {
-          background-color: #000000;
+        #custom-ml4w-welcome {
+            margin-right: 12px;
+            background-image: url("../assets/ml4w-icon.svg");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            padding-right: 20px;
         }
 
-        #cpu {
-          background-color: #2ecc71;
-          color: #000000;
+        #custom-chatgpt {
+            margin-right: 16px;
+            background-image: url("../assets/openai.svg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            padding-right: 18px;
+            opacity: 0.8;
         }
 
-        #memory {
-          background-color: #9b59b6;
-        }
-
-        #disk {
-          background-color: #964B00;
-        }
-
-        #backlight {
-          background-color: #90b1b1;
-        }
-
-        #network {
-          background-color: #2980b9;
-        }
-
-        #network.disconnected {
-          background-color: #f53c3c;
-        }
-
-        #pulseaudio {
-          background-color: #f1c40f;
-          color: #000000;
-        }
-
-        #pulseaudio.muted {
-          background-color: #90b1b1;
-          color: #2a5c45;
-        }
-
-        #wireplumber {
-          background-color: #fff0f5;
-          color: #000000;
-        }
-
-        #wireplumber.muted {
-          background-color: #f53c3c;
-        }
-
-        #custom-media {
-          background-color: #66cc99;
-          color: #2a5c45;
-          min-width: 100px;
-        }
-
-        #custom-media.custom-spotify {
-          background-color: #66cc99;
-        }
-
-        #custom-media.custom-vlc {
-          background-color: #ffa000;
-        }
-
-        #temperature {
-          background-color: #f0932b;
-        }
-
-        #temperature.critical {
-          background-color: #eb4d4b;
-        }
-
-        #tray {
-          background-color: #2980b9;
-        }
-
-        #tray > .passive {
-          -gtk-icon-effect: dim;
-        }
-
-        #tray > .needs-attention {
-          -gtk-icon-effect: highlight;
-          background-color: #eb4d4b;
-        }
+        /* -----------------------------------------------------
+        * Idle Inhibator
+        * ----------------------------------------------------- */
 
         #idle_inhibitor {
-          background-color: #2d3436;
+            margin-right: 15px;
+            font-size: 22px;
+            font-weight: bold;
+            opacity: 0.8;
+            color: @iconcolor;
         }
 
         #idle_inhibitor.activated {
-          background-color: #ecf0f1;
-          color: #2d3436;
+            margin-right: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            opacity: 0.8;
+            color: #dc2f2f;
         }
 
-        #mpd {
-          background-color: #66cc99;
-          color: #2a5c45;
+        /* -----------------------------------------------------
+        * Custom Modules
+        * ----------------------------------------------------- */
+
+        #custom-appmenu {
+            background-color: @backgrounddark;
+            font-size: 16px;
+            color: @textcolor1;
+            border-radius: 15px;
+            padding: 0px 10px 0px 10px;
+            margin: 3px 17px 3px 0px;
+            opacity:0.8;
+            border:3px solid @bordercolor;
         }
 
-        #mpd.disconnected {
-          background-color: #f53c3c;
+        /* -----------------------------------------------------
+        * Custom Notification
+        * ----------------------------------------------------- */
+
+        #custom-notification {
+            margin: 0px 13px 0px 0px;
+            padding:0px;
+            font-size:20px;
+            color: @iconcolor;
+            opacity: 0.8;
         }
 
-        #mpd.stopped {
-          background-color: #90b1b1;
+        /* -----------------------------------------------------
+        * Custom Exit
+        * ----------------------------------------------------- */
+
+        #custom-exit {
+            margin: 0px 13px 0px 0px;
+            padding:0px;
+            font-size:20px;
+            color: @iconcolor;
+            opacity: 0.8;
         }
 
-        #mpd.paused {
-          background-color: #51a37a;
+        /* -----------------------------------------------------
+        * Custom Updates
+        * ----------------------------------------------------- */
+
+        #custom-updates {
+            background-color: @backgroundlight;
+            font-size: 16px;
+            color: @textcolor2;
+            border-radius: 15px;
+            padding: 2px 10px 0px 10px;
+            margin: 5px 15px 5px 0px;
+            opacity:0.8;
+        }
+
+        #custom-updates.green {
+            background-color: @backgroundlight;
+        }
+
+        #custom-updates.yellow {
+            background-color: #ff9a3c;
+            color: #FFFFFF;
+        }
+
+        #custom-updates.red {
+            background-color: #dc2f2f;
+            color: #FFFFFF;
+        }
+
+        /* -----------------------------------------------------
+        * Hardware Group
+        * ----------------------------------------------------- */
+
+        #disk,#memory,#cpu,#language {
+            margin:0px;
+            padding:0px;
+            font-size:16px;
+            color:@iconcolor;
         }
 
         #language {
-          background: #00b093;
-          color: #740864;
-          padding: 0 5px;
-          margin: 0 5px;
-          min-width: 16px;
+            margin-right:10px;
         }
 
-        #keyboard-state {
-          background: #97e1ad;
-          color: #000000;
-          padding: 0 0px;
-          margin: 0 5px;
-          min-width: 16px;
+        /* -----------------------------------------------------
+        * Clock
+        * ----------------------------------------------------- */
+
+        #clock {
+            background-color: @backgrounddark;
+            font-size: 16px;
+            color: @textcolor1;
+            border-radius: 15px;
+            padding: 1px 10px 0px 10px;
+            margin: 3px 0px 3px 0px;
+            opacity:0.8;
+            border:3px solid @bordercolor;
         }
 
-        #keyboard-state > label {
-          padding: 0 5px;
+        /* -----------------------------------------------------
+        * Backlight
+        * ----------------------------------------------------- */
+
+        #backlight {
+            background-color: @backgroundlight;
+            font-size: 16px;
+            color: @textcolor2;
+            border-radius: 15px;
+            padding: 2px 10px 0px 10px;
+            margin: 5px 15px 5px 0px;
+            opacity:0.8;
         }
 
-        #keyboard-state > label.locked {
-          background: rgba(0, 0, 0, 0.2);
+        /* -----------------------------------------------------
+        * Pulseaudio
+        * ----------------------------------------------------- */
+
+        #pulseaudio {
+            background-color: @backgroundlight;
+            font-size: 16px;
+            color: @textcolor2;
+            border-radius: 15px;
+            padding: 2px 10px 0px 10px;
+            margin: 5px 15px 5px 0px;
+            opacity:0.8;
         }
 
-        #scratchpad {
-          background: rgba(0, 0, 0, 0.2);
+        #pulseaudio.muted {
+            background-color: @backgrounddark;
+            color: @textcolor1;
         }
 
-        #scratchpad.empty {
-          background-color: transparent;
+        /* -----------------------------------------------------
+        * Network
+        * ----------------------------------------------------- */
+
+        #network {
+            background-color: @backgroundlight;
+            font-size: 16px;
+            color: @textcolor2;
+            border-radius: 15px;
+            padding: 2px 10px 0px 10px;
+            margin: 5px 15px 5px 0px;
+            opacity:0.8;
+        }
+
+        #network.ethernet {
+            background-color: @backgroundlight;
+            color: @textcolor2;
+        }
+
+        #network.wifi {
+            background-color: @backgroundlight;
+            color: @textcolor2;
+        }
+
+        /* -----------------------------------------------------
+        * Bluetooth
+        * ----------------------------------------------------- */
+
+        #bluetooth, #bluetooth.on, #bluetooth.connected {
+            background-color: @backgroundlight;
+            font-size: 16px;
+            color: @textcolor2;
+            border-radius: 15px;
+            padding: 2px 10px 0px 10px;
+            margin: 5px 15px 5px 0px;
+            opacity:0.8;
+        }
+
+        #bluetooth.off {
+            background-color: transparent;
+            padding: 0px;
+            margin: 0px;
+        }
+
+        /* -----------------------------------------------------
+        * Battery
+        * ----------------------------------------------------- */
+
+        #battery {
+            background-color: @backgroundlight;
+            font-size: 16px;
+            color: @textcolor2;
+            border-radius: 15px;
+            padding: 2px 15px 0px 10px;
+            margin: 5px 15px 5px 0px;
+            opacity:0.8;
+        }
+
+        #battery.charging, #battery.plugged {
+            color: @textcolor2;
+            background-color: @backgroundlight;
+        }
+
+        @keyframes blink {
+            to {
+                background-color: @backgroundlight;
+                color: @textcolor2;
+            }
+        }
+
+        #battery.critical:not(.charging) {
+            background-color: #f53c3c;
+            color: @textcolor3;
+            animation-name: blink;
+            animation-duration: 0.5s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+
+        /* -----------------------------------------------------
+        * Tray
+        * ----------------------------------------------------- */
+
+        #tray {
+            padding: 0px 15px 0px 0px;
+        }
+
+        #tray > .passive {
+            -gtk-icon-effect: dim;
+        }
+
+        #tray > .needs-attention {
+            -gtk-icon-effect: highlight;
         }
       '';
     };
