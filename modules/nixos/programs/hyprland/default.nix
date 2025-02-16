@@ -3,7 +3,6 @@
 with lib;
 
 let
-  #hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.${namespace}.programs.hyprland; # Config path
 in {
   # --- Set options
@@ -13,10 +12,12 @@ in {
 
   # --- Set configuration
   config = mkIf cfg.enable {
+    services.xserver.enable = true;
+
     # Enable sddm
-    services.displayManager.sddm = {
+    services.xserver.displayManager.gdm = {
       enable = true;
-      wayland.enable = true;
+      wayland = true;
     };
 
     # Get swww and waypaper
@@ -25,20 +26,10 @@ in {
       pkgs.waypaper
     ];
 
-    # hardware.graphics = {
-    #   package = hyprland-pkgs.mesa.drivers;
-
-    #   driSupport32Bit = true;
-    #   package32 = hyprland-pkgs.pkgsi686Linux.mesa.drivers;
-    # };
-
     programs.hyprland = {
       enable = true;
+      withUWSM = true;
       xwayland.enable = true;
-      # set the flake package
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      # make sure to also set the portal package, so that they are in sync
-      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
   };
 }
