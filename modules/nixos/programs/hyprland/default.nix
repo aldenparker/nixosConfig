@@ -1,8 +1,9 @@
-{ lib, config, pkgs, namespace, ... }:
+{ lib, inputs, config, pkgs, namespace, ... }:
 
 with lib;
 
 let
+  hyprland-pkgs = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
   cfg = config.${namespace}.programs.hyprland; # Config path
 in {
   # --- Set options
@@ -18,14 +19,28 @@ in {
       trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
 
+    # Enable sddm
+    services.displayManager.sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
+
     # Get swww and waypaper
     environment.systemPackages = [
       inputs.swww.packages.${pkgs.system}.swww
       pkgs.waypaper
     ];
 
+    hardware.graphics = {
+      package = hyprland-pkgs.mesa.drivers;
+
+      driSupport32Bit = true;
+      package32 = hyprland-pkgs.pkgsi686Linux.mesa.drivers;
+    };
+
     programs.hyprland = {
       enable = true;
+      xwayland.enable = true;
       # set the flake package
       package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       # make sure to also set the portal package, so that they are in sync

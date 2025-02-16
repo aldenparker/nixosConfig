@@ -1,9 +1,9 @@
-{ lib, config, pkgs, namespace, ... }:
+{ inputs, system, lib, config, pkgs, namespace, ... }:
 
 with lib;
 
 let
-  asusWmiScreenpad = config.boot.kernelPackages.callPackage ./asus-wmi-screenpad.nix { };  
+  asusWmiScreenpad = inputs.asus-wmi-screenpad.defaultPackage.${system}.override config.boot.kernelPackages.kernel; 
   cfg = config.${namespace}.kernelModules.asusWMIScreenpad; # Config path
 in {
   # --- Set options

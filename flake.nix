@@ -9,6 +9,9 @@
     # Hardware Configurations
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    # Nixos ASUS-WMI-SCREENPAD driver
+    asus-wmi-screenpad.url = "github:MatthewCash/asus-wmi-screenpad-module";
+
     # Home Manager
     home-manager.url = "github:nix-community/home-manager/release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

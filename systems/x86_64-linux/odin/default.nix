@@ -28,6 +28,7 @@
       zsh.enable = true;
       htop.enable = true;
       keymapp.enable = true;
+      hyprland.enable = true;
     };
 
     services = {
@@ -50,13 +51,13 @@
     };
   };
 
-  # hardware.nvidia.prime = {
-  #   sync.enable = true;
+  hardware.nvidia.prime = {
+    sync.enable = true;
 
-  #   # Make sure to use the correct Bus ID values for your system!
-  #   nvidiaBusId = "PCI:14:0:0";
-  #   intelBusId = "PCI:0:2:0";
-  # };
+    # Make sure to use the correct Bus ID values for your system!
+    nvidiaBusId = "PCI:01:00:0";
+    intelBusId = "PCI:00:02:0";
+  };
 
   # --- Use the grub EFI boot loader. WARNING: HERE BE DRAGONS
   boot.loader.grub = {
