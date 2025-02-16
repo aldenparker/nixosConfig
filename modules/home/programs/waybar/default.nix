@@ -484,7 +484,7 @@ in {
         * ----------------------------------------------------- */
 
         #workspaces {
-            background: @workspacesbackground1;
+            background: @base00;
             margin: 2px 1px 3px 1px;
             padding: 0px 1px;
             border-radius: 15px;
@@ -493,7 +493,7 @@ in {
             font-style: normal;
             opacity: 0.8;
             font-size: 16px;
-            color: @textcolor1;
+            color: @base05;
         }
 
         #workspaces button {
@@ -501,15 +501,15 @@ in {
             margin: 4px 3px;
             border-radius: 15px;
             border: 0px;
-            color: @textcolor1;
-            background-color: @workspacesbackground2;
+            color: @base05;
+            background-color: @base02;
             transition: all 0.3s ease-in-out;
             opacity: 0.4;
         }
 
         #workspaces button.active {
-            color: @textcolor1;
-            background: @workspacesbackground2;
+            color: @base05;
+            background: @base02;
             border-radius: 15px;
             min-width: 40px;
             transition: all 0.3s ease-in-out;
@@ -517,8 +517,8 @@ in {
         }
 
         #workspaces button:hover {
-            color: @textcolor1;
-            background: @workspacesbackground2;
+            color: @base05;
+            background: @base02;
             border-radius: 15px;
             opacity:0.7;
         }
@@ -529,14 +529,14 @@ in {
 
         tooltip {
             border-radius: 16px;
-            background-color: @backgroundlight;
+            background-color: @base00;
             opacity:0.9;
             padding:20px;
             margin:0px;
         }
 
         tooltip label {
-            color: @textcolor2;
+            color: @base04;
         }
 
         /* -----------------------------------------------------
@@ -544,11 +544,11 @@ in {
         * ----------------------------------------------------- */
 
         #window {
-            background: @backgroundlight;
+            background: @base00;
             margin: 5px 15px 5px 0px;
             padding: 2px 10px 0px 10px;
             border-radius: 12px;
-            color:@textcolor2;
+            color:@base04;
             font-size:16px;
             font-weight:normal;
             opacity:0.8;
@@ -563,14 +563,14 @@ in {
         * ----------------------------------------------------- */
 
         #taskbar {
-            background: @backgroundlight;
+            background: @base00;
             margin: 3px 15px 3px 0px;
             padding:0px;
             border-radius: 15px;
             font-weight: normal;
             font-style: normal;
             opacity:0.8;
-            border: 3px solid @backgroundlight;
+            border: 3px solid @base00;
         }
 
         #taskbar button {
@@ -641,7 +641,7 @@ in {
             font-size: 20px;
             font-weight: bold;
             opacity: 0.8;
-            color: @iconcolor;
+            color: @base05;
         }
 
         #custom-quicklink_chromium,
@@ -670,7 +670,7 @@ in {
         }
 
         #custom-hypridle.active {
-            color: @iconcolor;
+            color: @base05;
         }
 
         #custom-hypridle.notactive {
@@ -705,7 +705,7 @@ in {
             font-size: 22px;
             font-weight: bold;
             opacity: 0.8;
-            color: @iconcolor;
+            color: @base05;
         }
 
         #idle_inhibitor.activated {
@@ -721,14 +721,14 @@ in {
         * ----------------------------------------------------- */
 
         #custom-appmenu {
-            background-color: @backgrounddark;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor1;
+            color: @base05;
             border-radius: 15px;
             padding: 0px 10px 0px 10px;
             margin: 3px 17px 3px 0px;
             opacity:0.8;
-            border:3px solid @bordercolor;
+            border:3px solid @base02;
         }
 
         /* -----------------------------------------------------
@@ -739,7 +739,7 @@ in {
             margin: 0px 13px 0px 0px;
             padding:0px;
             font-size:20px;
-            color: @iconcolor;
+            color: @base05;
             opacity: 0.8;
         }
 
@@ -751,7 +751,7 @@ in {
             margin: 0px 13px 0px 0px;
             padding:0px;
             font-size:20px;
-            color: @iconcolor;
+            color: @base05;
             opacity: 0.8;
         }
 
@@ -760,9 +760,9 @@ in {
         * ----------------------------------------------------- */
 
         #custom-updates {
-            background-color: @backgroundlight;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor2;
+            color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
             margin: 5px 15px 5px 0px;
@@ -770,7 +770,7 @@ in {
         }
 
         #custom-updates.green {
-            background-color: @backgroundlight;
+            background-color: @base00;
         }
 
         #custom-updates.yellow {
@@ -791,7 +791,7 @@ in {
             margin:0px;
             padding:0px;
             font-size:16px;
-            color:@iconcolor;
+            color:@base05;
         }
 
         #language {
@@ -803,14 +803,14 @@ in {
         * ----------------------------------------------------- */
 
         #clock {
-            background-color: @backgrounddark;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor1;
+            color: @base05;
             border-radius: 15px;
             padding: 1px 10px 0px 10px;
             margin: 3px 0px 3px 0px;
             opacity:0.8;
-            border:3px solid @bordercolor;
+            border:3px solid @base02;
         }
 
         /* -----------------------------------------------------
@@ -818,9 +818,9 @@ in {
         * ----------------------------------------------------- */
 
         #backlight {
-            background-color: @backgroundlight;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor2;
+            color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
             margin: 5px 15px 5px 0px;
@@ -832,9 +832,9 @@ in {
         * ----------------------------------------------------- */
 
         #pulseaudio {
-            background-color: @backgroundlight;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor2;
+            color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
             margin: 5px 15px 5px 0px;
@@ -842,8 +842,8 @@ in {
         }
 
         #pulseaudio.muted {
-            background-color: @backgrounddark;
-            color: @textcolor1;
+            background-color: @base00;
+            color: @base05;
         }
 
         /* -----------------------------------------------------
@@ -851,9 +851,9 @@ in {
         * ----------------------------------------------------- */
 
         #network {
-            background-color: @backgroundlight;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor2;
+            color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
             margin: 5px 15px 5px 0px;
@@ -861,13 +861,13 @@ in {
         }
 
         #network.ethernet {
-            background-color: @backgroundlight;
-            color: @textcolor2;
+            background-color: @base00;
+            color: @base04;
         }
 
         #network.wifi {
-            background-color: @backgroundlight;
-            color: @textcolor2;
+            background-color: @base00;
+            color: @base04;
         }
 
         /* -----------------------------------------------------
@@ -875,9 +875,9 @@ in {
         * ----------------------------------------------------- */
 
         #bluetooth, #bluetooth.on, #bluetooth.connected {
-            background-color: @backgroundlight;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor2;
+            color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
             margin: 5px 15px 5px 0px;
@@ -895,9 +895,9 @@ in {
         * ----------------------------------------------------- */
 
         #battery {
-            background-color: @backgroundlight;
+            background-color: @base00;
             font-size: 16px;
-            color: @textcolor2;
+            color: @base04;
             border-radius: 15px;
             padding: 2px 15px 0px 10px;
             margin: 5px 15px 5px 0px;
@@ -905,20 +905,20 @@ in {
         }
 
         #battery.charging, #battery.plugged {
-            color: @textcolor2;
-            background-color: @backgroundlight;
+            color: @base04;
+            background-color: @base00;
         }
 
         @keyframes blink {
             to {
-                background-color: @backgroundlight;
-                color: @textcolor2;
+                background-color: @base00;
+                color: @base04;
             }
         }
 
         #battery.critical:not(.charging) {
             background-color: #f53c3c;
-            color: @textcolor3;
+            color: @base04;
             animation-name: blink;
             animation-duration: 0.5s;
             animation-timing-function: linear;
