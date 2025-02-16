@@ -16,7 +16,7 @@ in {
       hyprland.enable = true;
       wofi.enable = true;
       kitty.enable = true;
-      waybar.enable = true;
+      hyprpanel.enable = true;
     };
   };
 }
