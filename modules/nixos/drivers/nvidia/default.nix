@@ -17,6 +17,9 @@ in {
       enable = true;
     };
 
+    # Disable nouveau
+    boot.kernelParams = [ "module_blacklist=nouveau" ];
+
     # Load nvidia driver for Xorg and Wayland
     services.xserver.videoDrivers = ["nvidia"];
 
