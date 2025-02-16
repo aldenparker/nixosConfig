@@ -92,9 +92,19 @@ in {
     # Hyprland config
     wayland.windowManager.hyprland = {
       enable = true; # enable Hyprland
-      # settings = {
-        
-      # };
+      settings = {
+      	"$mod" = "SUPER";
+      	"monitor" = ",preferred,auto,1";
+      	bind = [
+          "$mod, Q, killactive"
+      		"$mod, Return, exec, kitty"
+      		"$mod, W, exec, librewolf"
+      		"$mod_SHIFT, Return, exec, wofi --show drun"
+      	];
+      	exec-once = [
+      		"killall -q swww; sleep .5 && swww-daemon"
+      	];
+      };
     };
   };
 }

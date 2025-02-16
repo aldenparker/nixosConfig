@@ -13,12 +13,15 @@ in {
   # --- Set configuration
   config = mkIf cfg.enable {
     services.xserver.enable = true;
-
-    # Enable sddm
-    services.xserver.displayManager.gdm = {
-      enable = true;
-      wayland = true;
+    
+    # Configure keymap in X11
+    services.xserver.xkb = {
+      layout = "us";
+      variant = "";
     };
+
+    # Enable gdm
+    services.xserver.displayManager.gdm.enable = true;
 
     # Get swww and waypaper
     environment.systemPackages = [
@@ -28,7 +31,6 @@ in {
 
     programs.hyprland = {
       enable = true;
-      withUWSM = true;
       xwayland.enable = true;
     };
   };

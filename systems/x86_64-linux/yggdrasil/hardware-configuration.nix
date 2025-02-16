@@ -11,17 +11,17 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/74fb7830-5648-4a3c-b09a-c9e04a1d2840";
+      fsType = "ext4";
+    };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/d9d971f0-f048-4941-b2be-90fb28c02985";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8A29-B70F";
-    fsType = "vfat";
-    options = [ "fmask=0077" "dmask=0077" ];
-  };
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/81FA-9474";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
 
   # Secondary HDD
   systemd.tmpfiles.rules =
