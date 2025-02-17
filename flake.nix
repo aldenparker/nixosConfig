@@ -67,7 +67,7 @@
 
         # External overlay import
         overlays = with inputs; [
-          inputs.hyprpanel.overlay
+          hyprpanel.overlay
         ];
 
         # External module import for all hosts

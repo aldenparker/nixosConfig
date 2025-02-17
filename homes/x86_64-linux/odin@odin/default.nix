@@ -8,6 +8,7 @@
   snowman = {
     bundles = {
       hyprland.enable = true;
+      gruvbox-gtk-theme.enable = true;
     };
 
     # --- Configure individual packages
