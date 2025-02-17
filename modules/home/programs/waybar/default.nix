@@ -31,10 +31,8 @@ in {
 
           # Modules Left
           "modules-left" = [
-              "custom/appmenu"
-              "group/links"
+              "custom/appmenuicon"
               #"wlr/taskbar"
-              "group/quicklinks"
               "hyprland/window"
               "custom/empty"
           ];
@@ -57,7 +55,6 @@ in {
               "tray"
               "custom/notification"
               "custom/exit"
-              "custom/ml4w-welcome"
               "clock"
           ];
 
@@ -91,31 +88,12 @@ in {
             "app_ids-mapping" = {
               "firefoxdeveloperedition" = "firefox-developer-edition";
             };
-            "rewrite" = {
-              "Firefox Web Browser" = "Firefox";
-              "Foot Server" = "Terminal";
-            };
           };
 
           # Hyprland Window
           "hyprland/window" = {
-            "rewrite" = {
-              "(.*) - Brave" = "$1";
-              "(.*) - Chromium" = "$1";
-              "(.*) - Brave Search" = "$1";
-              "(.*) - Outlook" = "$1";
-              "(.*) Microsoft Teams" = "$1";
-            };
             "separate-outputs" = true;
           };
-
-          # ML4W Welcome App
-          "custom/ml4w-welcome" = {
-            "on-click" = "flatpak run com.ml4w.sidebar";
-            "format" = " ";
-            "tooltip-format" = "Open ML4W Sidebar App";
-          };
-
           # Empty
           "custom/empty" = {
             "format" = "";
@@ -123,64 +101,15 @@ in {
 
             # Tools
           "custom/tools" = {
-            "format" = "";
+            "format" = "󱁤";
             "tooltip-format" = "Tools";
-          };
-
-          # Cliphist
-          "custom/cliphist" = {
-            "format" = "";
-            "on-click" = "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh";
-            "on-click-right" = "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh d";
-            "on-click-middle" = "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh w";
-            "tooltip-format" = "Left: Open clipboard Manager\nRight: Delete an entry\nMiddle: Clear list";
-          };
-
-          # Updates Count
-          "custom/updates" = {
-            "format" = "  {}";
-            "escape" = true;
-            "return-type" = "json";
-            "exec" = "~/.config/ml4w/scripts/updates.sh";
-            "interval" = 1800;
-            "on-click" = "$(cat ~/.config/ml4w/settings/terminal.sh) --class dotfiles-floating -e ~/.config/ml4w/scripts/installupdates.sh";
-            "on-click-right" = "~/.config/ml4w/settings/software.sh";
           };
 
           # Wallpaper
           "custom/wallpaper" = {
             "format" = "";
             "on-click" = "bash -c waypaper &";
-            "on-click-right" = "~/.config/hypr/scripts/wallpaper-effects.sh";
-            "tooltip-format" = "Left: Select a wallpaper\nRight: Select wallpaper effect";
-          };
-
-          # Waybar Themes
-          "custom/waybarthemes" = {
-            "format" = "";
-            "on-click" = "~/.config/waybar/themeswitcher.sh";
-            "tooltip-format" = "Select a waybar theme";
-          };
-
-          # Settings
-          "custom/settings" = {
-            "format" = "";
-            "on-click" = "sleep 0.1 && com.ml4w.dotfilessettings";
-            "tooltip-format" = "ML4W Dotfiles Settings";
-          };
-
-          # Keybindings
-          "custom/keybindings" = {
-            "format" = "";
-            "on-click" = "~/.config/hypr/scripts/keybindings.sh";
-            "tooltip" = false;
-          };
-
-          # ChatGPT Launcher
-          "custom/chatgpt" = {
-            "format" = " ";
-            "on-click" = "~/.config/ml4w/settings/ai.sh";
-            "tooltip-format" = "AI Support";
+            "tooltip-format" = "Select a wallpaper";
           };
 
           # Calculator
@@ -190,37 +119,28 @@ in {
             "tooltip-format" = "Open calculator";
           };
 
-          # Windows VM
-          "custom/windowsvm" = {
-            "format" = "";
-            "on-click" = "~/.config/ml4w/scripts/launchvm.sh";
-            "tooltip" = false;
-          };
-
           # Rofi Application Launcher
           "custom/appmenu" = {
             # START APPS LABEL
             "format" = "Apps";
             # END APPS LABEL
-            "on-click" = "sleep 0.2;pkill rofi || rofi -show drun -replace";
-            "on-click-right" = "~/.config/hypr/scripts/keybindings.sh";
-            "tooltip-format" = "Left: Open the application launcher\nRight: Show all keybindings";
+            "on-click" = "sleep 0.2;pkill wofi || wofi -show drun -replace";
+            "tooltip-format" = "Left: Open the application launcher";
           };
 
           # Rofi Application Launcher
           "custom/appmenuicon" = {
-            "format" = "";
-            "on-click" = "sleep 0.2;rofi -show drun -replace";
-            "on-click-right" = "~/.config/hypr/scripts/keybindings.sh";
-            "tooltip-format" = "Left: Open the application launcher\nRight: Show all keybindings";
+            "format" = "󱄅";
+            "on-click" = "sleep 0.2;wofi -show drun -replace";
+            "tooltip-format" = "Left: Open the application launcher";
           };
 
           # Power Menu
           "custom/exit" = {
             "format" = "";
-            "on-click" = "~/.config/ml4w/scripts/wlogout.sh";
-            "on-click-right" = "hyprlock";
-            "tooltip-format" = "Left: Power menu\nRight: Lock screen";
+            "on-click" = "sudo shutdown";
+            "on-click-right" = "hyprctl dispatch exit";
+            "tooltip-format" = "Left: Shutdown\nRight: Logout";
           };
 
           # SwayNC
@@ -243,25 +163,6 @@ in {
             "on-click" = "swaync-client -t -sw";
             "on-click-right" = "swaync-client -d -sw";
             "escape" = true;
-          };
-
-          # Hyprshade
-          "custom/hyprshade" = {
-            "format" = "";
-            "tooltip-format" = "Toggle Screen Shader";
-            "on-click" = "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh";
-            "on-click-right" = "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh rofi";
-          };
-
-          # Hypridle inhibitor
-          "custom/hypridle" = {
-            "format" = "";
-            "return-type" = "json";
-            "escape" = true;
-            "exec-on-event" = true;
-            "interval" = 60;
-            "exec" = "~/.config/hypr/scripts/hypridle.sh status";
-            "on-click" = "~/.config/hypr/scripts/hypridle.sh toggle";
           };
 
           # Keyboard State
@@ -291,7 +192,7 @@ in {
 
           # System
           "custom/system" = {
-            "format" = "";
+            "format" = "󰻠";
             "tooltip" = false;
           };
 
@@ -346,15 +247,6 @@ in {
             ];
           };
 
-          # Group Links
-          "group/links" = {
-            "orientation" = "horizontal";
-            "modules" = [
-              "custom/chatgpt"
-              "custom/empty"
-            ];
-          };
-
           # Group Settings
           "group/settings" = {
             "orientation" = "inherit";
@@ -374,11 +266,11 @@ in {
           "network" = {
             "format" = "{ifname}";
             "format-wifi" = " {essid} ({signalStrength}%)";
-            "format-ethernet" = "  {ifname}";
+            "format-ethernet" = "󰈀  {ifname}";
             "format-disconnected" = "Disconnected ⚠";
-            "tooltip-format" = " {ifname} via {gwaddri}";
+            "tooltip-format" = "󰈀 {ifname} via {gwaddri}";
             "tooltip-format-wifi" = "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}";
-            "tooltip-format-ethernet" = " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}";
+            "tooltip-format-ethernet" = "󰈀 {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}";
             "tooltip-format-disconnected" = "Disconnected";
             "max-length" = 50;
             "on-click" = "~/.config/ml4w/settings/networkmanager.sh";
@@ -598,102 +490,8 @@ in {
             margin-right: 0;
         }
 
-        /* -----------------------------------------------------
-        * Custom Quicklinks
-        * ----------------------------------------------------- */
-
-        #custom-brave,
-        #custom-browser,
-        #custom-keybindings,
-        #custom-outlook,
-        #custom-filemanager,
-        #custom-teams,
-        #custom-chatgpt,
-        #custom-calculator,
-        #custom-windowsvm,
-        #custom-cliphist,
-        #custom-settings,
-        #custom-wallpaper,
-        #custom-system,
-        #custom-hyprshade,
-        #custom-hypridle,
-        #custom-tools,
-        #custom-quicklink_chromium,
-        #custom-quicklink_edge,
-        #custom-quicklink_firefox,
-        #custom-quicklink_browser,
-        #custom-quicklink_filemanager,
-        #custom-quicklink_email,
-        #custom-quicklink_thunderbird,
-        #custom-quicklink_calculator,
-        #custom-quicklink1,
-        #custom-quicklink2,
-        #custom-quicklink3,
-        #custom-quicklink4,
-        #custom-quicklink5,
-        #custom-quicklink6,
-        #custom-quicklink7,
-        #custom-quicklink8,
-        #custom-quicklink9,
-        #custom-quicklink10,
-        #custom-waybarthemes {
-            margin-right: 16px;
-            font-size: 20px;
-            font-weight: bold;
-            opacity: 0.8;
-            color: @base05;
-        }
-
-        #custom-quicklink_chromium,
-        #custom-quicklink_edge,
-        #custom-quicklink_firefox,
-        #custom-quicklink_browser,
-        #custom-quicklink_filemanager,
-        #custom-quicklink_email,
-        #custom-quicklink_thunderbird,
-        #custom-quicklink_calculator,
-        #custom-quicklink1,
-        #custom-quicklink2,
-        #custom-quicklink3,
-        #custom-quicklink4,
-        #custom-quicklink5,
-        #custom-quicklink6,
-        #custom-quicklink7,
-        #custom-quicklink8,
-        #custom-quicklink9,
-        #custom-quicklink10 {
-            margin-right: 18px;
-        }
-
         #custom-tools {
             margin-right:12px;
-        }
-
-        #custom-hypridle.active {
-            color: @base05;
-        }
-
-        #custom-hypridle.notactive {
-            color: #dc2f2f;
-        }
-
-        #custom-ml4w-welcome {
-            margin-right: 12px;
-            background-image: url("../assets/ml4w-icon.svg");
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: contain;
-            padding-right: 20px;
-        }
-
-        #custom-chatgpt {
-            margin-right: 16px;
-            background-image: url("../assets/openai.svg");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-            padding-right: 18px;
-            opacity: 0.8;
         }
 
         /* -----------------------------------------------------
@@ -753,34 +551,6 @@ in {
             font-size:20px;
             color: @base05;
             opacity: 0.8;
-        }
-
-        /* -----------------------------------------------------
-        * Custom Updates
-        * ----------------------------------------------------- */
-
-        #custom-updates {
-            background-color: @base00;
-            font-size: 16px;
-            color: @base04;
-            border-radius: 15px;
-            padding: 2px 10px 0px 10px;
-            margin: 5px 15px 5px 0px;
-            opacity:0.8;
-        }
-
-        #custom-updates.green {
-            background-color: @base00;
-        }
-
-        #custom-updates.yellow {
-            background-color: #ff9a3c;
-            color: #FFFFFF;
-        }
-
-        #custom-updates.red {
-            background-color: #dc2f2f;
-            color: #FFFFFF;
         }
 
         /* -----------------------------------------------------
