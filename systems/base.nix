@@ -11,6 +11,7 @@
   # Must have system packages to get anything done
   environment.systemPackages = with pkgs; [
     nh
+    killall
     vim
     wget
     curl

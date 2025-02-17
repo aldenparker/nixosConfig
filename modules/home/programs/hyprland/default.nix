@@ -22,10 +22,8 @@ in {
           border_size = 3;
           layout = "dwindle";
           resize_on_border = true;
-          col = {
-            active_border = mkForce "rgb(${config.stylix.base16Scheme.base0D})";
-            inactive_border  = mkForce "rgb(${config.stylix.base16Scheme.base03})";
-          };
+          "col.active_border" = mkForce "0x${config.lib.stylix.colors.base0D}";
+          "col.inactive_border"  = mkForce "0x${config.lib.stylix.colors.base03}";
         };
 
         decoration = {
@@ -47,7 +45,7 @@ in {
             enabled = true;
             range = 30;
             render_power = 3;
-            color = mkForce "rgb(${config.stylix.base16Scheme.base03})";
+            color = mkForce "0x66000000";
           };
         };
 
@@ -122,6 +120,7 @@ in {
 
       	exec-once = [
       		"killall -q swww-daemon; sleep .5 && swww-daemon"
+      		"killall -q blueman-applet; sleep .5 && blueman-applet"
           "killall -q waybar; sleep .5 && waybar"
           "killall -q nm-applet; sleep .5 && nm-applet"
       	];
