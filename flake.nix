@@ -21,7 +21,7 @@
     snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
 
     # NVF for easy neovim setup
-    nvf.url = "github:notashelf/nvf?ref=v0.7";
+    nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprpanel = {

@@ -121,8 +121,9 @@ in {
       	exec-once = [
       		"killall -q swww-daemon; sleep .5 && swww-daemon"
       		"killall -q blueman-applet; sleep .5 && blueman-applet"
-          "killall -q waybar; sleep .5 && waybar"
+          "killall -q waybar; sleep 1 && waybar"
           "killall -q nm-applet; sleep .5 && nm-applet"
+          "killall -q swaync; sleep .5 && swaync"
       	];
       };
     };

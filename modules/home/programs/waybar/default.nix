@@ -23,6 +23,7 @@ in {
         mainBar = {
           # General Settings
           "layer" = "top";
+          "height" = 40;
           "margin-top" = 14;
           "margin-bottom" = 0;
           "margin-left" = 14;
@@ -32,7 +33,6 @@ in {
           # Modules Left
           "modules-left" = [
               "custom/appmenuicon"
-              #"wlr/taskbar"
               "hyprland/window"
               "custom/empty"
           ];
@@ -46,7 +46,6 @@ in {
           "modules-right" = [
               "custom/updates"
               "pulseaudio"
-              #"backlight"
               "bluetooth"
               "battery"
               "network"
@@ -124,15 +123,15 @@ in {
             # START APPS LABEL
             "format" = "Apps";
             # END APPS LABEL
-            "on-click" = "sleep 0.2;pkill wofi || wofi -show drun -replace";
-            "tooltip-format" = "Left: Open the application launcher";
+            "on-click" = "sleep 0.2;wofi --show drun";
+            "tooltip-format" = "Open the application launcher";
           };
 
           # Rofi Application Launcher
           "custom/appmenuicon" = {
             "format" = "󱄅";
-            "on-click" = "sleep 0.2;wofi -show drun -replace";
-            "tooltip-format" = "Left: Open the application launcher";
+            "on-click" = "sleep 0.2;wofi --show drun";
+            "tooltip-format" = "Open the application launcher";
           };
 
           # Power Menu
@@ -178,8 +177,8 @@ in {
 
           # System tray
           "tray" = {
-            "icon-size" = 21;
-            "spacing" = 10;
+            "icon-size" = 12;
+            "spacing" = 5;
           };
 
           # Clock
@@ -525,8 +524,19 @@ in {
             border-radius: 15px;
             padding: 0px 10px 0px 10px;
             margin: 3px 17px 3px 0px;
-            opacity:0.8;
-            border:3px solid @base02;
+            opacity: 0.8;
+            border: 3px solid @base02;
+        }
+
+        #custom-appmenuicon {
+          background-color: @base00;
+          font-size: 16px;
+          color: @base05;
+          border-radius: 15px;
+          padding: 0px 14px 0px 10px;
+          margin: 3px 17px 3px 0px;
+          opacity: 0.8;
+          border: 3px solid @base02;
         }
 
         /* -----------------------------------------------------
@@ -534,11 +544,13 @@ in {
         * ----------------------------------------------------- */
 
         #custom-notification {
-            margin: 0px 13px 0px 0px;
-            padding:0px;
-            font-size:20px;
+            margin: 3px 0px 3px 0px;
+            padding: 0px 8px 0px 8px;
+            font-size: 12px;
             color: @base05;
             opacity: 0.8;
+            border-radius: 15px;
+            background-color: @base00;
         }
 
         /* -----------------------------------------------------
@@ -546,11 +558,13 @@ in {
         * ----------------------------------------------------- */
 
         #custom-exit {
-            margin: 0px 13px 0px 0px;
-            padding:0px;
-            font-size:20px;
+            margin: 3px 0px 3px 0px;
+            padding: 0px 8px 0px 8px;
+            border-radius: 15px;
+            font-size: 12px;
             color: @base05;
             opacity: 0.8;
+            background-color: @base00;
         }
 
         /* -----------------------------------------------------
@@ -671,7 +685,7 @@ in {
             border-radius: 15px;
             padding: 2px 15px 0px 10px;
             margin: 5px 15px 5px 0px;
-            opacity:0.8;
+            opacity: 0.8;
         }
 
         #battery.charging, #battery.plugged {
@@ -701,7 +715,12 @@ in {
         * ----------------------------------------------------- */
 
         #tray {
-            padding: 0px 15px 0px 0px;
+            margin: 3px 17px 3px 0px;
+            background-color: @base00;
+            color: @base04;
+            border-radius: 15px;
+            opacity: 0.8;
+            padding: 0px 8px 0px 8px;
         }
 
         #tray > .passive {

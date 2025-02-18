@@ -32,6 +32,11 @@ in {
             enable = true;
             name = "gruvbox";
             style = "dark";
+
+            # Add extra lua to run
+            extraConfig = ''
+              vim.diagnostic.config({ update_in_insert = true })
+            '';
           };
 
           # Setup basic needs
@@ -41,9 +46,12 @@ in {
 
           languages = {
             enableLSP = true;
+            enableFormat = true;
             enableTreesitter = true;
 
-            nix.enable = true;
+            nix = {
+              enable = true;
+            };
           };
         };
       };
