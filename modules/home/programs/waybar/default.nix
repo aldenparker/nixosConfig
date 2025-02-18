@@ -404,14 +404,14 @@ in {
             border-radius: 15px;
             min-width: 40px;
             transition: all 0.3s ease-in-out;
-            opacity:1.0;
+            opacity: 1.0;
         }
 
         #workspaces button:hover {
             color: @base05;
             background: @base02;
             border-radius: 15px;
-            opacity:0.7;
+            opacity: 0.7;
         }
 
         /* -----------------------------------------------------
@@ -421,9 +421,9 @@ in {
         tooltip {
             border-radius: 16px;
             background-color: @base00;
-            opacity:0.9;
-            padding:20px;
-            margin:0px;
+            opacity: 0.9;
+            padding: 20px;
+            margin: 0px;
         }
 
         tooltip label {
@@ -439,14 +439,14 @@ in {
             margin: 5px 15px 5px 0px;
             padding: 2px 10px 0px 10px;
             border-radius: 12px;
-            color:@base04;
-            font-size:16px;
-            font-weight:normal;
-            opacity:0.8;
+            color: @base04;
+            font-size: 16px;
+            font-weight: normal;
+            opacity: 0.8;
         }
 
         window#waybar.empty #window {
-            background-color:transparent;
+            background-color: transparent;
         }
 
         /* -----------------------------------------------------
@@ -456,11 +456,11 @@ in {
         #taskbar {
             background: @base00;
             margin: 3px 15px 3px 0px;
-            padding:0px;
+            padding: 0px;
             border-radius: 15px;
             font-weight: normal;
             font-style: normal;
-            opacity:0.8;
+            opacity: 0.8;
             border: 3px solid @base00;
         }
 
@@ -572,14 +572,14 @@ in {
         * ----------------------------------------------------- */
 
         #disk,#memory,#cpu,#language {
-            margin:0px;
-            padding:0px;
-            font-size:16px;
-            color:@base05;
+            margin: 0px;
+            padding: 0px;
+            font-size: 16px;
+            color: @base05;
         }
 
         #language {
-            margin-right:10px;
+            margin-right: 10px;
         }
 
         /* -----------------------------------------------------
