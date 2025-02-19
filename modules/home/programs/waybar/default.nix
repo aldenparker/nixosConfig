@@ -3,6 +3,7 @@
 with lib;
 
 let
+  font-size = "16px";
   cfg = config.${namespace}.programs.waybar; # Config path
 in {
   # --- Set options
@@ -355,10 +356,6 @@ in {
         };
       };
       style = ''
-        body {
-          --font-size: 16px;
-        }
-
         * {
           font-family: "JetBrainsMono Nerd Font";
           border: none;
@@ -387,7 +384,7 @@ in {
             font-weight: bold;
             font-style: normal;
             opacity: 0.8;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base05;
         }
 
@@ -444,7 +441,7 @@ in {
             padding: 2px 10px 0px 10px;
             border-radius: 12px;
             color: @base04;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             font-weight: normal;
             opacity: 0.8;
         }
@@ -498,14 +495,14 @@ in {
         * ----------------------------------------------------- */
 
         #idle_inhibitor {
-            font-size: var(--font-size);
+            font-size: ${font-size};
             font-weight: bold;
             opacity: 0.8;
             color: @base05;
         }
 
         #idle_inhibitor.activated {
-            font-size: var(--font-size);
+            font-size: ${font-size};
             font-weight: bold;
             opacity: 0.8;
             color: #dc2f2f;
@@ -517,7 +514,7 @@ in {
 
         #custom-appmenu {
             background-color: @base00;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base05;
             border-radius: 15px;
             padding: 0px 10px 0px 10px;
@@ -528,7 +525,7 @@ in {
 
         #custom-appmenuicon {
           background-color: @base00;
-          font-size: var(--font-size);
+          font-size: ${font-size};
           color: @base05;
           border-radius: 15px;
           padding: 0px 14px 0px 10px;
@@ -544,7 +541,7 @@ in {
         #custom-notification {
             margin: 3px 0px 3px 0px;
             padding: 0px 8px 0px 8px;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base05;
             opacity: 0.8;
             border-radius: 15px;
@@ -559,7 +556,7 @@ in {
             margin: 3px 0px 3px 0px;
             padding: 0px 8px 0px 8px;
             border-radius: 15px;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base05;
             opacity: 0.8;
             background-color: @base00;
@@ -572,7 +569,7 @@ in {
         #disk,#memory,#cpu,#language {
             margin: 0px;
             padding: 0px;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base05;
         }
 
@@ -586,7 +583,7 @@ in {
 
         #clock {
             background-color: @base00;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base05;
             border-radius: 15px;
             padding: 1px 10px 0px 10px;
@@ -601,7 +598,7 @@ in {
 
         #backlight {
             background-color: @base00;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
@@ -615,7 +612,7 @@ in {
 
         #pulseaudio {
             background-color: @base00;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
@@ -634,7 +631,7 @@ in {
 
         #network {
             background-color: @base00;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
@@ -658,7 +655,7 @@ in {
 
         #bluetooth, #bluetooth.on, #bluetooth.connected {
             background-color: @base00;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
@@ -678,7 +675,7 @@ in {
 
         #battery {
             background-color: @base00;
-            font-size: var(--font-size);
+            font-size: ${font-size};
             color: @base04;
             border-radius: 15px;
             padding: 2px 15px 0px 10px;
