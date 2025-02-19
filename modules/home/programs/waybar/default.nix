@@ -27,8 +27,8 @@ in {
           "margin-top" = 14;
           "margin-bottom" = 0;
           "margin-left" = 14;
-          "margin-right" = 14;    
-          "spacing" = 0;
+          "margin-right" = 14;
+          "spacing" = 5;
 
           # Modules Left
           "modules-left" = [
@@ -355,6 +355,10 @@ in {
         };
       };
       style = ''
+        body {
+          --font-size: 16px;
+        }
+
         * {
           font-family: "JetBrainsMono Nerd Font";
           border: none;
@@ -376,14 +380,14 @@ in {
 
         #workspaces {
             background: @base00;
-            margin: 2px 1px 3px 1px;
+            margin: 3px 0px 3px 0px;
             padding: 0px 1px;
             border-radius: 15px;
             border: 0px;
             font-weight: bold;
             font-style: normal;
             opacity: 0.8;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base05;
         }
 
@@ -436,17 +440,17 @@ in {
 
         #window {
             background: @base00;
-            margin: 5px 15px 5px 0px;
+            margin: 3px 0px 3px 0px;
             padding: 2px 10px 0px 10px;
             border-radius: 12px;
             color: @base04;
-            font-size: 16px;
+            font-size: var(--font-size);
             font-weight: normal;
             opacity: 0.8;
         }
 
         window#waybar.empty #window {
-            background-color: transparent;
+          background-color: transparent;
         }
 
         /* -----------------------------------------------------
@@ -454,27 +458,27 @@ in {
         * ----------------------------------------------------- */
 
         #taskbar {
-            background: @base00;
-            margin: 3px 15px 3px 0px;
-            padding: 0px;
-            border-radius: 15px;
-            font-weight: normal;
-            font-style: normal;
-            opacity: 0.8;
-            border: 3px solid @base00;
+          background: @base00;
+          margin: 3px 0px 3px 0px;
+          padding: 0px;
+          border-radius: 15px;
+          font-weight: normal;
+          font-style: normal;
+          opacity: 0.8;
+          border: 3px solid @base00;
         }
 
         #taskbar button {
-            margin:0;
-            border-radius: 15px;
-            padding: 0px 5px 0px 5px;
+          margin:0;
+          border-radius: 15px;
+          padding: 0px 5px 0px 5px;
         }
 
         #taskbar.empty {
-            background:transparent;
-            border:0;
-            padding:0;
-            margin:0;
+          background:transparent;
+          border:0;
+          padding:0;
+          margin:0;
         }
 
         /* -----------------------------------------------------
@@ -489,25 +493,19 @@ in {
             margin-right: 0;
         }
 
-        #custom-tools {
-            margin-right:12px;
-        }
-
         /* -----------------------------------------------------
         * Idle Inhibator
         * ----------------------------------------------------- */
 
         #idle_inhibitor {
-            margin-right: 15px;
-            font-size: 22px;
+            font-size: var(--font-size);
             font-weight: bold;
             opacity: 0.8;
             color: @base05;
         }
 
         #idle_inhibitor.activated {
-            margin-right: 15px;
-            font-size: 20px;
+            font-size: var(--font-size);
             font-weight: bold;
             opacity: 0.8;
             color: #dc2f2f;
@@ -519,22 +517,22 @@ in {
 
         #custom-appmenu {
             background-color: @base00;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base05;
             border-radius: 15px;
             padding: 0px 10px 0px 10px;
-            margin: 3px 17px 3px 0px;
+            margin: 3px 0px 3px 0px;
             opacity: 0.8;
             border: 3px solid @base02;
         }
 
         #custom-appmenuicon {
           background-color: @base00;
-          font-size: 16px;
+          font-size: var(--font-size);
           color: @base05;
           border-radius: 15px;
           padding: 0px 14px 0px 10px;
-          margin: 3px 17px 3px 0px;
+          margin: 3px 0px 3px 0px;
           opacity: 0.8;
           border: 3px solid @base02;
         }
@@ -546,7 +544,7 @@ in {
         #custom-notification {
             margin: 3px 0px 3px 0px;
             padding: 0px 8px 0px 8px;
-            font-size: 12px;
+            font-size: var(--font-size);
             color: @base05;
             opacity: 0.8;
             border-radius: 15px;
@@ -561,7 +559,7 @@ in {
             margin: 3px 0px 3px 0px;
             padding: 0px 8px 0px 8px;
             border-radius: 15px;
-            font-size: 12px;
+            font-size: var(--font-size);
             color: @base05;
             opacity: 0.8;
             background-color: @base00;
@@ -574,7 +572,7 @@ in {
         #disk,#memory,#cpu,#language {
             margin: 0px;
             padding: 0px;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base05;
         }
 
@@ -588,7 +586,7 @@ in {
 
         #clock {
             background-color: @base00;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base05;
             border-radius: 15px;
             padding: 1px 10px 0px 10px;
@@ -603,11 +601,11 @@ in {
 
         #backlight {
             background-color: @base00;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
-            margin: 5px 15px 5px 0px;
+            margin: 3px 0px 3px 0px;
             opacity:0.8;
         }
 
@@ -617,11 +615,11 @@ in {
 
         #pulseaudio {
             background-color: @base00;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
-            margin: 5px 15px 5px 0px;
+            margin: 3px 0px 3px 0px;
             opacity:0.8;
         }
 
@@ -636,11 +634,11 @@ in {
 
         #network {
             background-color: @base00;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
-            margin: 5px 15px 5px 0px;
+            margin: 3px 0px 3px 0px;
             opacity:0.8;
         }
 
@@ -660,11 +658,11 @@ in {
 
         #bluetooth, #bluetooth.on, #bluetooth.connected {
             background-color: @base00;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base04;
             border-radius: 15px;
             padding: 2px 10px 0px 10px;
-            margin: 5px 15px 5px 0px;
+            margin: 3px 0px 3px 0px;
             opacity:0.8;
         }
 
@@ -680,11 +678,11 @@ in {
 
         #battery {
             background-color: @base00;
-            font-size: 16px;
+            font-size: var(--font-size);
             color: @base04;
             border-radius: 15px;
             padding: 2px 15px 0px 10px;
-            margin: 5px 15px 5px 0px;
+            margin: 3px 0px 3px 0px;
             opacity: 0.8;
         }
 
@@ -694,10 +692,10 @@ in {
         }
 
         @keyframes blink {
-            to {
-                background-color: @base00;
-                color: @base04;
-            }
+          to {
+            background-color: @base00;
+            color: @base04;
+          }
         }
 
         #battery.critical:not(.charging) {
@@ -715,7 +713,7 @@ in {
         * ----------------------------------------------------- */
 
         #tray {
-            margin: 3px 17px 3px 0px;
+            margin: 3px 0px 3px 0px;
             background-color: @base00;
             color: @base04;
             border-radius: 15px;
