@@ -24,7 +24,6 @@ in {
         mainBar = {
           # General Settings
           "layer" = "top";
-          "height" = 40;
           "margin-top" = 14;
           "margin-bottom" = 0;
           "margin-left" = 14;
@@ -178,7 +177,7 @@ in {
 
           # System tray
           "tray" = {
-            "icon-size" = 12;
+            "icon-size" = font-size;
             "spacing" = 5;
           };
 
@@ -540,7 +539,7 @@ in {
 
         #custom-notification {
             margin: 3px 0px 3px 0px;
-            padding: 0px 8px 0px 8px;
+            padding: 0px 14px 0px 8px;
             font-size: ${font-size};
             color: @base05;
             opacity: 0.8;
@@ -554,7 +553,7 @@ in {
 
         #custom-exit {
             margin: 3px 0px 3px 0px;
-            padding: 0px 8px 0px 8px;
+            padding: 0px 13px 0px 8px;
             border-radius: 15px;
             font-size: ${font-size};
             color: @base05;
