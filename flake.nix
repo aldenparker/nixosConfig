@@ -24,15 +24,15 @@
     nvf.url = "github:notashelf/nvf";
     nvf.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprpanel = {
-      url = "github:jas-singhfsu/hyprpanel";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    swww.url = "github:LGFae/swww";
-
     # Stylix
     stylix.url = "github:danth/stylix/release-24.11";
+    
+    # Plasma Manager
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs =
@@ -66,14 +66,11 @@
         };
 
         # External overlay import
-        overlays = with inputs; [
-          hyprpanel.overlay
-        ];
+        overlays = with inputs; [];
 
         # External module import for all hosts
         systems.modules.nixos = with inputs; [
           home-manager.nixosModules.home-manager
-          stylix.nixosModules.stylix
         ];
 
         # Pass special args to hosts
@@ -92,7 +89,8 @@
         # External module import for all homes
         homes.modules = with inputs; [
           nvf.homeManagerModules.default
-          inputs.hyprpanel.homeManagerModules.hyprpanel
+          stylix.homeManagerModules.stylix
+          plasma-manager.homeManagerModules.plasma-manager
         ];
 
         homes.users."odin@odin".specialArgs = {

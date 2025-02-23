@@ -6,14 +6,10 @@
 
   # --- Configure snowman modules (my custom modules)
   snowman = {
-    bundles = {
-      hyprland.enable = true;
-      gruvbox-gtk-theme.enable = true;
-    };
-
     # --- Configure individual packages
     programs = {
       librewolf.enable = true;
+      geany.enable = true;
 
       git = {
         enable = true;
@@ -25,6 +21,13 @@
       neovim.enable = true;
       zsh.enable = true;
       kitty.enable = true;
+    };
+
+    bundles = {
+      gruvbox = {
+        enable = true;
+        kde = true;
+      };
     };
   };
 

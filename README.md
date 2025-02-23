@@ -2,6 +2,7 @@
 Welcome to my nixOS configuration. The reason behind the name, "snowman" is because it is a structured (snow)flake used to manage all of my machines. The structure relys on nixos and home-manager at the core, so you need to use both of these to get the entire value.
 Below is a quick overview of the file structure:
 
+
 ```
 /
   flake.nix

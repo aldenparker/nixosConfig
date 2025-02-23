@@ -7,36 +7,15 @@
     ../../base.nix
   ];
 
-  # --- Stylix Theme
-  stylix = {
-    enable = true;
-    image = ../../../assets/Wallpapers/Wallhaven/wizards-journey.jpg; # Required for some reason, does not set wallpaper
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-    cursor.package = pkgs.bibata-cursors;
-    cursor.name = "Bibata-Modern-Classic";
-    cursor.size = 24;
- 
-    fonts = {
-      monospace = {
-        package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
-        name = "JetBrainsMono Nerd Font Mono";
-      };
-      sansSerif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans";
-      };
-      serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
-      };
-    };
-  };
-
   # --- Setup snowman modules (my custom modules)
   snowman = {
     bundles = {
       audio.enable = true;
-      hyprland.enable = true;
+
+      kde = {
+        enable = true;
+        x11 = false;
+      };
       
       bluetooth = {
         enable = true;
@@ -48,7 +27,6 @@
       zsh.enable = true;
       htop.enable = true;
       keymapp.enable = true;
-      nemo.enable = true;
     };
 
     services = {
@@ -71,6 +49,7 @@
     };
   };
 
+  # --- Nvidia config for prime per device
   hardware.nvidia.prime = {
     sync.enable = true;
 
@@ -78,6 +57,9 @@
     nvidiaBusId = "PCI:01:00:0";
     intelBusId = "PCI:00:02:0";
   };
+
+  # --- Enable printing
+  services.printing.enable = true;
 
   # --- Use the grub EFI boot loader. WARNING: HERE BE DRAGONS
   boot.loader.grub = {
@@ -115,10 +97,22 @@
 
   # --- Localization Codes
   # Set your time zone.
-  time.timeZone = "America/New_York";
+  time.timeZone = "America/Indiana/Indianapolis";
 
   # Select internationalization properties.
   i18n.defaultLocale = "en_US.UTF-8";
+
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
 
   # --- User Settings
   # Define the user accounts
