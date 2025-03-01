@@ -85,6 +85,7 @@
     solaar
     gittyup
     cutter
+    snowman.xnconvert
   ];
 
   # --- Enable printing

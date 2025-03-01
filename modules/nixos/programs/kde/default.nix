@@ -15,14 +15,14 @@ in {
   config = mkIf cfg.enable {
     # Enable the X11 windowing system.
     # You can disable this if you're only using the Wayland session.
-    services.xserver = mkIf cfg.x11 {
-      enable = true;
-      excludePackages = [ pkgs.xterm ];
-      xkb = {
-        layout = "us";
-        variant = "";
-      };
+    services.xserver.enable = mkIf cfg.x11 true;
+    services.xserver.xkb = mkIf cfg.x11 {
+      layout = "us";
+      variant = "";
     };
+
+    # Always exclude xterm
+    services.xserver.excludePackages = [ pkgs.xterm ];
 
     # Enable the KDE Plasma Desktop Environment.
     services.desktopManager.plasma6.enable = true;
