@@ -18,6 +18,8 @@
     programs = {
       librewolf.enable = true;
       geany.enable = true;
+      neovim.enable = true;
+      kitty.enable = true;
 
       git = {
         enable = true;
@@ -26,9 +28,13 @@
         userGithubToken = secrets.git.githubToken;
       };
 
-      neovim.enable = true;
-      zsh.enable = true;
-      kitty.enable = true;
+      zsh = {
+        enable = true;
+        fastfetch = {
+          enable = true;
+          kitty = true;
+        };
+      };
     };
 
     bundles = {
