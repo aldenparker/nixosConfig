@@ -1,15 +1,21 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.services.tailscale; # Config path
   tailscale-args = if cfg.isExitNode then "--advertise-exit-node" else "";
-in {
+in
+{
   # --- Set options
   options.${namespace}.services.tailscale = {
-    enable = mkEnableOption
-      "Installs tailscale client on the host and authenticates to the server. Specifically used for headscale servers.";
+    enable = mkEnableOption "Installs tailscale client on the host and authenticates to the server. Specifically used for headscale servers.";
 
     isExitNode = mkEnableOption "Makes this host an exit node";
 
@@ -36,8 +42,7 @@ in {
     networking = {
       firewall = {
         enable = true; # Enable the firewall (if not enabled elsewhere)
-        trustedInterfaces =
-          [ "tailscale0" ]; # Always allow traffic from your Tailscale network
+        trustedInterfaces = [ "tailscale0" ]; # Always allow traffic from your Tailscale network
         allowedUDPPorts = [
           config.services.tailscale.port
         ]; # Allow the Tailscale UDP port through the firewall
@@ -52,8 +57,14 @@ in {
       description = "Automatic connection to Tailscale";
 
       # Make sure tailscale is running before trying to connect to tailscale
-      after = [ "network-pre.target" "tailscale.service" ];
-      wants = [ "network-pre.target" "tailscale.service" ];
+      after = [
+        "network-pre.target"
+        "tailscale.service"
+      ];
+      wants = [
+        "network-pre.target"
+        "tailscale.service"
+      ];
       wantedBy = [ "multi-user.target" ];
 
       # Set this service as a oneshot job

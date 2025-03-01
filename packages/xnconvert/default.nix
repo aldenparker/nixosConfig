@@ -14,7 +14,6 @@
 }:
 
 stdenv.mkDerivation rec {
-  name = "xnconvert";
   pname = "xnconvert";
   version = "1.102.0";
 
@@ -25,12 +24,12 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     openexr_3
-    gcc-unwrapped.libgcc 
+    gcc-unwrapped.libgcc
     qt5.wrapQtAppsHook
-    gtk3 
+    gtk3
     libGLU
     libGL
-    pango 
+    pango
     autoPatchelfHook
   ];
 
@@ -50,9 +49,9 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     install -m 444 -D ./XnConvert/xnconvert.png $out/share/icons/hicolor/64x64/apps/${pname}.png
-    
+
     mkdir -p $out/share/applications
-    cat <<INI > $out/share/applications/${name}.desktop
+    cat <<INI > $out/share/applications/${pname}.desktop
     [Desktop Entry]
     Encoding=UTF-8
     Terminal=0

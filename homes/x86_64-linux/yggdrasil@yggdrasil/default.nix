@@ -1,4 +1,12 @@
-{ inputs, lib, config, pkgs, secrets, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  secrets,
+  ...
+}:
+{
   imports = [
     # Import base
     ../../base.nix

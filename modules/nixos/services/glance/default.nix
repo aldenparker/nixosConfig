@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.services.glance; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.services.glance = {
     enable = mkEnableOption "Installs glance on host and runs it on startup";

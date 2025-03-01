@@ -1,14 +1,20 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.services.filebrowser; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.services.filebrowser = {
-    enable = mkEnableOption
-      "Installs filebrowser on the host and starts hosting the dataPath folder.";
+    enable = mkEnableOption "Installs filebrowser on the host and starts hosting the dataPath folder.";
 
     port = mkOption {
       type = types.int;

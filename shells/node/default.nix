@@ -6,5 +6,10 @@
 
 # Creates node / javascript / typescript shell
 mkShell {
-  packages = with pkgs; [ node2nix nodejs nodePackages.pnpm yarn ];
+  packages = with pkgs; [
+    node2nix
+    nodejs
+    nodePackages.pnpm
+    yarn
+  ];
 }

@@ -1,14 +1,20 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.services.postgres; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.services.postgres = {
-    enable = mkEnableOption
-      "Enables postgres and sets database path for host. Use ensureDatabases and ensureUsers in other modules to create database for that module.";
+    enable = mkEnableOption "Enables postgres and sets database path for host. Use ensureDatabases and ensureUsers in other modules to create database for that module.";
 
     dataPath = mkOption {
       type = types.str;

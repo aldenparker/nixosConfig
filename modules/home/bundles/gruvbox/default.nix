@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.bundles.gruvbox; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.bundles.gruvbox = {
     enable = mkEnableOption "Enables gruvbox theme for host";
@@ -12,15 +19,15 @@ in {
   };
 
   # --- Set configuration
-  config = mkIf cfg.enable {  
+  config = mkIf cfg.enable {
     # --- Stylix Theme
     stylix = {
       enable = true;
-      
+
       # Wallpaper and Color
       image = ../../../../assets/Wallpapers/Wallhaven/hao-sect.jpg; # Default wallpaper
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
-      
+
       # Cursor
       cursor = {
         package = pkgs.bibata-cursors;
@@ -35,11 +42,11 @@ in {
         dark = "Gruvbox-Plus-Dark";
         light = "Gruvbox-Plus-Dark";
       };
-   
+
       # Fonts
       fonts = {
         monospace = {
-          package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+          package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
           name = "JetBrainsMono Nerd Font Mono";
         };
         sansSerif = {
@@ -60,7 +67,7 @@ in {
 
     programs.plasma = mkIf cfg.kde {
       enable = true;
-      
+
       workspace = {
         colorScheme = "Gruvboxdarkmedium";
         cursor = {

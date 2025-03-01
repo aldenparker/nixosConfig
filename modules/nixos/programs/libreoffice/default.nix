@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.libreoffice; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.libreoffice = {
     enable = mkEnableOption "Enables libreoffice for host";

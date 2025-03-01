@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.keymapp; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.keymapp = {
     enable = mkEnableOption "Enables keymapp for host";
@@ -14,10 +21,10 @@ in {
   config = mkIf cfg.enable {
     # --- Keyboard support
     hardware.keyboard.zsa.enable = true;
-    
+
     # --- System packages (no config)
-    environment.systemPackages = with pkgs; [ 
-      keymapp 
+    environment.systemPackages = with pkgs; [
+      keymapp
     ];
   };
 }

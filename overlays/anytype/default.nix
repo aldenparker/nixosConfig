@@ -1,6 +1,5 @@
-{ channels, ... }: 
+{ channels, ... }:
 
-_final: _prev:
-{
+_final: _prev: {
   inherit (channels.unstable) anytype;
 }

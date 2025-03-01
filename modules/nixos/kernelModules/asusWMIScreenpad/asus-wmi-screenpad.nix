@@ -1,17 +1,20 @@
-{ lib
-, stdenv
-, fetchzip
-, fetchurl
-, kernel
+{
+  lib,
+  stdenv,
+  fetchzip,
+  fetchurl,
+  kernel,
 }:
 
 let
-  baseKernelVersion = with lib; 
+  baseKernelVersion =
+    with lib;
     let
       versionParts = splitString "." kernel.version;
       major = head versionParts;
       minor = elemAt versionParts 1;
-    in "${major}.${minor}";
+    in
+    "${major}.${minor}";
 
   # Comprehensive hash mapping for all supported kernel versions
   kernelSourceHashes = {
@@ -91,21 +94,28 @@ let
       "asus-nb-wmi.c" = "17zlc1c4bk03abqxw63d6i4fbgp8x1f3p822vlsggq1ngg7lkapr";
     };
   };
-# Verify kernel version is supported
-  assertKernelSupported = version:
-    if ! kernelSourceHashes ? ${version} then
+  # Verify kernel version is supported
+  assertKernelSupported =
+    version:
+    if !kernelSourceHashes ? ${version} then
       throw "Kernel version ${version} is not supported. Supported versions: ${toString (builtins.attrNames kernelSourceHashes)}"
-    else version;
+    else
+      version;
 
   # Get appropriate patch file based on kernel version
-  getPatch = version:
+  getPatch =
+    version:
     let
       v = lib.versions.majorMinor version;
     in
-    if lib.versionOlder v "5.7" then "patch"
-    else if lib.versionOlder v "5.99" then "patch5.8"
-    else if lib.versionOlder v "6.2" then "patch6.0"
-    else "patch6.2";
+    if lib.versionOlder v "5.7" then
+      "patch"
+    else if lib.versionOlder v "5.99" then
+      "patch5.8"
+    else if lib.versionOlder v "6.2" then
+      "patch6.0"
+    else
+      "patch6.2";
 
   # Verify and get kernel version
   kernelVersion = assertKernelSupported baseKernelVersion;
@@ -126,7 +136,8 @@ let
     };
   };
 
-in stdenv.mkDerivation rec {
+in
+stdenv.mkDerivation rec {
   pname = "asus-wmi-screenpad";
   version = "1.0";
 
@@ -164,7 +175,7 @@ in stdenv.mkDerivation rec {
     longDescription = ''
       This kernel module provides support for controlling the secondary screen
       (ScreenPad Plus) brightness on ASUS Zenbook Duo laptops.
-      
+
       Supported kernel versions:
       - 5.4 to 5.6 (patch)
       - 5.8 to 5.99 (patch5.8)
@@ -178,4 +189,3 @@ in stdenv.mkDerivation rec {
     broken = !kernelSourceHashes ? ${baseKernelVersion};
   };
 }
-

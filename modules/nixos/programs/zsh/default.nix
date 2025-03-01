@@ -1,14 +1,20 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.zsh; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.zsh = {
-    enable =
-      mkEnableOption "Installs zsh for host and makes it the default shell";
+    enable = mkEnableOption "Installs zsh for host and makes it the default shell";
   };
 
   # --- Set configuration

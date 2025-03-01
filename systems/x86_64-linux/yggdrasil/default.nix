@@ -1,4 +1,12 @@
-{ inputs, lib, config, pkgs, secrets, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  secrets,
+  ...
+}:
+{
   imports = [
     # Import generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
@@ -52,7 +60,7 @@
       };
     };
   };
-  
+
   # --- Use the grub EFI boot loader. WARNING: HERE BE DRAGONS
   boot.loader.grub = {
     enable = true;
@@ -128,4 +136,3 @@
   # ---- NixOS Settings. WARNING: HERE BE DRAGONS
   system.stateVersion = "24.11";
 }
-

@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.services.gitea; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.services.gitea = {
     enable = mkEnableOption "Enables Gitea for host";
@@ -37,24 +44,26 @@ in {
     runnerToken = mkOption {
       type = types.str;
       default = "";
-      description =
-        "The token used by the runner for the Gitea instance. YOU WILL HAVE TO SET THIS AFTER YOU RUN GITEA THE FIRST TIME.";
+      description = "The token used by the runner for the Gitea instance. YOU WILL HAVE TO SET THIS AFTER YOU RUN GITEA THE FIRST TIME.";
     };
   };
 
   # --- Set configuration
-  config = mkIf cfg.enable (mkMerge [ # Merge all structures together
+  config = mkIf cfg.enable (mkMerge [
+    # Merge all structures together
     # Add warning about the runner
     (mkIf (cfg.runnerToken == "") {
-      warnings = [''
-        The runnerToken is not set for Gitea. 
-        After setting up the Gitea server, add the runner by setting runnerToken to the token generated to enable this feature. 
-      ''];
+      warnings = [
+        ''
+          The runnerToken is not set for Gitea. 
+          After setting up the Gitea server, add the runner by setting runnerToken to the token generated to enable this feature. 
+        ''
+      ];
     })
 
     # Add default configuration stuff
     {
-      # Set firewall port 
+      # Set firewall port
       networking = {
         firewall = {
           enable = true; # Enable the firewall (if not enabled elsewhere)
@@ -68,10 +77,12 @@ in {
       # Setup postgres database for gitea
       services.postgresql = {
         ensureDatabases = [ config.services.gitea.user ];
-        ensureUsers = [{
-          name = config.services.gitea.database.user;
-          ensureDBOwnership = true;
-        }];
+        ensureUsers = [
+          {
+            name = config.services.gitea.database.user;
+            ensureDBOwnership = true;
+          }
+        ];
       };
 
       # Setup gitea
@@ -103,7 +114,8 @@ in {
         name = "Gitea Runner";
         url = "http://${cfg.domain}:${builtins.toString cfg.port}/";
         token = cfg.runnerToken;
-        labels = [ # TODO: add windows container and other options later
+        labels = [
+          # TODO: add windows container and other options later
           "ubuntu-latest:docker://node:16-bullseye"
           "ubuntu-22.04:docker://node:16-bullseye"
           "ubuntu-18.04:docker://node:16-buster"

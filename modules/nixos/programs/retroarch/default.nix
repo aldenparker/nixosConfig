@@ -1,10 +1,18 @@
-{ lib, inputs, config, pkgs, namespace, ... }:
+{
+  lib,
+  inputs,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.retroarch; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.retroarch = {
     enable = mkEnableOption "Enables retroarh for host with default cores";

@@ -1,4 +1,12 @@
-{ inputs, lib, config, pkgs, secrets, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  secrets,
+  ...
+}:
+{
   # This is the config for RPI 3B+ tailscale exit nodes, hence heimdallur as a reference to the bifrost
   imports = [
     # Import generated (nixos-generate-config) hardware configuration
@@ -87,4 +95,3 @@
   system.stateVersion = "24.11";
 
 }
-

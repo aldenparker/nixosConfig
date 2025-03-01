@@ -1,10 +1,18 @@
-{ lib, inputs, config, pkgs, namespace, ... }:
+{
+  lib,
+  inputs,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.kde; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.kde = {
     enable = mkEnableOption "Enables kde for host";

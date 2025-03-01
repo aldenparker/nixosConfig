@@ -1,10 +1,16 @@
-{ lib, config, namespace, ... }:
+{
+  lib,
+  config,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.git; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.git = {
     enable = mkEnableOption "Configures git for host, giving oath based on configuration";

@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.geany; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.geany = {
     enable = mkEnableOption "Enables geany for the host";
@@ -15,7 +22,7 @@ in {
     home.packages = with pkgs; [
       geany
     ];
-    
+
     home.file.".config/geany" = {
       source = ./config;
       recursive = true;

@@ -1,4 +1,12 @@
-{ inputs, lib, config, pkgs, secrets, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  secrets,
+  ...
+}:
+{
   imports = [
     # Import base
     ../../base.nix
@@ -14,7 +22,7 @@
         userEmail = "ajparker1401@gmail.com";
         userGithubToken = secrets.git.githubToken;
       };
-      
+
       zsh.enable = true;
       kitty.enable = true;
     };

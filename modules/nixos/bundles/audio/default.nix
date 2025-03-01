@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.bundles.audio; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.bundles.audio = {
     enable = mkEnableOption "Enables audio for host";

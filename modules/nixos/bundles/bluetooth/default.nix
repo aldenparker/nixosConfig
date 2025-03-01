@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.bundles.bluetooth; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.bundles.bluetooth = {
     enable = mkEnableOption "Enables bluetooth for host";
@@ -14,7 +21,7 @@ in {
   # --- Set configuration
   config = mkIf cfg.enable {
     # --- Bluetooth
-    hardware.bluetooth ={
+    hardware.bluetooth = {
       enable = true; # enables support for Bluetooth
       powerOnBoot = true; # powers up the default Bluetooth controller on boot
     };

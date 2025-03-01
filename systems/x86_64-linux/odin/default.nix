@@ -1,4 +1,12 @@
-{ inputs, lib, config, pkgs, secrets, ... }: {
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  secrets,
+  ...
+}:
+{
   imports = [
     # Import generated (nixos-generate-config) hardware configuration
     ../yggdrasil/hardware-configuration.nix
@@ -16,7 +24,7 @@
         enable = true;
         x11 = false;
       };
-      
+
       bluetooth = {
         enable = true;
         enableAudio = true;
@@ -157,4 +165,3 @@
   # ---- NixOS Settings. WARNING: HERE BE DRAGONS
   system.stateVersion = "24.11";
 }
-

@@ -26,7 +26,7 @@
 
     # Stylix
     stylix.url = "github:danth/stylix/release-24.11";
-    
+
     # Plasma Manager
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
@@ -67,61 +67,60 @@
       };
     in
     # Setup flake
-    lib.mkFlake
-      {
-        # Configure nixpkgs
-        channels-config = {
-          allowUnfree = true;
-          permittedInsecurePackages = [];
-        };
+    lib.mkFlake {
+      # Configure nixpkgs
+      channels-config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [ ];
+      };
 
-        # External overlay import
-        overlays = with inputs; [
-          rust-overlay.overlays.default
-        ];
+      # External overlay import
+      overlays = with inputs; [
+        rust-overlay.overlays.default
+      ];
 
-        # External module import for all hosts
-        systems.modules.nixos = with inputs; [
-          home-manager.nixosModules.home-manager
-        ];
+      # External module import for all hosts
+      systems.modules.nixos = with inputs; [
+        home-manager.nixosModules.home-manager
+      ];
 
-        # Pass special args to hosts
-        systems.hosts.odin.specialArgs = {
-          inherit secrets;
-        };  
+      # Pass special args to hosts
+      systems.hosts.odin.specialArgs = {
+        inherit secrets;
+      };
 
-        systems.hosts.yggdrasil.specialArgs = {
-          inherit secrets;
-        };
+      systems.hosts.yggdrasil.specialArgs = {
+        inherit secrets;
+      };
 
-        systems.hosts.heimdallur.specialArgs = {
-          inherit secrets;
-        };
+      systems.hosts.heimdallur.specialArgs = {
+        inherit secrets;
+      };
 
-        # External module import for all homes
-        homes.modules = with inputs; [
-          nvf.homeManagerModules.default
-          stylix.homeManagerModules.stylix
-          plasma-manager.homeManagerModules.plasma-manager
-        ];
+      # External module import for all homes
+      homes.modules = with inputs; [
+        nvf.homeManagerModules.default
+        stylix.homeManagerModules.stylix
+        plasma-manager.homeManagerModules.plasma-manager
+      ];
 
-        homes.users."odin@odin".specialArgs = {
-          inherit secrets;
-        };
+      homes.users."odin@odin".specialArgs = {
+        inherit secrets;
+      };
 
-        homes.users."yggdrasil@yggdrasil".specialArgs = {
-          inherit secrets;
-        };
+      homes.users."yggdrasil@yggdrasil".specialArgs = {
+        inherit secrets;
+      };
 
-        homes.users."heimdallur@heimdallur".specialArgs = {
-          inherit secrets;
-        };
+      homes.users."heimdallur@heimdallur".specialArgs = {
+        inherit secrets;
+      };
 
-        # Import hardware packages for raspberry pi into the heimdallur device config
-        systems.hosts.heimdallur.modules = with inputs; [
-          nixos-hardware.nixosModules.raspberry-pi-3
-        ];
-      }
+      # Import hardware packages for raspberry pi into the heimdallur device config
+      systems.hosts.heimdallur.modules = with inputs; [
+        nixos-hardware.nixosModules.raspberry-pi-3
+      ];
+    }
     // {
       self = inputs.self;
     };

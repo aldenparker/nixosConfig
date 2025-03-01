@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.neovim; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.neovim = {
     enable = mkEnableOption "Installs and configures neovim for host";

@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.librewolf; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.librewolf = {
     enable = mkEnableOption "Enables librewolf for the host";

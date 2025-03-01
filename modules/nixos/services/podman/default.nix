@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.services.podman; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.services.podman = {
     enable = mkEnableOption "Enables podman for host";

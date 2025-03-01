@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.steam; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.steam = {
     enable = mkEnableOption "Enables steam and needed gaming features for host";

@@ -1,10 +1,17 @@
-{ lib, config, pkgs, namespace, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  namespace,
+  ...
+}:
 
 with lib;
 
 let
   cfg = config.${namespace}.programs.htop; # Config path
-in {
+in
+{
   # --- Set options
   options.${namespace}.programs.htop = {
     enable = mkEnableOption "Enables htop for host";
