@@ -27,6 +27,11 @@ in {
     # Enable the KDE Plasma Desktop Environment.
     services.desktopManager.plasma6.enable = true;
 
+    # Install fix for cursor size
+    environment.systemPackages = with pkgs; [
+      xdg-desktop-portal-gtk
+    ];
+
     # Disable unwanted optionals
     environment.plasma6.excludePackages = with pkgs.kdePackages; [
       plasma-browser-integration

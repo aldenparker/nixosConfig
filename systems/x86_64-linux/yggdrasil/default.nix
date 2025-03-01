@@ -52,7 +52,7 @@
       };
     };
   };
-
+  
   # --- Use the grub EFI boot loader. WARNING: HERE BE DRAGONS
   boot.loader.grub = {
     enable = true;

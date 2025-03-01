@@ -1,4 +1,6 @@
-{ inputs, lib, config, pkgs, ... }: {
+{ inputs, lib, config, pkgs, ... }: 
+
+{
   # Enable flakes 
   nix.settings.experimental-features = "nix-command flakes"; 
 
@@ -17,5 +19,6 @@
     curl
     git
     git-crypt
+    nil
   ];
 }

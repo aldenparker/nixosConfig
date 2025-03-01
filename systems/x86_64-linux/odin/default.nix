@@ -27,6 +27,8 @@
       zsh.enable = true;
       htop.enable = true;
       keymapp.enable = true;
+      libreoffice.enable = true;
+      steam.enable = true;
     };
 
     services = {
@@ -49,7 +51,7 @@
     };
   };
 
-  # --- Nvidia config for prime per device
+  # --- Nvidia config for prime (not part of nvidia package as it is super device specific)
   hardware.nvidia.prime = {
     sync.enable = true;
 
@@ -57,6 +59,32 @@
     nvidiaBusId = "PCI:01:00:0";
     intelBusId = "PCI:00:02:0";
   };
+
+  # --- Packages without configuration
+  environment.systemPackages = with pkgs; [
+    vscode
+    scanmem
+    anki
+    kicad
+    inkscape
+    krita
+    qbittorrent
+    sparrow
+    tor-browser
+    vlc
+    veracrypt
+    gephi
+    gparted
+    ktailctl
+    usbimager
+    kdePackages.filelight
+    anytype
+    keepassxc
+    simplex-chat-desktop
+    solaar
+    gittyup
+    cutter
+  ];
 
   # --- Enable printing
   services.printing.enable = true;

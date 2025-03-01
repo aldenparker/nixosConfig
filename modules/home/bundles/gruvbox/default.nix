@@ -22,7 +22,7 @@ in {
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
       
       # Cursor
-      cursor = mkIf (!cfg.kde) {
+      cursor = {
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
         size = 16;
@@ -55,7 +55,6 @@ in {
 
     # --- Apply KDE plasma 6 fix if on kde
     home.packages = mkIf cfg.kde [
-      pkgs.bibata-cursors
       pkgs.gruvbox-plus-icons
     ];
 
