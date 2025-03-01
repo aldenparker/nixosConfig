@@ -16,10 +16,10 @@
 stdenv.mkDerivation rec {
   name = "xnconvert";
   pname = "xnconvert";
-  version = "latest";
+  version = "1.102.0";
 
   src = fetchurl {
-    url = "https://download.xnview.com/XnConvert-linux-x64.tgz";
+    url = "https://download.xnview.com/old_versions/XnConvert/XnConvert-${version}-linux-x64.tgz";
     sha256 = "sha256-oVAN030PdZZ3OvjbG4DsWQJ+JcmPLT4iHPhwPfgO4VY=";
   };
 
