@@ -33,6 +33,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
+    # Rust overlay
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Zig overlays
+    zig-overlay.url = "github:mitchellh/zig-overlay";
+    zls-overlay.url = "github:zigtools/zls";
   };
 
   outputs =
@@ -66,7 +76,9 @@
         };
 
         # External overlay import
-        overlays = with inputs; [];
+        overlays = with inputs; [
+          rust-overlay.overlays.default
+        ];
 
         # External module import for all hosts
         systems.modules.nixos = with inputs; [
