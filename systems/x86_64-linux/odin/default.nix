@@ -29,6 +29,7 @@
       keymapp.enable = true;
       libreoffice.enable = true;
       steam.enable = true;
+      retroarch.enable = true;
     };
 
     services = {
