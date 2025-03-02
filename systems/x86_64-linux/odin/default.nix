@@ -1,7 +1,4 @@
 {
-  inputs,
-  lib,
-  config,
   pkgs,
   secrets,
   ...
@@ -56,17 +53,19 @@
     };
 
     drivers = {
-      cuda.enable = true;
+      nvidia = {
+        enable = true;
+        withCuda = true;
+        # prime = {
+        #   enable = true;
+        #   withSync = true;
+
+        #   # Make sure to use the correct Bus ID values for your system!
+        #   nvidiaBusId = "PCI:01:00:0";
+        #   intelBusId = "PCI:00:02:0";
+        # };
+      };
     };
-  };
-
-  # --- Nvidia config for prime (not part of nvidia package as it is super device specific)
-  hardware.nvidia.prime = {
-    sync.enable = true;
-
-    # Make sure to use the correct Bus ID values for your system!
-    nvidiaBusId = "PCI:01:00:0";
-    intelBusId = "PCI:00:02:0";
   };
 
   # --- Packages without configuration

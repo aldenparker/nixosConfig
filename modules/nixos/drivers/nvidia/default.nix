@@ -1,7 +1,7 @@
 {
   lib,
-  config,
   pkgs,
+  config,
   namespace,
   ...
 }:
@@ -15,6 +15,18 @@ in
   # --- Set options
   options.${namespace}.drivers.nvidia = {
     enable = mkEnableOption "Enables nvidia drivers for host";
+    withCuda = mkEnableOption "Enables CUDA for nvidia gpus";
+
+    prime.enable = mkEnableOption "Enables Nvidia Prime (Must specify a the intel and nvidia PCIs)";
+    prime.useSync = mkEnableOption "Use sync mode instead of offload mode for Nvidia Prime";
+    prime.nvidiaBusId = mkOption {
+      type = types.str;
+      description = "The bus id for the Nvidia gpu";
+    };
+    prime.intelBusId = mkOption {
+      type = types.str;
+      description = "The bus id for the Intel gpu";
+    };
   };
 
   # --- Set configuration
@@ -58,6 +70,26 @@ in
 
       # Optionally, you may need to select the appropriate driver version for your specific GPU.
       package = config.boot.kernelPackages.nvidiaPackages.beta;
+    };
+
+    # Enable cuda if needed
+    environment.systemPackages = mkIf cfg.withCuda [
+      pkgs.cudaPackages.cudatoolkit
+    ];
+
+    # Configure nvidia prime if specified
+    hardware.nvidia.prime = mkIf cfg.prime.enable {
+      # Enable offload mode by default, sync if specified
+      offload = mkIf (!cfg.prime.useSync) {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+
+      sync.enable = mkIf cfg.prime.useSync true;
+
+      # Make sure to use the correct Bus ID values for your system!
+      nvidiaBusId = cfg.prime.nvidiaBusId;
+      intelBusId = cfg.prime.intelBusId;
     };
   };
 }
