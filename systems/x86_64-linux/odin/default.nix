@@ -56,14 +56,14 @@
       nvidia = {
         enable = true;
         withCuda = true;
-        # prime = {
-        #   enable = true;
-        #   withSync = true;
+        prime = {
+          enable = true;
+          useSync = true;
 
-        #   # Make sure to use the correct Bus ID values for your system!
-        #   nvidiaBusId = "PCI:01:00:0";
-        #   intelBusId = "PCI:00:02:0";
-        # };
+          # Make sure to use the correct Bus ID values for your system!
+          nvidiaBusId = "PCI:01:00:0";
+          intelBusId = "PCI:00:02:0";
+        };
       };
     };
   };
