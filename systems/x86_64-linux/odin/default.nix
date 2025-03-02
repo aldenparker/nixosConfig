@@ -46,6 +46,11 @@
         loginServer = secrets.tailscale.loginServer;
         preAuthKey = secrets.tailscale.preAuthKey;
       };
+
+      cloudflared = {
+        enable = true;
+        tunnelToken = secrets.cloudflared.odinToken;
+      };
     };
 
     kernelModules = {
@@ -70,7 +75,6 @@
 
   # --- Packages without configuration
   environment.systemPackages = with pkgs; [
-    vscode
     scanmem
     anki
     kicad
