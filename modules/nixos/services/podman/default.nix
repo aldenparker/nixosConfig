@@ -23,7 +23,6 @@ in
     virtualisation = {
       podman = {
         enable = true;
-        dockerCompat = true; # Create docker alias for podman
         defaultNetwork.settings.dns_enabled = true; # Requires that compose containers can talk to each other
       };
     };

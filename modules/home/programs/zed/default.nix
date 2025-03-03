@@ -44,6 +44,7 @@ in
           light = "One Light";
           dark = "Gruvbox Dark";
         };
+        tab_size = 2;
         ui_font_size = 16;
         buffer_font_size = 13;
         scrollbar = {
@@ -56,6 +57,28 @@ in
           axes = {
             horizontal = false;
             vertical = true;
+          };
+        };
+
+        # Langauge settings
+        languages = {
+          Nix = {
+            language_servers = [
+              "nil"
+              "!nixd"
+            ];
+            formatter = {
+              external = {
+                command = "nixfmt";
+              };
+            };
+          };
+        };
+        lsp = {
+          rust-analyzer = {
+            binary = {
+              path_lookup = true;
+            };
           };
         };
 

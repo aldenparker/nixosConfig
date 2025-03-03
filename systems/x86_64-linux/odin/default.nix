@@ -38,7 +38,7 @@
     };
 
     services = {
-      podman.enable = true;
+      docker.enable = true;
 
       tailscale = {
         enable = true;
