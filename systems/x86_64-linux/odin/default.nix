@@ -6,7 +6,7 @@
 {
   imports = [
     # Import generated (nixos-generate-config) hardware configuration
-    ../yggdrasil/hardware-configuration.nix
+    ./hardware-configuration.nix
 
     # Import base NixOS module
     ../../base.nix
@@ -108,6 +108,7 @@
     enable = true;
     device = "nodev";
     efiSupport = true;
+    useOSProber = true;
   };
   boot.loader.efi = {
     canTouchEfiVariables = true;
