@@ -97,6 +97,7 @@
     gittyup
     cutter
     snowman.xnconvert
+    snowman.zen
   ];
 
   # --- Enable printing

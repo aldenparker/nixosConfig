@@ -12,7 +12,6 @@
   snowman = {
     # --- Configure individual packages
     programs = {
-      librewolf.enable = true;
       geany.enable = true;
       neovim.enable = true;
       kitty.enable = true;
