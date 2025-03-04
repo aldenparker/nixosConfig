@@ -25,6 +25,7 @@
     git-crypt
     nil
     nixfmt-rfc-style
+    nix-tree
   ];
 
   # --- Create installed packages file
