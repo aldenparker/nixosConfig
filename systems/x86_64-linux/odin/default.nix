@@ -103,6 +103,9 @@
   # --- Enable printing
   services.printing.enable = true;
 
+  # --- Fix clock for dual boot
+  time.hardwareClockInLocalTime = true;
+
   # --- Use the grub EFI boot loader. WARNING: HERE BE DRAGONS
   boot.loader.grub = {
     enable = true;
