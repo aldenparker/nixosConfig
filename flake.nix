@@ -34,6 +34,12 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    # Program to help with adding zsh support in nix shells and nix develop
+    nix-your-shell = {
+      url = "github:MercuryTechnologies/nix-your-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Rust overlay
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -76,6 +82,7 @@
 
       # External overlay import
       overlays = with inputs; [
+        nix-your-shell.overlays.default
         rust-overlay.overlays.default
       ];
 

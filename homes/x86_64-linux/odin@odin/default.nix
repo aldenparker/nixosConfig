@@ -26,6 +26,7 @@
 
       zsh = {
         enable = true;
+        useAsNixShell = true;
         fastfetch = {
           enable = true;
           kitty = true;

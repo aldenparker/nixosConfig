@@ -115,6 +115,9 @@
     efiSysMountPoint = "/boot";
   };
 
+  # --- Add support for NTFS
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # --- Networking
   networking = {
     hostName = "odin"; # Define your hostname.

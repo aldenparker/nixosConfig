@@ -17,12 +17,16 @@ in
     enable = mkEnableOption "Configures zsh for host";
     fastfetch.enable = mkEnableOption "Configures fastfetch for host";
     fastfetch.kitty = mkEnableOption "Configures fastfetch with kitty image for host";
+    useAsNixShell = mkEnableOption "Configures zsh as the Nix Shell (aka it us used for nix-shell and nix develop commands)";
   };
 
   # --- Set configuration
   config = mkIf cfg.enable {
-    # Install neofetch for startup
-    home.packages = mkIf cfg.fastfetch.enable [ pkgs.fastfetch ];
+    # Install fastfetch for startup if needed and nix-your-shell for nix develop zsh support
+    home.packages = [
+      (mkIf cfg.useAsNixShell pkgs.nix-your-shell)
+      (mkIf cfg.fastfetch.enable pkgs.fastfetch)
+    ];
 
     # Configure zsh, must enable nixos package version as well for default shell behavior
     programs.zsh = {
@@ -31,7 +35,12 @@ in
       enableCompletion = true;
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
-      initExtra = "fastfetch"; # fastfetch runs on terminal startup
+
+      # Fastfetch runs on terminal startup
+      initExtra = ''
+        ${if cfg.fastfetch.enable then "fastfetch" else ""}
+        ${if cfg.useAsNixShell then "nix-your-shell zsh | source /dev/stdin" else ""}
+      '';
 
       # Enable oh-my-zsh
       oh-my-zsh = {
