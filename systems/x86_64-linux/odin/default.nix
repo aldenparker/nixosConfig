@@ -98,6 +98,7 @@
     cutter
     snowman.xnconvert
     snowman.zen
+    nix-tree
   ];
 
   # --- Enable printing
