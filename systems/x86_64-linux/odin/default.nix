@@ -42,7 +42,6 @@
 
       tailscale = {
         enable = true;
-        isExitNode = true;
         loginServer = secrets.tailscale.loginServer;
         preAuthKey = secrets.tailscale.preAuthKey;
       };

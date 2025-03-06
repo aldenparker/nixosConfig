@@ -59,11 +59,11 @@ in
       # Make sure tailscale is running before trying to connect to tailscale
       after = [
         "network-pre.target"
-        "tailscale.service"
+        "tailscaled.service"
       ];
       wants = [
         "network-pre.target"
-        "tailscale.service"
+        "tailscaled.service"
       ];
       wantedBy = [ "multi-user.target" ];
 

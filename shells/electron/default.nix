@@ -39,6 +39,7 @@
       libappindicator-gtk3
       libdbusmenu
       libxkbcommon
+      libz
     ])
     ++ (with pkgs.xorg; [
       libXScrnSaver
