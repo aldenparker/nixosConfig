@@ -73,9 +73,12 @@ in
     };
 
     # Enable cuda if needed
-    environment.systemPackages = mkIf cfg.withCuda [
-      pkgs.cudaPackages.cudatoolkit
-    ];
+    environment.systemPackages =
+      with pkgs;
+      mkIf cfg.withCuda [
+        cudaPackages.cudatoolkit
+        egl-wayland
+      ];
 
     # Configure nvidia prime if specified
     hardware.nvidia.prime = mkIf cfg.prime.enable {
