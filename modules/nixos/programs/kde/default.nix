@@ -29,7 +29,7 @@ in
     };
 
     # Always exclude xterm
-    services.xserver.excludePackages = [ pkgs.xterm ];
+    services.xserver.excludePackages = mkIf cfg.x11 [ pkgs.xterm ];
 
     # Enable the KDE Plasma Desktop Environment.
     services.desktopManager.plasma6.enable = true;

@@ -27,6 +27,7 @@ in
       # Wallpaper and Color
       image = ../../../../assets/Wallpapers/Wallhaven/hao-sect.jpg; # Default wallpaper
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+      polarity = "dark";
 
       # Cursor
       cursor = {

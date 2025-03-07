@@ -88,7 +88,7 @@ in
           diagnostics = false;
         };
         features = {
-          inline_completion_provider = "none";
+          edit_prediction_provider = "none";
         };
         assistant = {
           enabled = false;

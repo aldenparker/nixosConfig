@@ -18,15 +18,8 @@ in
 
   # --- Set configuration
   config = mkIf cfg.enable {
-    services.xserver.enable = true;
-
-    # Configure keymap in X11
-    services.xserver.xkb = {
-      layout = "us";
-      variant = "";
-    };
-
     # Enable gdm
     services.xserver.displayManager.gdm.enable = true;
+    services.xserver.displayManager.gdm.wayland = true;
   };
 }

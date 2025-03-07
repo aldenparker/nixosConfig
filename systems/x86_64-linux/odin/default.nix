@@ -17,10 +17,8 @@
     bundles = {
       audio.enable = true;
 
-      kde = {
-        enable = true;
-        x11 = false;
-      };
+      kde.enable = true;
+      niri.enable = true;
 
       bluetooth = {
         enable = true;

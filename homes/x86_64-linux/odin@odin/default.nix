@@ -16,6 +16,7 @@
       neovim.enable = true;
       kitty.enable = true;
       zed.enable = true;
+      niri.enable = true;
 
       git = {
         enable = true;

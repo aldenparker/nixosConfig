@@ -49,6 +49,9 @@
     # Zig overlays
     zig-overlay.url = "github:mitchellh/zig-overlay";
     zls-overlay.url = "github:zigtools/zls";
+
+    # Niri
+    niri.url = "github:sodiboo/niri-flake";
   };
 
   outputs =
@@ -84,11 +87,13 @@
       overlays = with inputs; [
         nix-your-shell.overlays.default
         rust-overlay.overlays.default
+        niri.overlays.niri
       ];
 
       # External module import for all hosts
       systems.modules.nixos = with inputs; [
         home-manager.nixosModules.home-manager
+        niri.nixosModules.niri
       ];
 
       # Pass special args to hosts
