@@ -22,25 +22,54 @@ in
   config = mkIf cfg.enable {
     # --- Niri config
     programs.niri.settings = {
-      # input.keyboard.xkb.layout = "no";
       input = {
         mouse.accel-speed = 1.0;
+
         touchpad = {
           tap = true;
-          dwt = true;
           natural-scroll = true;
           click-method = "clickfinger";
         };
+
         focus-follows-mouse = {
           enable = true;
           max-scroll-amount = "10%";
         };
+
+        warp-mouse-to-focus = true;
       };
 
-      # input.tablet.map-to-output = "eDP-1";
-      # input.touch.map-to-output = "eDP-1";
-
-      # input.warp-mouse-to-focus = true;
+      # Setup configured monitor outputs
+      outputs =
+        let
+          cfg = config.programs.niri.settings.outputs;
+        in
+        {
+          "eDP-1" = {
+            mode.width = 3840;
+            mode.height = 2160;
+            mode.refresh = 60.0;
+            position.x = 0;
+            position.y = 0;
+            scale = 1.5;
+          };
+          "DP-1" = {
+            mode.width = 3840;
+            mode.height = 1100;
+            mode.refresh = 60.017;
+            position.x = 0;
+            position.y = builtins.floor (cfg."eDP-1".mode.height / cfg."eDP-1".scale);
+            scale = 1.5;
+          };
+          "HDMI-A-1" = {
+            mode.width = 1920;
+            mode.height = 1080;
+            mode.refresh = 60.0;
+            position.x = -1 * builtins.floor (cfg."HDMI-A-1".mode.width / cfg."HDMI-A-1".scale);
+            position.y = 0;
+            scale = 1;
+          };
+        };
 
       prefer-no-csd = true;
 
@@ -77,7 +106,6 @@ in
       };
 
       hotkey-overlay.skip-at-startup = true;
-      # clipboard.disable-primary = true;
 
       screenshot-path = "~/Pictures/Screenshots/%Y-%m-%dT%H:%M:%S.png";
 
@@ -99,14 +127,17 @@ in
           sh = spawn "sh" "-c";
         in
         {
+          # Direct Spawns
           "Mod+T".action = spawn "kitty";
           "Mod+O".action = show-hotkey-overlay;
           "Mod+D".action = spawn "fuzzel";
 
+          # Screenshot Binds
           "Mod+Shift+S".action = screenshot;
           "Print".action = screenshot-screen;
           "Mod+Print".action = screenshot-window;
 
+          # Volume
           "XF86AudioRaiseVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
           "XF86AudioLowerVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
           "XF86AudioMute".action = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
@@ -115,41 +146,54 @@ in
           "XF86MonBrightnessUp".action = sh "brightnessctl set 10%+";
           "XF86MonBrightnessDown".action = sh "brightnessctl set 10%-";
 
+          # Window Manupulation
           "Mod+Q".action = close-window;
-
           "Mod+Shift+Space".action = toggle-window-floating;
-
           "Mod+Space".action = toggle-column-tabbed-display;
 
+          # Focus Binds
           "Mod+Right".action = focus-column-right;
           "Mod+Left".action = focus-column-left;
-
-          "Mod+Shift+Right".action = consume-or-expel-window-right;
-          "Mod+Shift+Left".action = consume-or-expel-window-left;
-
+          "Mod+Up".action = focus-workspace-up;
+          "Mod+Down".action = focus-workspace-down;
           "Mod+Tab".action = focus-window-down-or-column-right;
           "Mod+Shift+Tab".action = focus-window-up-or-column-left;
 
-          "Mod+Comma".action = consume-window-into-column;
-          "Mod+Period".action = expel-window-from-column;
+          # Special Window Move Binds
+          "Mod+Shift+Right".action = consume-or-expel-window-right;
+          "Mod+Shift+Left".action = consume-or-expel-window-left;
+          "Mod+Shift+Up".action = move-window-to-workspace-up;
+          "Mod+Shift+Down".action = move-window-to-workspace-down;
 
+          # Normal Move Binds
+          "Mod+Alt+Right".action = move-column-right;
+          "Mod+Alt+Left".action = move-column-left;
+          "Mod+Alt+Up".action = move-window-up;
+          "Mod+Alt+Down".action = move-window-down;
+
+          # Window Sizing Binds
           "Mod+R".action = switch-preset-column-width;
           "Mod+F".action = maximize-column;
           "Mod+Shift+F".action = fullscreen-window;
           "Mod+C".action = center-column;
-
           "Mod+Minus".action = set-column-width "-10%";
           "Mod+Equal".action = set-column-width "+10%";
           "Mod+Shift+Minus".action = set-window-height "-10%";
           "Mod+Shift+Equal".action = set-window-height "+10%";
 
+          # Misc
           "Mod+Shift+Escape".action = toggle-keyboard-shortcuts-inhibit;
           "Mod+Shift+E".action = quit;
           "Mod+Shift+P".action = power-off-monitors;
-
-          "Mod+Shift+Ctrl+T".action = toggle-debug-tint;
         };
 
+      # Pass cursor config from stylix
+      cursor = {
+        theme = config.stylix.cursor.name;
+        size = config.stylix.cursor.size;
+      };
+
+      # Window rules
       window-rules =
         let
           colors = config.lib.stylix.colors.withHashtag;
