@@ -31,6 +31,10 @@ in
           click-method = "clickfinger";
         };
 
+        touch = {
+          map-to-output = "eDP-1";
+        };
+
         focus-follows-mouse = {
           enable = true;
           max-scroll-amount = "10%";
@@ -75,8 +79,8 @@ in
 
       layout = {
         gaps = 16;
-        struts.left = 64;
-        struts.right = 64;
+        struts.left = 16;
+        struts.right = 16;
         border.width = 4;
         always-center-single-column = true;
 
