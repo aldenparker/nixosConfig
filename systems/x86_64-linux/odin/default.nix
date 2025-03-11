@@ -95,6 +95,8 @@
     cutter
     snowman.xnconvert
     snowman.zen
+    asus-wmi-screenpad-ctl
+    discord
   ];
 
   # --- Enable printing

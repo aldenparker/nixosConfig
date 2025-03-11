@@ -37,7 +37,7 @@ in
 
         focus-follows-mouse = {
           enable = true;
-          max-scroll-amount = "10%";
+          max-scroll-amount = "50%";
         };
 
         warp-mouse-to-focus = true;
@@ -106,7 +106,9 @@ in
           { proportion = 1.0; }
         ];
 
-        default-column-width = { };
+        default-column-width = {
+          proportion = 1.0;
+        };
       };
 
       hotkey-overlay.skip-at-startup = true;
@@ -142,13 +144,14 @@ in
           "Mod+Print".action = screenshot-window;
 
           # Volume
-          "XF86AudioRaiseVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+";
-          "XF86AudioLowerVolume".action = sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
-          "XF86AudioMute".action = sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+          "XF86AudioRaiseVolume".action = sh "swayosd-client --output-volume 10 --max-volume 100";
+          "XF86AudioLowerVolume".action = sh "swayosd-client --output-volume -10 --max-volume 100";
+          "XF86AudioMute".action = sh "swayosd-client --output-volume mute-toggle";
 
-          # TODO: fix brightness control
-          "XF86MonBrightnessUp".action = sh "brightnessctl set 10%+";
-          "XF86MonBrightnessDown".action = sh "brightnessctl set 10%-";
+          # TODO: fix brightness control so it runs for all monitors
+          "XF86MonBrightnessUp".action = sh "swayosd-client --brightness +10; asus-wmi-screenpad-ctl -a 10";
+          "XF86MonBrightnessDown".action =
+            sh "swayosd-client --brightness -10; asus-wmi-screenpad-ctl -a -10";
 
           # Window Manupulation
           "Mod+Q".action = close-window;
@@ -240,6 +243,11 @@ in
           command = [
             "${lib.getExe pkgs.xwayland-satellite-unstable}"
             ":0"
+          ];
+        }
+        {
+          command = [
+            "${pkgs.swayosd}/bin/swayosd-server"
           ];
         }
       ];

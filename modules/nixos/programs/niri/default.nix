@@ -28,7 +28,11 @@ in
       fuzzel # App Launcher
       xwayland-satellite-unstable # Xwayland Support
       swaybg # Backgorund Daemon
-      brightnessctl # All Display Brightness Controle
+      pavucontrol # Audio GUI
+      blueberry # Bluetooth GUI
+      networkmanagerapplet # Wifi GUI
     ];
+
+    ${namespace}.programs.swayosd.enable = true; # For volume and brightness controll and display
   };
 }

@@ -11,6 +11,7 @@
 
     # Nixos ASUS-WMI-SCREENPAD driver
     asus-wmi-screenpad.url = "github:MatthewCash/asus-wmi-screenpad-module";
+    asus-wmi-screenpad-ctl.url = "github:aldenparker/asus-wmi-screenpad-ctl";
 
     # Home Manager
     home-manager.url = "github:nix-community/home-manager/release-24.11";
@@ -88,6 +89,7 @@
         nix-your-shell.overlays.default
         rust-overlay.overlays.default
         niri.overlays.niri
+        asus-wmi-screenpad-ctl.overlays.default
       ];
 
       # External module import for all hosts

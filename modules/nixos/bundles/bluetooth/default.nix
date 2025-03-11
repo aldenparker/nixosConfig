@@ -27,9 +27,11 @@ in
     };
 
     # --- System Applications
-    environment.systemPackages = mkIf cfg.enableAudio [
-      pkgs.bluez # Bluetooth support
-      pkgs.bluez-tools # Bluetooth tools
-    ];
+    environment.systemPackages =
+      with pkgs;
+      mkIf cfg.enableAudio [
+        bluez # Bluetooth support
+        bluez-tools # Bluetooth tools
+      ];
   };
 }
