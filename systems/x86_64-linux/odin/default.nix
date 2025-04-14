@@ -17,7 +17,6 @@
     bundles = {
       audio.enable = true;
 
-      kde.enable = true;
       niri.enable = true;
 
       bluetooth = {
@@ -92,11 +91,17 @@
     simplex-chat-desktop
     solaar
     gittyup
-    cutter
     snowman.xnconvert
     snowman.zen
     asus-wmi-screenpad-ctl
-    discord
+    vscode # Remove later when no longer needed
+
+    # Cyber Security
+    cutter
+    nmap
+    detect-it-easy
+    file
+    tcpdump
   ];
 
   # --- Enable printing

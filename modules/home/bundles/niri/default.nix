@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   namespace,
   ...
 }:
@@ -13,15 +14,14 @@ in
 {
   # --- Set options
   options.${namespace}.bundles.niri = {
-    enable = mkEnableOption "Enables niri for host and all basic desktop features";
+    enable = mkEnableOption "Enables niri and other needed modules like waybar";
   };
 
   # --- Set configuration
   config = mkIf cfg.enable {
     ${namespace}.programs = {
-      gdm.enable = true;
-      thunar.enable = true;
       niri.enable = true;
+      waybar.enable = true;
     };
   };
 }

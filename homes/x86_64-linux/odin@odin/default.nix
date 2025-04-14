@@ -16,7 +16,6 @@
       neovim.enable = true;
       kitty.enable = true;
       zed.enable = true;
-      niri.enable = true;
 
       git = {
         enable = true;
@@ -28,18 +27,12 @@
       zsh = {
         enable = true;
         useAsNixShell = true;
-        fastfetch = {
-          enable = true;
-          kitty = true;
-        };
       };
     };
 
     bundles = {
-      gruvbox = {
-        enable = true;
-        kde = true;
-      };
+      niri.enable = true;
+      gruvbox.enable = true;
     };
   };
 

@@ -15,9 +15,13 @@ mkShell {
         numpy
         pandas
         torch
+        torchvision
         unidecode
         matplotlib
         jedi-language-server
+        seaborn
+        scipy
+        scikit-learn
       ]
     ))
   ];

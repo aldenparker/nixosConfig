@@ -44,7 +44,7 @@ in
           light = "One Light";
           dark = "Gruvbox Dark";
         };
-        tab_size = 2;
+        tab_size = 4;
         ui_font_size = 16;
         buffer_font_size = 13;
         scrollbar = {
@@ -80,6 +80,9 @@ in
               path_lookup = true;
             };
           };
+        };
+        inlay_hints = {
+          enabled = true;
         };
 
         # Turn off the spyware

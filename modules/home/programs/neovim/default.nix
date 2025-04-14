@@ -130,6 +130,10 @@ in
                 package = inputs.zls-overlay.packages.${system}.zls;
               };
             };
+
+            rust = {
+              enable = true;
+            };
           };
         };
       };

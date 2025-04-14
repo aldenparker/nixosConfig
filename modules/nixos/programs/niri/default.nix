@@ -31,6 +31,8 @@ in
       pavucontrol # Audio GUI
       blueberry # Bluetooth GUI
       networkmanagerapplet # Wifi GUI
+      wdisplays # Display managment
+      kanshi # Display managment
     ];
 
     ${namespace}.programs.swayosd.enable = true; # For volume and brightness controll and display

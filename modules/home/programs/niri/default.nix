@@ -12,7 +12,7 @@ let
   cfg = config.${namespace}.programs.niri; # Config path
 in
 {
-  # TODO: add polkit, bar, screen lock
+  # TODO: add bar, screen lock
   # --- Set options
   options.${namespace}.programs.niri = {
     enable = mkEnableOption "Configures niri for host and all other programs needed for desktop environment";
@@ -35,6 +35,10 @@ in
           map-to-output = "eDP-1";
         };
 
+        tablet = {
+          map-to-output = "HDMI-A-1";
+        };
+
         focus-follows-mouse = {
           enable = true;
           max-scroll-amount = "50%";
@@ -42,38 +46,6 @@ in
 
         warp-mouse-to-focus = true;
       };
-
-      # Setup configured monitor outputs
-      outputs =
-        let
-          cfg = config.programs.niri.settings.outputs;
-        in
-        {
-          "eDP-1" = {
-            mode.width = 3840;
-            mode.height = 2160;
-            mode.refresh = 60.0;
-            position.x = 0;
-            position.y = 0;
-            scale = 1.5;
-          };
-          "DP-1" = {
-            mode.width = 3840;
-            mode.height = 1100;
-            mode.refresh = 60.017;
-            position.x = 0;
-            position.y = builtins.floor (cfg."eDP-1".mode.height / cfg."eDP-1".scale);
-            scale = 1.5;
-          };
-          "HDMI-A-1" = {
-            mode.width = 1920;
-            mode.height = 1080;
-            mode.refresh = 60.0;
-            position.x = -1 * builtins.floor (cfg."HDMI-A-1".mode.width / cfg."HDMI-A-1".scale);
-            position.y = 0;
-            scale = 1;
-          };
-        };
 
       prefer-no-csd = true;
 
@@ -224,12 +196,11 @@ in
         ];
 
       spawn-at-startup = [
-        # {
-        #   command = [
-        #     "${only-without-session}"
-        #     "${lib.getExe pkgs.waybar}"
-        #   ];
-        # }
+        {
+          command = [
+            "${lib.getExe pkgs.waybar}"
+          ];
+        }
         {
           command = [
             "${lib.getExe pkgs.swaybg}"
@@ -248,6 +219,11 @@ in
         {
           command = [
             "${pkgs.swayosd}/bin/swayosd-server"
+          ];
+        }
+        {
+          command = [
+            "${pkgs.kanshi}/bin/kanshi"
           ];
         }
       ];
