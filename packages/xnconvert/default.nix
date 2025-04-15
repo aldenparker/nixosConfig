@@ -15,11 +15,11 @@
 
 stdenv.mkDerivation rec {
   pname = "xnconvert";
-  version = "1.102.0";
+  version = "1.104.0";
 
   src = fetchurl {
     url = "https://download.xnview.com/old_versions/XnConvert/XnConvert-${version}-linux-x64.tgz";
-    sha256 = "sha256-oVAN030PdZZ3OvjbG4DsWQJ+JcmPLT4iHPhwPfgO4VY=";
+    sha256 = "sha256-77e7xCrN8CW5AyM1w3A9WzlrGtnSsT+QGVZbmOVaehI=";
   };
 
   nativeBuildInputs = [
@@ -43,8 +43,8 @@ stdenv.mkDerivation rec {
 
   # Patch dependency error
   postFixup = ''
-    patchelf --replace-needed libOpenEXR-3_2.so.29 libOpenEXR-3_2.so.31 ./XnConvert/Plugins/libOpenEXRUtil-3_2.so 
-    patchelf --replace-needed libOpenEXRCore-3_2.so.29 libOpenEXRCore-3_2.so.31 ./XnConvert/Plugins/libOpenEXRUtil-3_2.so 
+    patchelf --replace-needed libOpenEXR-3_2.so.29 libOpenEXR-3_2.so.31 ./XnConvert/Plugins/libOpenEXRUtil-3_2.so
+    patchelf --replace-needed libOpenEXRCore-3_2.so.29 libOpenEXRCore-3_2.so.31 ./XnConvert/Plugins/libOpenEXRUtil-3_2.so
   '';
 
   installPhase = ''

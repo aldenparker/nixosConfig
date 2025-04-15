@@ -112,7 +112,8 @@ in
 
           # Screenshot Binds
           "Mod+Shift+S".action = screenshot;
-          "Print".action = screenshot-screen;
+          # "Print".action = screenshot-screen; TODO: Switch back to this after it is fixed
+          "Print".action = sh "niri msg action screenshot-screen";
           "Mod+Print".action = screenshot-window;
 
           # Volume

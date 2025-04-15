@@ -7,7 +7,7 @@
 
 let
   pname = "zen";
-  version = "1.8.2b";
+  version = "1.11.3b";
 
   src = fetchurl {
     url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen-x86_64.AppImage";
