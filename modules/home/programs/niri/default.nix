@@ -198,7 +198,17 @@ in
       spawn-at-startup = [
         {
           command = [
+            "${lib.getExe pkgs.mako}"
+          ];
+        }
+        {
+          command = [
             "${lib.getExe pkgs.waybar}"
+          ];
+        }
+        {
+          command = [
+            "${pkgs.blueman}/bin/blueman-applet"
           ];
         }
         {

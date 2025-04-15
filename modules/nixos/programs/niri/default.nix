@@ -27,12 +27,14 @@ in
     environment.systemPackages = with pkgs; [
       fuzzel # App Launcher
       xwayland-satellite-unstable # Xwayland Support
-      swaybg # Backgorund Daemon
+      swaybg # Background Daemon
+      waypaper # Background GUI
       pavucontrol # Audio GUI
-      blueberry # Bluetooth GUI
+      blueman # Bluetooth GUI
       networkmanagerapplet # Wifi GUI
-      wdisplays # Display managment
-      kanshi # Display managment
+      wdisplays # Display Managment GUI
+      kanshi # Display Managment Dynamic Config
+      mission-center # Task Manager
     ];
 
     ${namespace}.programs.swayosd.enable = true; # For volume and brightness controll and display

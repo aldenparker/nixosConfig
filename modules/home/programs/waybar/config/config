@@ -23,12 +23,7 @@
   ],
   "niri/workspaces": {
     "icon-size": 32,
-    "spacing": 16,
-    "format": "{icon}",
-  	"format-icons": {
-  		"active": "",
-  		"default": ""
-  	}
+    "spacing": 16
   },
   "cpu": {
     "interval": 5,
@@ -64,7 +59,7 @@
     "spacing": 3
   },
   "clock": {
-    "format": "      {:%R\n %d.%m.%Y}",
+    "format": "{:%r\n %d.%m.%Y}",
     "tooltip-format": "<tt><small>{calendar}</small></tt>",
     "calendar": {
       "mode": "year",

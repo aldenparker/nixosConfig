@@ -32,6 +32,10 @@
       libreoffice.enable = true;
       steam.enable = true;
       retroarch.enable = true;
+      virt-manager = {
+        enable = true;
+        users = [ "odin" ];
+      };
     };
 
     services = {
@@ -102,6 +106,7 @@
     detect-it-easy
     file
     tcpdump
+    bruno
   ];
 
   # --- Enable printing

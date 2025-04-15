@@ -144,3 +144,8 @@ tooltip label {
 #clock:hover {
   background: @bg_hover;
 }
+
+#battery {
+  margin-left: 3px;
+  margin-right: 3px;
+}

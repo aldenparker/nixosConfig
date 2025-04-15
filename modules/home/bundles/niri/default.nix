@@ -22,6 +22,7 @@ in
     ${namespace}.programs = {
       niri.enable = true;
       waybar.enable = true;
+      mako.enable = true;
     };
   };
 }
