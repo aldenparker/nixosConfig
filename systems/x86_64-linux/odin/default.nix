@@ -2,8 +2,7 @@
   pkgs,
   secrets,
   ...
-}:
-{
+}: {
   imports = [
     # Import generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
@@ -34,7 +33,7 @@
       retroarch.enable = true;
       virt-manager = {
         enable = true;
-        users = [ "odin" ];
+        users = ["odin"];
       };
     };
 
@@ -98,6 +97,7 @@
     snowman.xnconvert
     snowman.zen
     asus-wmi-screenpad-ctl
+    discord
     vscode # Remove later when no longer needed
 
     # Cyber Security
@@ -128,7 +128,7 @@
   };
 
   # --- Add support for NTFS
-  boot.supportedFilesystems = [ "ntfs" ];
+  boot.supportedFilesystems = ["ntfs"];
 
   # --- Networking
   networking = {
