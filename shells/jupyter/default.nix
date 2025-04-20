@@ -22,6 +22,7 @@ mkShell {
         seaborn
         scipy
         scikit-learn
+        torchsummary
       ]
     ))
   ];

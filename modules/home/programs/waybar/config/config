@@ -8,10 +8,11 @@
   "passthrough": false,
   "height": 41,
   "modules-left": [
-    "niri/workspaces",
-    "wlr/taskbar"
+    "niri/workspaces"
   ],
-  "modules-center": [],
+  "modules-center": [
+    "niri/window"
+  ],
   "modules-right": [
     "cpu",
     "memory",
@@ -44,6 +45,14 @@
     "max-length": 10,
     "tooltip": true,
     "tooltip-format": "RAM - {used:0.1f}GiB used"
+  },
+  "niri/window": {
+  	"format": "{app_id} | {title:.80}",
+    "separate-outputs": true,
+    "icon": true,
+    "rewrite": {
+  		"dev.zed.Zed [|] (.*)": "zed | $1"
+  	}
   },
   "wlr/taskbar": {
     "format": "{icon} {title:.17}",

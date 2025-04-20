@@ -27,16 +27,22 @@ in
     environment.systemPackages = with pkgs; [
       fuzzel # App Launcher
       xwayland-satellite-unstable # Xwayland Support
-      swaybg # Background Daemon
+      swww # Background Daemon
       waypaper # Background GUI
+      swaylock # Screen locker
       pavucontrol # Audio GUI
       blueman # Bluetooth GUI
       networkmanagerapplet # Wifi GUI
       wdisplays # Display Managment GUI
       kanshi # Display Managment Dynamic Config
       mission-center # Task Manager
+      selectdefaultapplication # Default appliation manager
+      xdg-desktop-portal-gtk # For file picker portal (needs to be configured)
+      kdePackages.ark # Archive manager
+      eog # Image viewer
     ];
 
+    security.pam.services.swaylock = { }; # For enabling pam for screen unlock
     ${namespace}.programs.swayosd.enable = true; # For volume and brightness controll and display
   };
 }

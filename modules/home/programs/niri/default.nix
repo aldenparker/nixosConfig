@@ -126,6 +126,9 @@ in
           "XF86MonBrightnessDown".action =
             sh "swayosd-client --brightness -10; asus-wmi-screenpad-ctl -a -10";
 
+          # Lock and Screensaver
+          "Mod+L".action = sh "swaylock";
+
           # Window Manupulation
           "Mod+Q".action = close-window;
           "Mod+Shift+Space".action = toggle-window-floating;
@@ -214,11 +217,7 @@ in
         }
         {
           command = [
-            "${lib.getExe pkgs.swaybg}"
-            "-m"
-            "fill"
-            "-i"
-            "${config.stylix.image}"
+            "${pkgs.swww}/bin/swww-daemon"
           ];
         }
         {
@@ -244,5 +243,45 @@ in
         DISPLAY = ":0"; # For XWayland apps
       };
     };
+
+    # --- Portals config
+    home.file.".config/xdg-desktop-portal/portals.conf" = {
+      source = ./portals.conf;
+    };
+
+    # --- Swaylock config
+    home.file.".config/swaylock/config".text = ''
+      ignore-empty-password
+      show-failed-attempts
+
+      image=${config.stylix.image}
+
+      indicator-radius=30
+      indicator-thickness=5
+
+      inside-color=1d1f21
+      inside-clear-color=1d1f21
+      inside-ver-color=1d1f21
+      inside-wrong-color=1d1f21
+
+      key-hl-color=7aa6daaa
+      bs-hl-color=d54e53aa
+
+      separator-color=55555555
+
+      line-color=1d1f21
+      line-uses-ring
+
+      text-color=81a2be
+      text-clear-color=b5bd68
+      text-caps-lock-color=f0c674
+      text-ver-color=81a2be
+      text-wrong-color=cc6666
+
+      ring-color=81a2be55
+      ring-ver-color=81a2be
+      ring-clear-color=b5bd6811
+      ring-wrong-color=cc6666
+    '';
   };
 }

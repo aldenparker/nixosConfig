@@ -28,6 +28,11 @@ in
       type = types.str;
       description = "The preauth key used for authentication with the server";
     };
+
+    operator = mkOption {
+      type = types.str;
+      description = "The user who will be issuing tailscale commands";
+    };
   };
 
   # --- Set configuration
@@ -82,7 +87,7 @@ in
         fi
 
         # Otherwise authenticate with tailscale
-        ${pkgs.tailscale}/bin/tailscale up --login-server=${cfg.loginServer} --auth-key=${cfg.preAuthKey} ${tailscale-args}
+        ${pkgs.tailscale}/bin/tailscale up --login-server=${cfg.loginServer} --auth-key=${cfg.preAuthKey} --operator=${cfg.operator} ${tailscale-args}
       '';
     };
   };

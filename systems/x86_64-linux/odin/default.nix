@@ -2,7 +2,8 @@
   pkgs,
   secrets,
   ...
-}: {
+}:
+{
   imports = [
     # Import generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
@@ -15,8 +16,8 @@
   snowman = {
     bundles = {
       audio.enable = true;
-
       niri.enable = true;
+      cybersecurity.enable = true;
 
       bluetooth = {
         enable = true;
@@ -33,7 +34,7 @@
       retroarch.enable = true;
       virt-manager = {
         enable = true;
-        users = ["odin"];
+        users = [ "odin" ];
       };
     };
 
@@ -44,6 +45,7 @@
         enable = true;
         loginServer = secrets.tailscale.loginServer;
         preAuthKey = secrets.tailscale.preAuthKey;
+        operator = "odin";
       };
 
       cloudflared = {
@@ -84,6 +86,7 @@
     tor-browser
     vlc
     veracrypt
+    gnupg
     gephi
     gparted
     ktailctl
@@ -98,15 +101,8 @@
     snowman.zen
     asus-wmi-screenpad-ctl
     discord
+    blender
     vscode # Remove later when no longer needed
-
-    # Cyber Security
-    cutter
-    nmap
-    detect-it-easy
-    file
-    tcpdump
-    bruno
   ];
 
   # --- Enable printing
@@ -128,7 +124,7 @@
   };
 
   # --- Add support for NTFS
-  boot.supportedFilesystems = ["ntfs"];
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # --- Networking
   networking = {
@@ -179,6 +175,7 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "wireshark"
     ]; # Enable ‘sudo’ for the user and add network managing
   };
 
