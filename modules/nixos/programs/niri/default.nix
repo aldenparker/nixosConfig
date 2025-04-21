@@ -29,7 +29,7 @@ in
       xwayland-satellite-unstable # Xwayland Support
       swww # Background Daemon
       waypaper # Background GUI
-      swaylock # Screen locker
+      swaylock-effects # Screen locker
       pavucontrol # Audio GUI
       blueman # Bluetooth GUI
       networkmanagerapplet # Wifi GUI

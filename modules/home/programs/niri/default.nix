@@ -254,10 +254,15 @@ in
       ignore-empty-password
       show-failed-attempts
 
-      image=${config.stylix.image}
+      clock
+      timestr=%R
+      datestr=%a, %e of %B
 
-      indicator-radius=30
-      indicator-thickness=5
+      screenshots
+      effect-blur=10x2
+
+      indicator-radius=80
+      indicator-thickness=10
 
       inside-color=1d1f21
       inside-clear-color=1d1f21
