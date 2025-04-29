@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   secrets,
   ...
 }:
@@ -74,6 +75,9 @@
     };
   };
 
+  # --- Drawing Tablet Drivers
+  boot.extraModulePackages = [ config.boot.kernelPackages.digimend ];
+
   # --- Packages without configuration
   environment.systemPackages = with pkgs; [
     scanmem
@@ -102,7 +106,7 @@
     asus-wmi-screenpad-ctl
     discord
     blender
-    vscode # Remove later when no longer needed
+    audacity
   ];
 
   # --- Enable printing
