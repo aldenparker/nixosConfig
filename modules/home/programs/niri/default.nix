@@ -177,27 +177,23 @@ in
       };
 
       # Window rules
-      window-rules =
-        let
-          colors = config.lib.stylix.colors.withHashtag;
-        in
-        [
-          {
-            # Round Corners of Focus Ring
-            draw-border-with-background = false;
-            geometry-corner-radius =
-              let
-                r = 8.0;
-              in
-              {
-                top-left = r;
-                top-right = r;
-                bottom-left = r;
-                bottom-right = r;
-              };
-            clip-to-geometry = true;
-          }
-        ];
+      window-rules = [
+        {
+          # Round Corners of Focus Ring
+          draw-border-with-background = false;
+          geometry-corner-radius =
+            let
+              r = 8.0;
+            in
+            {
+              top-left = r;
+              top-right = r;
+              bottom-left = r;
+              bottom-right = r;
+            };
+          clip-to-geometry = true;
+        }
+      ];
 
       spawn-at-startup = [
         {
