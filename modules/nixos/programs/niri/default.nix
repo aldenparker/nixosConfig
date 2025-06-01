@@ -44,5 +44,31 @@ in
 
     security.pam.services.swaylock = { }; # For enabling pam for screen unlock
     ${namespace}.programs.swayosd.enable = true; # For volume and brightness controll and display
+
+    # Add japanese support - 私はアルデンテ。
+    i18n.inputMethod = {
+      type = "fcitx5";
+      enable = true;
+      fcitx5 = {
+        waylandFrontend = true;
+        addons = with pkgs; [
+          fcitx5-mozc # Japanese plugin
+          fcitx5-gtk # GTK integration
+          fcitx5-nord # Color Theme
+        ];
+      };
+    };
+
+    fonts.packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      mplus-outline-fonts.githubRelease
+      dina-font
+      proggyfonts
+    ];
   };
 }

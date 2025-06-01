@@ -23,6 +23,7 @@ in
       niri.enable = true;
       waybar.enable = true;
       mako.enable = true;
+      fcitx5.enable = true;
     };
   };
 }

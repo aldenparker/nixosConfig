@@ -208,6 +208,11 @@ in
         }
         {
           command = [
+            "${lib.getExe pkgs.fcitx5}"
+          ];
+        }
+        {
+          command = [
             "${pkgs.blueman}/bin/blueman-applet"
           ];
         }

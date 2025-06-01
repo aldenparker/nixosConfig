@@ -12,7 +12,6 @@ let
   cfg = config.${namespace}.programs.waybar; # Config path
 in
 {
-  # TODO: add bar, screen lock
   # --- Set options
   options.${namespace}.programs.waybar = {
     enable = mkEnableOption "Installs and configures waybar";

@@ -2,6 +2,8 @@
   pkgs,
   config,
   secrets,
+  inputs,
+  system,
   ...
 }:
 {
@@ -80,6 +82,7 @@
 
   # --- Packages without configuration
   environment.systemPackages = with pkgs; [
+    inputs.zen-browser.packages."${system}".default
     scanmem
     anki
     kicad
@@ -102,7 +105,6 @@
     solaar
     gittyup
     snowman.xnconvert
-    snowman.zen
     asus-wmi-screenpad-ctl
     discord
     blender
