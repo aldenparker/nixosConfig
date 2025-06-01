@@ -24,6 +24,9 @@ in
     stylix = {
       enable = true;
 
+      # Disable for specific programs
+      targets.zed.enable = false;
+
       # Wallpaper and Color
       image = ../../../../assets/Wallpapers/Wallhaven/hao-sect.jpg; # Default wallpaper
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
@@ -47,7 +50,7 @@ in
       # Fonts
       fonts = {
         monospace = {
-          package = pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; };
+          package = pkgs.nerd-fonts.jetbrains-mono;
           name = "JetBrainsMono Nerd Font Mono";
         };
         sansSerif = {

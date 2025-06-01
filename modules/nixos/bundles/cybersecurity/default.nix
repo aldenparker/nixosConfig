@@ -31,7 +31,7 @@ in
       tcpflow # Capture TCP data transmitted in a easy way to analyse
       macchanger # Chaneg mac address of device
       nbtscan # Scan networks searching for NetBIOS information
-      ike-scan # Tool to discover, fingerprint and test IPsec VPN servers
+      # ike-scan # Tool to discover, fingerprint and test IPsec VPN servers
       ipcalc # Calculate IP address parameters
       dnsenum # Gather all DNS records for a domain
       dnsrecon # DNS enum with focus on vulnerabilities

@@ -13,7 +13,6 @@
     # --- Configure individual packages
     programs = {
       geany.enable = true;
-      neovim.enable = true;
       kitty.enable = true;
       zed.enable = true;
 
@@ -41,5 +40,5 @@
   home.homeDirectory = "/home/odin";
 
   # --- Home Manager Version - WARNING: HERE BE DRAGONS
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 }

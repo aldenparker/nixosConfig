@@ -18,7 +18,6 @@
         userEmail = "ajparker1401@gmail.com";
         userGithubToken = secrets.git.githubToken;
       };
-      neovim.enable = true;
       zsh.enable = true;
       kitty.enable = true;
     };

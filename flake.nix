@@ -3,30 +3,39 @@
 
   inputs = {
     # NixPkgs and Unstable
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Hardware Configurations
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # Nixos ASUS-WMI-SCREENPAD driver
-    asus-wmi-screenpad.url = "github:MatthewCash/asus-wmi-screenpad-module";
+    asus-wmi-screenpad = {
+      url = "github:MatthewCash/asus-wmi-screenpad-module";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     asus-wmi-screenpad-ctl.url = "github:aldenparker/asus-wmi-screenpad-ctl";
 
     # Home Manager
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Snowfall Lib
-    snowfall-lib.url = "github:snowfallorg/lib?ref=v3.0.3";
-    snowfall-lib.inputs.nixpkgs.follows = "nixpkgs";
+    snowfall-lib = {
+      url = "github:snowfallorg/lib?ref=v3.0.3";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # NVF for easy neovim setup
-    nvf.url = "github:notashelf/nvf";
-    nvf.inputs.nixpkgs.follows = "nixpkgs";
+    nvf = {
+      url = "github:notashelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Stylix
-    stylix.url = "github:danth/stylix/release-24.11";
+    stylix.url = "github:danth/stylix/release-25.05";
 
     # Plasma Manager
     plasma-manager = {
@@ -120,7 +129,7 @@
       # External module import for all homes
       homes.modules = with inputs; [
         nvf.homeManagerModules.default
-        stylix.homeManagerModules.stylix
+        stylix.homeModules.stylix
         plasma-manager.homeManagerModules.plasma-manager
       ];
 

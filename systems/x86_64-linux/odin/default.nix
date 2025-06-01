@@ -34,7 +34,6 @@
       keymapp.enable = true;
       libreoffice.enable = true;
       steam.enable = true;
-      retroarch.enable = true;
       virt-manager = {
         enable = true;
         users = [ "odin" ];
@@ -83,6 +82,7 @@
   # --- Packages without configuration
   environment.systemPackages = with pkgs; [
     inputs.zen-browser.packages."${system}".default
+    retroarch-full
     scanmem
     anki
     kicad
@@ -186,5 +186,5 @@
   };
 
   # ---- NixOS Settings. WARNING: HERE BE DRAGONS
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 }

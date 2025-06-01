@@ -37,7 +37,7 @@ in
       syntaxHighlighting.enable = true;
 
       # Fastfetch runs on terminal startup
-      initExtra = ''
+      initContent = ''
         ${if cfg.fastfetch.enable then "fastfetch" else ""}
         ${if cfg.useAsNixShell then "nix-your-shell zsh | source /dev/stdin" else ""}
       '';
