@@ -22,7 +22,7 @@ in
       enable = true;
       themeFile = "GruvboxMaterialDarkMedium";
       settings = {
-        font_family = "JetBrainsMono Nerd Font";
+        font_family = "JetBrainsMono NFM";
         font_size = 11;
         bold_font = "auto";
         italic_font = "auto";

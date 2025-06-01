@@ -10,7 +10,7 @@
 
   # Set flake session variable for nh programs
   environment.sessionVariables = {
-    FLAKE = "/etc/nixos";
+    NH_FLAKE = "/etc/nixos";
   };
 
   # --- System Package Settings

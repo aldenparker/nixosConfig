@@ -34,5 +34,5 @@
   home.homeDirectory = "/home/yggdrasil";
 
   # --- Home Manager Version -  WARNING: HERE BE DRAGONS
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 }

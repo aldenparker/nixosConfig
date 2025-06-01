@@ -29,5 +29,5 @@
   home.homeDirectory = "/home/heimdallur";
 
   # --- Home Manager Version -  WARNING: HERE BE DRAGONS
-  home.stateVersion = "24.11";
+  home.stateVersion = "25.05";
 }

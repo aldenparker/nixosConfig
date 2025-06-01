@@ -25,7 +25,10 @@ in
       enable = true;
 
       # Disable for specific programs
-      targets.zed.enable = false;
+      targets = {
+        zed.enable = false;
+        kitty.enable = false;
+      };
 
       # Wallpaper and Color
       image = ../../../../assets/Wallpapers/Wallhaven/hao-sect.jpg; # Default wallpaper
@@ -51,7 +54,7 @@ in
       fonts = {
         monospace = {
           package = pkgs.nerd-fonts.jetbrains-mono;
-          name = "JetBrainsMono Nerd Font Mono";
+          name = "JetBrainsMono NFM";
         };
         sansSerif = {
           package = pkgs.dejavu_fonts;
