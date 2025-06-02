@@ -83,6 +83,7 @@
   environment.systemPackages = with pkgs; [
     inputs.zen-browser.packages."${system}".default
     retroarch-full
+    kdePackages.elisa
     scanmem
     anki
     kicad

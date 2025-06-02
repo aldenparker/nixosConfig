@@ -109,6 +109,15 @@ in
           "Mod+T".action = spawn "kitty";
           "Mod+O".action = show-hotkey-overlay;
           "Mod+D".action = spawn "fuzzel";
+          "Shift+Tab".action = sh ''
+            pid=$(ps aux | grep "kitty +kitten.*quick-access" | grep -v grep | awk '{print $2}')
+            if [ -z "$pid" ]
+            then
+              kitten quick-access-terminal &
+            else
+              kill $pid
+            fi
+          ''; # Script to fix quick access terminal not closing when hotkey used
 
           # Screenshot Binds
           "Mod+Shift+S".action = screenshot;

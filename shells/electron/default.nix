@@ -4,7 +4,7 @@
 }:
 
 # Creates electron shell
-(pkgs.buildFHSUserEnv {
+(pkgs.buildFHSEnv {
   name = "electron-env";
   targetPkgs =
     pkgs:

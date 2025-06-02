@@ -46,5 +46,9 @@ in
         cursor_trail_start_threshold = 0;
       };
     };
+
+    home.file.".config/kitty/quick-access-terminal.conf" = {
+      source = ./quick-access-terminal.conf;
+    };
   };
 }
