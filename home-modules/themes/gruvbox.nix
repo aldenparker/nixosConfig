@@ -31,7 +31,7 @@ in
       };
 
       # Wallpaper and Color
-      image = ../../assets/wallpapers/wallhaven/hao-sect.jpg; # Default wallpaper
+      image = ../../assets/wallpapers/hao-sect.jpg; # Default wallpaper
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
       polarity = "dark";
 
