@@ -52,7 +52,7 @@ in
 
     # --- Fastfetch config
     home.file.".config/fastfetch/nixos-icon.png" = mkIf cfg.fastfetch.kitty {
-      source = ./nixos-icon.png;
+      source = ../../assets/nixos-icon.png;
     };
 
     programs.fastfetch = {
