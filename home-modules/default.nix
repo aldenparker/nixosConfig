@@ -1,0 +1,9 @@
+{ ... }:
+
+{
+  imports = [
+    ./themes
+    ./desktops
+    ./programs
+  ];
+}

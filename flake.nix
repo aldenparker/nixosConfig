@@ -1,156 +1,238 @@
 {
-  description = "Snowman";
+  description = "aldenparker's dotfiles";
 
   inputs = {
-    # NixPkgs and Unstable
+    # --- PACKAGE CHANNELS ---
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Hardware Configurations
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # --- HARDWARE FLAKES ---
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master"; # Hardware Configurations
+    asus-wmi-screenpad-ctl.url = "github:aldenparker/asus-wmi-screenpad-ctl"; # ASUS-WMI-SCREENPAD control utility
 
-    # Nixos ASUS-WMI-SCREENPAD driver
     asus-wmi-screenpad = {
       url = "github:MatthewCash/asus-wmi-screenpad-module";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    asus-wmi-screenpad-ctl.url = "github:aldenparker/asus-wmi-screenpad-ctl";
+    }; # ASUS-WMI-SCREENPAD driver
 
-    # Home Manager
+    # --- NIX ADDONS ---
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
+    }; # Configures and manages dotfiles
 
-    # Snowfall Lib
-    snowfall-lib = {
-      url = "github:snowfallorg/lib?ref=v3.0.3";
+    stylix = {
+      url = "github:danth/stylix/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
+    }; # Styles entire system
 
-    # NVF for easy neovim setup
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Stylix
-    stylix.url = "github:danth/stylix/release-25.05";
-
-    # Plasma Manager
-    plasma-manager = {
-      url = "github:nix-community/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
-    };
-
-    # Program to help with adding zsh support in nix shells and nix develop
     nix-your-shell = {
       url = "github:MercuryTechnologies/nix-your-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
+    }; # Helps with adding zsh support in nix shells and nix develop
 
-    # Rust overlay
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
+    }; # Provides newest version of rust
 
-    # Zig overlays
-    zig-overlay.url = "github:mitchellh/zig-overlay";
-    zls-overlay.url = "github:zigtools/zls";
+    zig-overlay = {
+      url = "github:mitchellh/zig-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    }; # Provides newest version of zig
 
-    # Niri
-    niri.url = "github:sodiboo/niri-flake";
+    zls-overlay = {
+      url = "github:zigtools/zls";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.zig-overlay.follows = "zig-overlay";
+    }; # Provides newest version of zls
 
-    # Zen Browser
+    # --- PROGRAMS ---
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    }; # Newest version of niri desktop
+
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "unstable";
-    };
+    }; # Newest version of zen browser
   };
 
   outputs =
-    inputs:
+    {
+      home-manager,
+      nixpkgs,
+      nixos-hardware,
+      niri,
+      nix-your-shell,
+      rust-overlay,
+      asus-wmi-screenpad-ctl,
+      ...
+    }@inputs:
+
     let
-      # Import all secrets used in config
-      secrets = builtins.fromJSON (builtins.readFile "${inputs.self}/secrets/secrets.json");
+      secrets = builtins.fromJSON (builtins.readFile "${inputs.self}/secrets.json"); # Import all secrets for configs
+      namespace = "snowman"; # Used to put all custom config options in one place
 
-      # Setup internal library
-      lib = inputs.snowfall-lib.mkLib {
-        inherit inputs;
-        src = ./.;
-
-        snowfall = {
-          meta = {
-            name = "snowman";
-            title = "Snowman";
-          };
-
-          namespace = "snowman";
-        };
-      };
-    in
-    # Setup flake
-    lib.mkFlake {
-      # Configure nixpkgs
-      channels-config = {
+      pkg-config = {
         allowUnfree = true;
-        permittedInsecurePackages = [ ];
-      };
+        allowUnfreePredicate = _: true;
+      }; # The config options for nixpkgs
 
-      # External overlay import
-      overlays = with inputs; [
+      pkg-overlays = [
         nix-your-shell.overlays.default
         rust-overlay.overlays.default
         niri.overlays.niri
-        asus-wmi-screenpad-ctl.overlays.default
-      ];
+        (import ./overlay.nix { flake-inputs = inputs; })
+      ]; # All overlays to be applied to pkgs (used for createPkgs and config for normal nixos)
 
-      # External module import for all hosts
-      systems.modules.nixos = with inputs; [
-        home-manager.nixosModules.home-manager
-        niri.nixosModules.niri
-      ];
+      createPkgs =
+        system:
+        import nixpkgs {
+          inherit system;
+          config = pkg-config;
+          overlays = pkg-overlays;
+        }; # Used to keep consitent package config
 
-      # Pass special args to hosts
-      systems.hosts.odin.specialArgs = {
-        inherit secrets;
+      pkgs-x86_64-linux = createPkgs "x86_64-linux";
+      pkgs-aarch64-linux = createPkgs "aarch64-linux";
+    in
+    {
+      nixosConfigurations = {
+        # --- x86_64-linux ---
+        odin = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nixos-config
+            ./nixos-config/x86_64-linux/odin
+            ./nixos-modules
+            niri.nixosModules.niri
+          ];
+
+          specialArgs = {
+            system = "x86_64-linux";
+            inherit secrets;
+            inherit pkg-config;
+            inherit pkg-overlays;
+            inherit namespace;
+            flake-inputs = inputs;
+          };
+        };
+
+        yggdrasil = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./nixos-config
+            ./nixos-config/x86_64-linux/yggdrasil
+            ./nixos-modules
+          ];
+
+          specialArgs = {
+            system = "x86_64-linux";
+            inherit secrets;
+            inherit pkg-config;
+            inherit pkg-overlays;
+            inherit namespace;
+            flake-inputs = inputs;
+          };
+        };
+
+        # --- aarch64-linux ---
+        heimdallur = nixpkgs.lib.nixosSystem {
+          system = "aarch64-linux";
+          modules = [
+            ./nixos-config
+            ./nixos-config/aarch64-linux/heimdallur
+            ./nixos-modules
+            nixos-hardware.nixosModules.raspberry-pi-3
+          ];
+
+          specialArgs = {
+            system = "aarch64-linux";
+            inherit secrets;
+            inherit pkg-config;
+            inherit pkg-overlays;
+            inherit namespace;
+            flake-inputs = inputs;
+          };
+        };
       };
 
-      systems.hosts.yggdrasil.specialArgs = {
-        inherit secrets;
+      homeConfigurations = {
+        # --- x86_64-linux ---
+        "odin@odin" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          modules = [
+            ./home-config
+            ./home-config/x86_64-linux/odin
+            ./home-modules
+          ];
+
+          extraSpecialArgs = {
+            system = "x86_64-linux";
+            inherit secrets;
+            inherit namespace;
+            flake-inputs = inputs;
+          };
+        };
+
+        "yggdrasil@yggdrasil" = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgs-x86_64-linux;
+          modules = [
+            ./home-config
+            ./home-config/x86_64-linux/yggdrasil
+            ./home-modules
+          ];
+
+          extraSpecialArgs = {
+            system = "x86_64-linux";
+            inherit secrets;
+            inherit namespace;
+            flake-inputs = inputs;
+          };
+        };
+
+        # --- aarch64-linux ---
+        "heimdallur@heimdallur" = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgs-aarch64-linux;
+          modules = [
+            ./home-config
+            ./home-config/aarch64-linux/heimdallur
+            ./home-modules
+          ];
+
+          extraSpecialArgs = {
+            system = "aarch64-linux";
+            inherit secrets;
+            inherit namespace;
+            flake-inputs = inputs;
+          };
+        };
       };
 
-      systems.hosts.heimdallur.specialArgs = {
-        inherit secrets;
+      packages = {
+        x86_64-linux = import ./packages/x86_64-linux.nix {
+          pkgs = pkgs-x86_64-linux;
+        };
+
+        aarch64-linux = import ./packages/aarch64-linux.nix {
+          pkgs = pkgs-aarch64-linux;
+        };
       };
 
-      # External module import for all homes
-      homes.modules = with inputs; [
-        nvf.homeManagerModules.default
-        stylix.homeModules.stylix
-        plasma-manager.homeManagerModules.plasma-manager
-      ];
+      devShells = {
+        x86_64-linux = import ./shells/x86_64-linux.nix {
+          system = "x86_64-linux";
+          pkgs = pkgs-x86_64-linux;
+          flake-inputs = inputs;
+        };
 
-      homes.users."odin@odin".specialArgs = {
-        inherit secrets;
+        aarch64-linux = import ./shells/aarch64-linux.nix {
+          system = "aarch64-linux";
+          pkgs = pkgs-aarch64-linux;
+          flake-inputs = inputs;
+        };
       };
-
-      homes.users."yggdrasil@yggdrasil".specialArgs = {
-        inherit secrets;
-      };
-
-      homes.users."heimdallur@heimdallur".specialArgs = {
-        inherit secrets;
-      };
-
-      # Import hardware packages for raspberry pi into the heimdallur device config
-      systems.hosts.heimdallur.modules = with inputs; [
-        nixos-hardware.nixosModules.raspberry-pi-3
-      ];
-    }
-    // {
-      self = inputs.self;
     };
 }
