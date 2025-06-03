@@ -31,7 +31,7 @@ in
       };
 
       # Wallpaper and Color
-      image = ../../../../assets/wallpapers/wallhaven/hao-sect.jpg; # Default wallpaper
+      image = ../../assets/wallpapers/wallhaven/hao-sect.jpg; # Default wallpaper
       base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
       polarity = "dark";
 
@@ -48,7 +48,7 @@ in
       };
 
       # Icons
-      iconTheme = mkIf (!cfg.kde) {
+      iconTheme = {
         enable = true;
         package = pkgs.gruvbox-plus-icons;
         dark = "Gruvbox-Plus-Dark";

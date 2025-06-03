@@ -36,6 +36,9 @@ in
       xwayland-satellite # Xwayland Support
       swww # Background Daemon
       waypaper # Background GUI
+      waybar # Status Bar
+      mako # Notifications
+      libnotify # Start notifications from terminal
       swaylock-effects # Screen locker
       pavucontrol # Audio GUI
       blueman # Bluetooth GUI
@@ -50,6 +53,8 @@ in
       kdePackages.elisa # Music Player
       swayosd # Volume and Brightness GUI
       gedit # Simple text editor
+      kitty # Terminal
+      zed-editor # Full code editor
     ];
 
     # Create startup service for swayOSD

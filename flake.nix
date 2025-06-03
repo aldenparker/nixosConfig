@@ -68,6 +68,7 @@
       nix-your-shell,
       rust-overlay,
       asus-wmi-screenpad-ctl,
+      stylix,
       ...
     }@inputs:
 
@@ -97,17 +98,27 @@
 
       pkgs-x86_64-linux = createPkgs "x86_64-linux";
       pkgs-aarch64-linux = createPkgs "aarch64-linux";
+
+      nixos-modules = [
+        niri.nixosModules.niri
+        ./nixos-config
+        ./nixos-modules
+      ];
+
+      home-modules = [
+        niri.homeModules.niri
+        stylix.homeModules.stylix
+        ./home-config
+        ./home-modules
+      ];
     in
     {
       nixosConfigurations = {
         # --- x86_64-linux ---
         odin = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-            ./nixos-config
+          modules = nixos-modules ++ [
             ./nixos-config/x86_64-linux/odin
-            ./nixos-modules
-            niri.nixosModules.niri
           ];
 
           specialArgs = {
@@ -122,10 +133,8 @@
 
         yggdrasil = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [
-            ./nixos-config
+          modules = nixos-modules ++ [
             ./nixos-config/x86_64-linux/yggdrasil
-            ./nixos-modules
           ];
 
           specialArgs = {
@@ -141,10 +150,8 @@
         # --- aarch64-linux ---
         heimdallur = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          modules = [
-            ./nixos-config
+          modules = nixos-modules ++ [
             ./nixos-config/aarch64-linux/heimdallur
-            ./nixos-modules
             nixos-hardware.nixosModules.raspberry-pi-3
           ];
 
@@ -163,10 +170,8 @@
         # --- x86_64-linux ---
         "odin@odin" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = [
-            ./home-config
-            ./home-config/x86_64-linux/odin
-            ./home-modules
+          modules = home-modules ++ [
+            ./home-config/x86_64-linux/odin-odin
           ];
 
           extraSpecialArgs = {
@@ -179,10 +184,8 @@
 
         "yggdrasil@yggdrasil" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs-x86_64-linux;
-          modules = [
-            ./home-config
-            ./home-config/x86_64-linux/yggdrasil
-            ./home-modules
+          modules = home-modules ++ [
+            ./home-config/x86_64-linux/yggdrasil-yggdrasil
           ];
 
           extraSpecialArgs = {
@@ -196,10 +199,8 @@
         # --- aarch64-linux ---
         "heimdallur@heimdallur" = home-manager.lib.homeManagerConfiguration {
           pkgs = pkgs-aarch64-linux;
-          modules = [
-            ./home-config
-            ./home-config/aarch64-linux/heimdallur
-            ./home-modules
+          modules = home-modules ++ [
+            ./home-config/aarch64-linux/heimdallur-heimdallur
           ];
 
           extraSpecialArgs = {

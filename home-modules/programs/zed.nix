@@ -39,6 +39,7 @@ in
         icon_theme = "Bearded Icon Theme";
         vim_mode = false;
         base_keymap = "VSCode";
+        buffer_font_size = mkForce 13; # Override stylix size
         tab_size = 4;
         scrollbar = {
           show = "auto";

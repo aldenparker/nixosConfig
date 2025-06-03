@@ -13,7 +13,7 @@
         enable = true;
         userName = "Alden Parker";
         userEmail = "ajparker1401@gmail.com";
-        userGithubToken = secrets.git.githubToken;
+        userGithubToken = secrets.git.token;
       };
 
       zsh.enable = true;
