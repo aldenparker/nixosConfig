@@ -50,7 +50,7 @@ in
       xdg-desktop-portal-gtk # For file picker portal (needs to be configured)
       kdePackages.ark # Archive manager
       eog # Image viewer
-      kdePackages.elisa # Music Player
+      tauon # Music Player
       swayosd # Volume and Brightness GUI
       gedit # Simple text editor
       kitty # Terminal
