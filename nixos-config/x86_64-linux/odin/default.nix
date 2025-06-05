@@ -77,6 +77,7 @@ in
   # --- Packages without configuration
   environment.systemPackages = with pkgs; [
     flake-inputs.zen-browser.packages."${system}".default
+    gimp3
     retroarch-full
     scanmem
     anki
