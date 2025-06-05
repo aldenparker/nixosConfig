@@ -206,43 +206,44 @@ in
       spawn-at-startup = [
         {
           command = [
-            "${lib.getExe pkgs.mako}"
+            "mako"
           ];
         }
         {
           command = [
-            "${lib.getExe pkgs.waybar}"
+            "waybar"
           ];
         }
         {
           command = [
-            "${lib.getExe pkgs.fcitx5}"
+            "fcitx5"
+            "-d"
           ];
         }
         {
           command = [
-            "${pkgs.blueman}/bin/blueman-applet"
+            "blueman-applet"
           ];
         }
         {
           command = [
-            "${pkgs.swww}/bin/swww-daemon"
+            "swww-daemon"
           ];
         }
         {
           command = [
-            "${lib.getExe pkgs.xwayland-satellite}"
+            "xwayland-satellite"
             ":0"
           ];
         }
         {
           command = [
-            "${pkgs.swayosd}/bin/swayosd-server"
+            "swayosd-server"
           ];
         }
         {
           command = [
-            "${pkgs.kanshi}/bin/kanshi"
+            "kanshi"
           ];
         }
       ];
