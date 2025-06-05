@@ -51,6 +51,7 @@ in
       kdePackages.ark # Archive manager
       eog # Image viewer
       tauon # Music Player
+      picard # Music Tagger
       swayosd # Volume and Brightness GUI
       gedit # Simple text editor
       kitty # Terminal
