@@ -1,24 +1,21 @@
-{ flake-inputs }:
+{ unstable-channel }:
 
-let
-  channel-unstable = flake-inputs.unstable;
-in
 _final: _prev: rec {
   # Swap to unstable channel
-  inherit (channel-unstable) anki;
-  inherit (channel-unstable) blender;
-  inherit (channel-unstable) bruno;
-  inherit (channel-unstable) cloudflared;
-  inherit (channel-unstable) glance;
-  inherit (channel-unstable) kitty;
-  inherit (channel-unstable) ktailctl;
-  inherit (channel-unstable) mako;
-  inherit (channel-unstable) metasploit;
-  inherit (channel-unstable) qemu;
-  inherit (channel-unstable) simplex-chat-desktop;
-  inherit (channel-unstable) solaar;
-  inherit (channel-unstable) waypaper;
-  inherit (channel-unstable) zed-editor;
+  inherit (unstable-channel) anki;
+  inherit (unstable-channel) blender;
+  inherit (unstable-channel) bruno;
+  inherit (unstable-channel) cloudflared;
+  inherit (unstable-channel) glance;
+  inherit (unstable-channel) kitty;
+  inherit (unstable-channel) ktailctl;
+  inherit (unstable-channel) mako;
+  inherit (unstable-channel) metasploit;
+  inherit (unstable-channel) qemu;
+  inherit (unstable-channel) simplex-chat-desktop;
+  inherit (unstable-channel) solaar;
+  inherit (unstable-channel) waypaper;
+  inherit (unstable-channel) zed-editor;
 
   # Fix nodjs
   nodejs = _prev.nodejs;

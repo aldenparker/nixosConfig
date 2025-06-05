@@ -1,19 +1,12 @@
 {
   config,
   pkgs,
-  pkg-overlays,
-  pkg-config,
   ...
 }:
 
 {
   # --- Enable flakes
   nix.settings.experimental-features = "nix-command flakes";
-
-  # --- Allow unfree packages and add overlays
-  nixpkgs.config = pkg-config // {
-    overlays = pkg-overlays;
-  };
 
   # --- Set flake session variable for nh programs
   environment.sessionVariables = {

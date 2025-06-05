@@ -69,20 +69,7 @@ in
 
     security.pam.services.swaylock = { }; # For enabling pam for screen unlock
 
-    # Add japanese support - 私はアルデンテ。
-    i18n.inputMethod = {
-      type = "fcitx5";
-      enable = true;
-      fcitx5 = {
-        waylandFrontend = true;
-        addons = with pkgs; [
-          fcitx5-mozc # Japanese plugin
-          fcitx5-gtk # GTK integration
-          fcitx5-nord # Color Theme
-        ];
-      };
-    };
-
+    # Add fonts for all languages and needs
     fonts.packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans

@@ -73,6 +73,7 @@
     }@inputs:
 
     let
+      # --- Config Values
       secrets = builtins.fromJSON (builtins.readFile "${inputs.self}/secrets.json"); # Import all secrets for configs
       namespace = "snowman"; # Used to put all custom config options in one place
 
@@ -85,155 +86,135 @@
         nix-your-shell.overlays.default
         rust-overlay.overlays.default
         niri.overlays.niri
-        (import ./overlay.nix { flake-inputs = inputs; })
-      ]; # All overlays to be applied to pkgs (used for createPkgs and config for normal nixos)
+      ]; # All external overlays to be applied to pkgs (used for createPkgs and config for normal nixos)
+
+      nixos-modules = [
+        niri.nixosModules.niri
+        ./nixos-config
+        ./nixos-modules
+      ]; # Nixos modules to load
+
+      home-modules = [
+        stylix.homeModules.stylix
+        ./home-config
+        ./home-modules
+      ]; # Home manager modules to load
+
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ]; # List of systems that I have configs for (generated needed variables)
+
+      # --- Creation Functions
+      createForEachSystem =
+        createFunc:
+        builtins.listToAttrs (
+          map (system: {
+            name = system;
+            value = createFunc system;
+          }) systems
+        );
+
+      createHomeSpecialArgs = system: {
+        inherit system;
+        inherit secrets;
+        inherit namespace;
+        flake-inputs = inputs;
+      };
+
+      createNixosSpecialArgs =
+        system:
+        {
+          inherit pkg-config;
+          inherit pkg-overlays;
+        }
+        // createHomeSpecialArgs system;
 
       createPkgs =
         system:
         import nixpkgs {
           inherit system;
           config = pkg-config;
-          overlays = pkg-overlays;
+          overlays = pkg-overlays ++ [
+            (import ./overlay.nix { unstable-channel = inputs.unstable.legacyPackages.${system}; })
+          ];
         }; # Used to keep consitent package config
 
-      pkgs-x86_64-linux = createPkgs "x86_64-linux";
-      pkgs-aarch64-linux = createPkgs "aarch64-linux";
+      createPackages =
+        system:
+        import ./packages/${system}.nix {
+          pkgs = pkgs.${system};
+        }; # Import packages for system
 
-      nixos-modules = [
-        niri.nixosModules.niri
-        ./nixos-config
-        ./nixos-modules
-      ];
+      createDevShells =
+        system:
+        import ./shells/${system}.nix {
+          inherit system;
+          pkgs = pkgs.${system};
+          flake-inputs = inputs;
+        }; # Import devshells for system
 
-      home-modules = [
-        niri.homeModules.niri
-        stylix.homeModules.stylix
-        ./home-config
-        ./home-modules
-      ];
+      # --- Built Vairables
+      nixos-special-args = createForEachSystem createNixosSpecialArgs;
+      home-special-args = createForEachSystem createHomeSpecialArgs;
+      pkgs = createForEachSystem createPkgs;
     in
     {
       nixosConfigurations = {
         # --- x86_64-linux ---
         odin = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          pkgs = pkgs.x86_64-linux;
+          specialArgs = nixos-special-args.x86_64-linux;
           modules = nixos-modules ++ [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = home-special-args.x86_64-linux;
+              home-manager.users.odin.imports = home-modules ++ [
+                ./home-config/x86_64-linux/odin-odin
+              ];
+            }
             ./nixos-config/x86_64-linux/odin
           ];
-
-          specialArgs = {
-            system = "x86_64-linux";
-            inherit secrets;
-            inherit pkg-config;
-            inherit pkg-overlays;
-            inherit namespace;
-            flake-inputs = inputs;
-          };
         };
 
         yggdrasil = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
+          pkgs = pkgs.x86_64-linux;
+          specialArgs = nixos-special-args.x86_64-linux;
           modules = nixos-modules ++ [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = home-special-args.x86_64-linux;
+              home-manager.users.yggdrasil.imports = home-modules ++ [
+                ./home-config/x86_64-linux/yggdrasil-yggdrasil
+              ];
+            }
             ./nixos-config/x86_64-linux/yggdrasil
           ];
-
-          specialArgs = {
-            system = "x86_64-linux";
-            inherit secrets;
-            inherit pkg-config;
-            inherit pkg-overlays;
-            inherit namespace;
-            flake-inputs = inputs;
-          };
         };
 
         # --- aarch64-linux ---
         heimdallur = nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
+          pkgs = pkgs.aarch64-linux;
+          specialArgs = nixos-special-args.aarch64-linux;
           modules = nixos-modules ++ [
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = home-special-args.aarch64-linux;
+              home-manager.users.heimdallur.imports = home-modules ++ [
+                ./home-config/aarch64-linux/heimdallur-heimdallur
+              ];
+            }
             ./nixos-config/aarch64-linux/heimdallur
             nixos-hardware.nixosModules.raspberry-pi-3
           ];
-
-          specialArgs = {
-            system = "aarch64-linux";
-            inherit secrets;
-            inherit pkg-config;
-            inherit pkg-overlays;
-            inherit namespace;
-            flake-inputs = inputs;
-          };
         };
       };
 
-      homeConfigurations = {
-        # --- x86_64-linux ---
-        "odin@odin" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          modules = home-modules ++ [
-            ./home-config/x86_64-linux/odin-odin
-          ];
+      packages = createForEachSystem createPackages;
 
-          extraSpecialArgs = {
-            system = "x86_64-linux";
-            inherit secrets;
-            inherit namespace;
-            flake-inputs = inputs;
-          };
-        };
-
-        "yggdrasil@yggdrasil" = home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgs-x86_64-linux;
-          modules = home-modules ++ [
-            ./home-config/x86_64-linux/yggdrasil-yggdrasil
-          ];
-
-          extraSpecialArgs = {
-            system = "x86_64-linux";
-            inherit secrets;
-            inherit namespace;
-            flake-inputs = inputs;
-          };
-        };
-
-        # --- aarch64-linux ---
-        "heimdallur@heimdallur" = home-manager.lib.homeManagerConfiguration {
-          pkgs = pkgs-aarch64-linux;
-          modules = home-modules ++ [
-            ./home-config/aarch64-linux/heimdallur-heimdallur
-          ];
-
-          extraSpecialArgs = {
-            system = "aarch64-linux";
-            inherit secrets;
-            inherit namespace;
-            flake-inputs = inputs;
-          };
-        };
-      };
-
-      packages = {
-        x86_64-linux = import ./packages/x86_64-linux.nix {
-          pkgs = pkgs-x86_64-linux;
-        };
-
-        aarch64-linux = import ./packages/aarch64-linux.nix {
-          pkgs = pkgs-aarch64-linux;
-        };
-      };
-
-      devShells = {
-        x86_64-linux = import ./shells/x86_64-linux.nix {
-          system = "x86_64-linux";
-          pkgs = pkgs-x86_64-linux;
-          flake-inputs = inputs;
-        };
-
-        aarch64-linux = import ./shells/aarch64-linux.nix {
-          system = "aarch64-linux";
-          pkgs = pkgs-aarch64-linux;
-          flake-inputs = inputs;
-        };
-      };
+      devShells = createForEachSystem createDevShells;
     };
 }
