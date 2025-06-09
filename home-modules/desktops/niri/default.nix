@@ -108,15 +108,7 @@ in
           "Mod+T".action = spawn "kitty";
           "Mod+O".action = show-hotkey-overlay;
           "Mod+D".action = spawn "fuzzel";
-          "Mod+Alt+Tab".action = sh ''
-            pid=$(ps aux | grep "kitty +kitten.*quick-access" | grep -v grep | awk '{print $2}')
-            if [ -z "$pid" ]
-            then
-              kitten quick-access-terminal &
-            else
-              kill $pid
-            fi
-          ''; # Script to fix quick access terminal not closing when hotkey used
+          "Mod+Alt+Tab".action = sh "kitten quick-access-terminal"; # Spawn quick acess terminal
 
           # Screenshot Binds
           "Mod+Shift+S".action = screenshot;
@@ -141,6 +133,7 @@ in
           "Mod+Q".action = close-window;
           "Mod+Shift+Space".action = toggle-window-floating;
           "Mod+Space".action = toggle-column-tabbed-display;
+          # "Mod+Ctrl+Up".action = toggle-overview; TODO: make available on update
 
           # Focus Binds
           "Mod+Right".action = focus-column-right;
@@ -254,7 +247,6 @@ in
 
         # For input handler
         XMODIFIERS = "@im=fcitx";
-        GTK_IM_MODULE = "fcitx";
         QT_IM_MODULE = "fcitx";
       };
     };

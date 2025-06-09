@@ -25,8 +25,11 @@ in
       wayland = true;
     };
 
-    # Install Niri and Make electron use Waland
-    programs.niri.enable = true;
+    # Install Niri and make electron use Waland
+    programs.niri = {
+      enable = true;
+      package = pkgs.niri; # TODO: Can be removed on niri flake update
+    };
     environment.variables.NIXOS_OZONE_WL = "1";
 
     # Install packages needed for a solid dektop environment (will be configured using home-manager module like niri)
