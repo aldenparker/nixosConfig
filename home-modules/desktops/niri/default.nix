@@ -251,6 +251,11 @@ in
       # --- Environment variables
       environment = {
         DISPLAY = ":0"; # For XWayland apps
+
+        # For input handler
+        XMODIFIERS = "@im=fcitx";
+        GTK_IM_MODULE = "fcitx";
+        QT_IM_MODULE = "fcitx";
       };
     };
 

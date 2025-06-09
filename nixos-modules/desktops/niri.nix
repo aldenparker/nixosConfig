@@ -92,6 +92,7 @@ in
         addons = with pkgs; [
           fcitx5-mozc # Japanese plugin
           fcitx5-gtk # GTK integration
+          libsForQt5.fcitx5-qt # QT integration
         ];
       };
     };

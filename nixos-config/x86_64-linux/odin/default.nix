@@ -103,6 +103,8 @@ in
     discord
     blender
     audacity
+    pot # Japanese Study
+    tagainijisho # Japanese Study
   ];
 
   # --- Enable printing
