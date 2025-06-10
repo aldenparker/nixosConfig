@@ -41,6 +41,7 @@ in
         eog # Image viewer
         tauon # Music Player
         picard # Music Tagger
+        thunderbird # Email Client
       ]
       ++ (
         if !cfg.disableExtraEditors then
