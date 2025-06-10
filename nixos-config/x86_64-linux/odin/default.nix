@@ -76,33 +76,19 @@ in
 
   # --- Packages without configuration
   environment.systemPackages = with pkgs; [
-    flake-inputs.zen-browser.packages."${system}".default
-    gimp3
     retroarch-full
     scanmem
     anki
     kicad
-    inkscape
-    krita
-    qbittorrent
     sparrow
-    tor-browser
-    vlc
-    veracrypt
-    gnupg
     gephi
     ktailctl
-    usbimager
-    kdePackages.filelight
     anytype
-    keepassxc
     simplex-chat-desktop
     solaar
     gittyup
     xnconvert
     discord
-    blender
-    audacity
     pot # Japanese Study
     tagainijisho # Japanese Study
   ];

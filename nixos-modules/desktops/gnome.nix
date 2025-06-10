@@ -39,12 +39,8 @@ in
     # Enable gnome
     services.xserver.desktopManager.gnome.enable = true;
 
-    # Install replacement for exluded packages that are required
-    environment.systemPackages = with pkgs; [
-      kitty # Terminal
-      zed # Text Editor
-      kdePackages.elisa # Music Player
-    ];
+    # Install gui essential packages
+    ${namespace}.pkg-bundles.gui-essentials.enable = true;
 
     # Disable unwanted optionals
     environment.gnome.excludePackages = (

@@ -34,7 +34,6 @@ in
 
     # Install packages needed for a solid dektop environment (will be configured using home-manager module like niri)
     environment.systemPackages = with pkgs; [
-      gparted # GUI Partitioner
       fuzzel # App Launcher
       xwayland-satellite # Xwayland Support
       swww # Background Daemon
@@ -52,13 +51,7 @@ in
       selectdefaultapplication # Default appliation manager
       xdg-desktop-portal-gtk # For file picker portal (needs to be configured)
       kdePackages.ark # Archive manager
-      eog # Image viewer
-      tauon # Music Player
-      picard # Music Tagger
       swayosd # Volume and Brightness GUI
-      gedit # Simple text editor
-      kitty # Terminal
-      zed-editor # Full code editor
     ];
 
     # Create startup service for swayOSD
@@ -100,9 +93,10 @@ in
       };
     };
 
-    # Install thunar for file explorer
-    ${namespace}.programs = {
-      thunar.enable = true;
+    # Install thunar for file explorer and essential gui applications
+    ${namespace} = {
+      programs.thunar.enable = true;
+      pkg-bundles.gui-essentials.enable = true;
     };
   };
 }

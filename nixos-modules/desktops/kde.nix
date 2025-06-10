@@ -39,11 +39,9 @@ in
     # Enable the KDE Plasma Desktop Environment.
     services.desktopManager.plasma6.enable = true;
 
-    # Install fix for cursor size and replacement for exluded packages
+    # Install fix for cursor size
     environment.systemPackages = with pkgs; [
       xdg-desktop-portal-gtk
-      kitty # Terminal
-      zed # Text Editor
     ];
 
     # Disable unwanted optionals
@@ -52,5 +50,8 @@ in
       konsole # Terminal
       kate # Text Editor
     ];
+
+    # Install gui essential packages
+    ${namespace}.pkg-bundles.gui-essentials.enable = true;
   };
 }
