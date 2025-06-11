@@ -20,15 +20,6 @@ _final: _prev: rec {
   nodejs = _prev.nodejs;
   yarn = (_prev.yarn.override { inherit nodejs; });
 
-  # Fix wlogout by adding svg capability
-  wlogout = _prev.wlogout.overrideAttrs (
-    finalAttrs: previousAttrs: {
-      buildInputs = previousAttrs.buildInputs ++ [
-        _prev.librsvg
-      ];
-    }
-  );
-
   # Build rust toolchain
   rustToolchain =
     let

@@ -338,73 +338,66 @@ in
           keybind = "r";
         }
       ];
-      style =
-        with config.lib.stylix.colors.withHashtag;
-        let
-          iconThemePackage = config.stylix.iconTheme.package;
-          iconThemeName = config.stylix.iconTheme.${config.stylix.polarity};
-          iconThemePath = "${iconThemePackage}/share/icons/${iconThemeName}";
-        in
-        ''
-          @define-color base00 ${base00}; @define-color base01 ${base01}; @define-color base02 ${base02}; @define-color base03 ${base03};
-          @define-color base04 ${base04}; @define-color base05 ${base05}; @define-color base06 ${base06}; @define-color base07 ${base07};
+      style = with config.lib.stylix.colors.withHashtag; ''
+        @define-color base00 ${base00}; @define-color base01 ${base01}; @define-color base02 ${base02}; @define-color base03 ${base03};
+        @define-color base04 ${base04}; @define-color base05 ${base05}; @define-color base06 ${base06}; @define-color base07 ${base07};
 
-          @define-color base08 ${base08}; @define-color base09 ${base09}; @define-color base0A ${base0A}; @define-color base0B ${base0B};
-          @define-color base0C ${base0C}; @define-color base0D ${base0D}; @define-color base0E ${base0E}; @define-color base0F ${base0F};
+        @define-color base08 ${base08}; @define-color base09 ${base09}; @define-color base0A ${base0A}; @define-color base0B ${base0B};
+        @define-color base0C ${base0C}; @define-color base0D ${base0D}; @define-color base0E ${base0E}; @define-color base0F ${base0F};
 
-          * {
-            font-family: "${config.stylix.fonts.monospace.name}";
-            font-size: ${builtins.toString config.stylix.fonts.sizes.desktop}pt;
-            background-image: none;
-          }
+        * {
+          font-family: "${config.stylix.fonts.monospace.name}";
+          font-size: ${builtins.toString config.stylix.fonts.sizes.desktop}pt;
+          background-image: none;
+        }
 
-          window {
-            background-color: alpha(@base00, 0.5);
-          }
+        window {
+          background-color: alpha(@base00, 0.5);
+        }
 
-          button {
-            color: @base05;
-            font-size: 16px;
-            background-color: @base01;
-            border-style: none;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 35%;
-            border-radius:30px;
-            margin: 182px 5px;
-            text-shadow: 0px 0px;
-            box-shadow: 0px 0px;
-          }
+        button {
+          color: @base05;
+          font-size: 16px;
+          background-color: @base01;
+          border-style: none;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: 35%;
+          border-radius:30px;
+          margin: 182px 5px;
+          text-shadow: 0px 0px;
+          box-shadow: 0px 0px;
+        }
 
-          button:focus, button:active, button:hover {
-            background-color: @base02;
-            outline-style: none;
-          }
+        button:focus, button:active, button:hover {
+          background-color: @base02;
+          outline-style: none;
+        }
 
-          #lock {
-            background-image: url("${iconThemePath}/status/48/status_lock.svg"), url("${pkgs.wlogout}/share/wlogout/icons/lock.png");
-          }
+        #lock {
+          background-image: image(-gtk-icontheme("status_lock"), url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
+        }
 
-          #logout {
-            background-image: url("${iconThemePath}/status/48/stock_dialog-warning.svg"), url("${pkgs.wlogout}/share/wlogout/icons/logout.png");
-          }
+        #logout {
+          background-image: image(-gtk-icontheme("stock_dialog-warning"), url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
+        }
 
-          #suspend {
-            background-image: url("${iconThemePath}/status/48/state_paused.svg"), url("${pkgs.wlogout}/share/wlogout/icons/suspend.png");
-          }
+        #suspend {
+          background-image: image(-gtk-icontheme("state_paused"), url("${pkgs.wlogout}/share/wlogout/icons/suspend.png"));
+        }
 
-          #hibernate {
-            background-image: url("${iconThemePath}/status/48/weather-clear-night.svg"), url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png");
-          }
+        #hibernate {
+          background-image: image(-gtk-icontheme("weather-clear-night"), url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png"));
+        }
 
-          #shutdown {
-            background-image: url("${iconThemePath}/status/48/state_shutoff.svg"), url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png");
-          }
+        #shutdown {
+          background-image: image(-gtk-icontheme("system-shutdown"), url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
+        }
 
-          #reboot {
-            background-image: url("${iconThemePath}/status/48/state_running.svg"), url("${pkgs.wlogout}/share/wlogout/icons/reboot.png");
-          }
-        '';
+        #reboot {
+          background-image: image(-gtk-icontheme("state_running"), url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
+        }
+      '';
     };
   };
 }

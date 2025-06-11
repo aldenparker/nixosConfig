@@ -22,6 +22,9 @@ in
 
   # --- Set configuration
   config = mkIf cfg.enable {
+    # Fixes GTK unable to load svg icons
+    programs.gdk-pixbuf.modulePackages = [ pkgs.librsvg ];
+
     environment.systemPackages =
       with pkgs;
       [
