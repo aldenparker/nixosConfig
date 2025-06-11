@@ -167,7 +167,7 @@ in
 
           # Misc
           "Mod+Shift+Escape".action = toggle-keyboard-shortcuts-inhibit;
-          "Mod+Shift+E".action = quit;
+          "Mod+Shift+E".action = sh "wlogout -p layer-shell -b 4"; # Bring up power menu
           "Mod+Shift+P".action = power-off-monitors;
         };
 
@@ -199,7 +199,7 @@ in
       spawn-at-startup = [
         {
           command = [
-            "mako"
+            "swaync"
           ];
         }
         {
@@ -284,45 +284,127 @@ in
       recursive = true;
     };
 
-    # --- Mako config
-    services.mako = {
+    # --- Swaync config
+    services.swaync = {
       enable = true;
       settings = {
-        # NO COLOR CONFIG... Left to stylix
-        on-button-left = "invoke-default-action";
-        on-button-right = "dismiss-group";
-        on-touch = "dismiss";
-        on-notify = "none";
-
-        layer = "top";
-        anchor = "top-right";
-        outer-margin = 0;
-        margin = 10;
-        padding = 5;
-        text-alignment = "left";
-
-        border-size = 4;
-        border-radius = 0;
-
-        icons = 1;
-        max-history = 5;
-        max-icon-size = 100;
-
-        markup = 1;
-        actions = 1;
-        history = 1;
-        default-timeout = 5000;
-        ignore-timeout = 0;
-        group-by = "none";
-        max-visible = 5;
-        output = "";
-
-        icon-path = "";
-        icon-location = "left";
+        positionX = "right";
+        positionY = "top";
+        layer = "overlay";
+        control-center-layer = "top";
+        layer-shell = true;
+        cssPriority = "application";
+        control-center-margin-top = 10;
+        control-center-margin-bottom = 10;
+        control-center-margin-right = 10;
+        control-center-margin-left = 0;
+        notification-2fa-action = true;
+        notification-inline-replies = false;
+        notification-icon-size = 64;
+        notification-body-image-height = 100;
+        notification-body-image-width = 200;
       };
     };
 
     # --- Enable fuzzel so that stylix can theme it
     programs.fuzzel.enable = true;
+
+    # --- Config logout screen
+    programs.wlogout = {
+      enable = true;
+      layout = [
+        {
+          label = "lock";
+          action = "swaylock";
+          text = "Lock";
+          keybind = "l";
+        }
+        {
+          label = "logout";
+          action = "niri msg action Quit { skip_confirmation: true }";
+          text = "Logout";
+          keybind = "e";
+        }
+        {
+          label = "shutdown";
+          action = "systemctl poweroff";
+          text = "Shutdown";
+          keybind = "s";
+        }
+        {
+          label = "reboot";
+          action = "systemctl reboot";
+          text = "Reboot";
+          keybind = "r";
+        }
+      ];
+      style =
+        with config.lib.stylix.colors.withHashtag;
+        let
+          iconThemePackage = config.stylix.iconTheme.package;
+          iconThemeName = config.stylix.iconTheme.${config.stylix.polarity};
+          iconThemePath = "${iconThemePackage}/share/icons/${iconThemeName}";
+        in
+        ''
+          @define-color base00 ${base00}; @define-color base01 ${base01}; @define-color base02 ${base02}; @define-color base03 ${base03};
+          @define-color base04 ${base04}; @define-color base05 ${base05}; @define-color base06 ${base06}; @define-color base07 ${base07};
+
+          @define-color base08 ${base08}; @define-color base09 ${base09}; @define-color base0A ${base0A}; @define-color base0B ${base0B};
+          @define-color base0C ${base0C}; @define-color base0D ${base0D}; @define-color base0E ${base0E}; @define-color base0F ${base0F};
+
+          * {
+            font-family: "${config.stylix.fonts.monospace.name}";
+            font-size: ${builtins.toString config.stylix.fonts.sizes.desktop}pt;
+            background-image: none;
+          }
+
+          window {
+            background-color: alpha(@base00, 0.5);
+          }
+
+          button {
+            color: @base05;
+            font-size: 16px;
+            background-color: @base01;
+            border-style: none;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 35%;
+            border-radius:30px;
+            margin: 182px 5px;
+            text-shadow: 0px 0px;
+            box-shadow: 0px 0px;
+          }
+
+          button:focus, button:active, button:hover {
+            background-color: @base02;
+            outline-style: none;
+          }
+
+          #lock {
+            background-image: url("${iconThemePath}/status/48/status_lock.svg"), url("${pkgs.wlogout}/share/wlogout/icons/lock.png");
+          }
+
+          #logout {
+            background-image: url("${iconThemePath}/status/48/stock_dialog-warning"), url("${pkgs.wlogout}/share/wlogout/icons/logout.png");
+          }
+
+          #suspend {
+            background-image: url("${iconThemePath}/status/48/state_paused.svg"), url("${pkgs.wlogout}/share/wlogout/icons/suspend.png");
+          }
+
+          #hibernate {
+            background-image: url("${iconThemePath}/status/48/weather-clear-night.svg"), url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png");
+          }
+
+          #shutdown {
+            background-image: url("${iconThemePath}/status/48/state_shutoff.svg"), url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png");
+          }
+
+          #reboot {
+            background-image: url("${iconThemePath}/status/48/state_running.svg"), url("${pkgs.wlogout}/share/wlogout/icons/reboot.png");
+          }
+        '';
+    };
   };
 }

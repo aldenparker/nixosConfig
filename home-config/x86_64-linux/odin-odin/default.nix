@@ -11,6 +11,7 @@
     programs = {
       kitty.enable = true;
       zed.enable = true;
+      vesktop.enable = true;
 
       git = {
         enable = true;

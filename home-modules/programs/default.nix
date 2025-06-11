@@ -6,5 +6,6 @@
     ./git.nix
     ./kitty.nix
     ./zed.nix
+    ./vesktop.nix
   ];
 }

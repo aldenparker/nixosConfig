@@ -42,6 +42,11 @@ tooltip label {
   color: @content_main;
 }
 
+#custom-notification {
+  margin-right: 14px;
+  margin-left: 4px;
+}
+
 #workspaces {
   color: transparent;
   margin-right: 1.5px;

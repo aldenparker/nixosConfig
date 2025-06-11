@@ -39,7 +39,7 @@ in
       swww # Background Daemon
       waypaper # Background GUI
       waybar # Status Bar
-      mako # Notifications
+      swaynotificationcenter # Notifications
       libnotify # Start notifications from terminal
       swaylock-effects # Screen locker
       pavucontrol # Audio GUI
@@ -52,6 +52,7 @@ in
       xdg-desktop-portal-gtk # For file picker portal (needs to be configured)
       kdePackages.ark # Archive manager
       swayosd # Volume and Brightness GUI
+      wlogout # Logout screen
     ];
 
     # Create startup service for swayOSD

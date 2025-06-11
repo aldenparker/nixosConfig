@@ -60,8 +60,8 @@
   };
 
   # --- Localization Codes
-  # Set your time zone.
-  time.timeZone = "America/New_York";
+  # Enable automatic time zone.
+  services.automatic-timezoned.enable = true;
 
   # Select internationalization properties.
   i18n.defaultLocale = "en_US.UTF-8";
