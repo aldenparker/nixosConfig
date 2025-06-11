@@ -15,11 +15,19 @@ _final: _prev: rec {
   inherit (unstable-channel) simplex-chat-desktop;
   inherit (unstable-channel) solaar;
   inherit (unstable-channel) waypaper;
-  inherit (unstable-channel) zed-editor;
 
   # Fix nodjs
   nodejs = _prev.nodejs;
   yarn = (_prev.yarn.override { inherit nodejs; });
+
+  # Fix wlogout by adding svg capability
+  wlogout = _prev.wlogout.overrideAttrs (
+    finalAttrs: previousAttrs: {
+      buildInputs = previousAttrs.buildInputs ++ [
+        _prev.librsvg
+      ];
+    }
+  );
 
   # Build rust toolchain
   rustToolchain =

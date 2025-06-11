@@ -111,27 +111,12 @@
         builtins.listToAttrs (
           map (system: {
             name = system;
-            value = createFunc system;
+            value = createFunc { inherit system; };
           }) systems
         );
 
-      createHomeSpecialArgs = system: {
-        inherit system;
-        inherit secrets;
-        inherit namespace;
-        flake-inputs = inputs;
-      };
-
-      createNixosSpecialArgs =
-        system:
-        {
-          inherit pkg-config;
-          inherit pkg-overlays;
-        }
-        // createHomeSpecialArgs system;
-
       createPkgs =
-        system:
+        { system }:
         import nixpkgs {
           inherit system;
           config = pkg-config;
@@ -140,14 +125,45 @@
           ];
         }; # Used to keep consitent package config
 
+      createHomeSpecialArgs =
+        {
+          system,
+          withPkgs ? true,
+        }:
+        {
+          inherit system;
+          inherit secrets;
+          inherit namespace;
+          flake-inputs = inputs;
+        }
+        // (
+          if withPkgs then
+            {
+              pkgs = createPkgs { inherit system; };
+            }
+          else
+            { }
+        );
+
+      createNixosSpecialArgs =
+        { system }:
+        {
+          inherit pkg-config;
+          inherit pkg-overlays;
+        }
+        // createHomeSpecialArgs {
+          inherit system;
+          withPkgs = false;
+        };
+
       createPackages =
-        system:
+        { system }:
         import ./packages/${system}.nix {
           pkgs = pkgs.${system};
         }; # Import packages for system
 
       createDevShells =
-        system:
+        { system }:
         import ./shells/${system}.nix {
           inherit system;
           pkgs = pkgs.${system};

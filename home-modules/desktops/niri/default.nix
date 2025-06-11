@@ -386,7 +386,7 @@ in
           }
 
           #logout {
-            background-image: url("${iconThemePath}/status/48/stock_dialog-warning"), url("${pkgs.wlogout}/share/wlogout/icons/logout.png");
+            background-image: url("${iconThemePath}/status/48/stock_dialog-warning.svg"), url("${pkgs.wlogout}/share/wlogout/icons/logout.png");
           }
 
           #suspend {
