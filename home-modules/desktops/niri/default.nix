@@ -173,7 +173,7 @@ in
 
             case $selected in
               logout)
-                niri msg action Quit { skip_confirmation: true };;
+                niri msg action quit -s;;
               lock)
                 swaylock;;
               reboot)
@@ -328,6 +328,7 @@ in
         show-actions = true;
         terminal = "kitty";
         exit-on-keyboard-focus-loss = true;
+        keyboard-focus = "on-demand";
       };
     };
   };
