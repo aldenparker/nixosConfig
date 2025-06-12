@@ -167,7 +167,11 @@ in
 
           # Misc
           "Mod+Shift+Escape".action = toggle-keyboard-shortcuts-inhibit;
-          "Mod+Shift+E".action = sh "wlogout -p layer-shell -b 4"; # Bring up power menu
+          "Mod+Shift+E".action = sh ''
+            if ! pgrep -x "wlogout" > /dev/null; then
+              wlogout -p layer-shell -b 4
+            fi
+          ''; # Bring up power menu, but make sure one isn't already running
           "Mod+Shift+P".action = power-off-monitors;
         };
 
@@ -391,7 +395,7 @@ in
         }
 
         #shutdown {
-          background-image: image(-gtk-icontheme("system-shutdown"), url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
+          background-image: image(-gtk-icontheme("state_shutoff"), url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
         }
 
         #reboot {
