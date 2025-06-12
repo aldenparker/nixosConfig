@@ -60,7 +60,7 @@ in
               }
             }
 
-            plugins.clipboard.NO_DAEMON = true # Needed for clipboard copy
+            plugins.clipboard.NO_DAEMON: true # needed for clipboard copy
           }
         ''
         + (if cfg.useAsNixShell then "\nsource nix-your-shell.nu" else "")
@@ -74,9 +74,7 @@ in
 
       plugins =
         with pkgs.nushellPlugins;
-        let
-          inherit (flake-inputs.self.packages.${system}.nushellPlugins) clipboard; # Photo conversion app
-        in
+        with flake-inputs.self.packages.${system}.nushellPlugins;
         [
           units
           semver
@@ -86,6 +84,8 @@ in
           gstat
           formats
           clipboard
+          emoji
+          vec
         ];
     };
 
@@ -100,6 +100,8 @@ in
       enable = true;
       settings = {
         add_newline = false;
+        format = "$character";
+        right_format = "$all"; # Enble one line prompt
       };
     };
 
