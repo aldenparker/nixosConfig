@@ -10,7 +10,6 @@
   libGL,
   pango,
   autoPatchelfHook,
-  ...
 }:
 
 stdenv.mkDerivation rec {

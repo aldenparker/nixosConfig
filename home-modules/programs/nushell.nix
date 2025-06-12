@@ -3,50 +3,103 @@
   config,
   pkgs,
   namespace,
+  flake-inputs,
+  system,
   ...
 }:
 
 with lib;
 
 let
-  cfg = config.${namespace}.programs.zsh; # Config path
+  cfg = config.${namespace}.programs.nushell; # Config path
 in
 {
   # --- Set options
-  options.${namespace}.programs.zsh = {
-    enable = mkEnableOption "Configures zsh";
-    fastfetch.enable = mkEnableOption "Enables fastfetch for zsh";
+  options.${namespace}.programs.nushell = {
+    enable = mkEnableOption "Configures nushell";
+    fastfetch.enable = mkEnableOption "Enables fastfetch for nushell";
     fastfetch.kitty = mkEnableOption "Enables fastfetch to use kitty for image display";
-    useAsNixShell = mkEnableOption "Configures zsh as the Nix Shell (aka it us used for nix-shell and nix develop commands)";
+    useAsNixShell = mkEnableOption "Configures nushell as the Nix Shell (aka it us used for nix-shell and nix develop commands)";
   };
 
   # --- Set configuration
   config = mkIf cfg.enable {
-    # Install fastfetch for startup if needed and nix-your-shell for nix develop zsh support
+    # Install fastfetch for startup if needed and nix-your-shell for nix develop nushell support
     home.packages = [
       (mkIf cfg.useAsNixShell pkgs.nix-your-shell)
       (mkIf cfg.fastfetch.enable pkgs.fastfetch)
     ];
 
-    # Configure zsh, must enable nixos package version as well for default shell behavior
-    programs.zsh = {
-      # Basic Config values
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
+    # --- generate config for nushell
+    home.file.".config/nushell/nix-your-shell.nu" = mkIf cfg.useAsNixShell {
+      source = pkgs.nix-your-shell.generate-config "nu";
+    };
 
-      # Fastfetch runs on terminal startup
-      initContent =
-        ""
-        + (if cfg.useAsNixShell then "\nnix-your-shell zsh | source /dev/stdin" else "")
+    # --- Nushell config
+    programs.nushell = {
+      enable = true;
+      extraConfig =
+        ''
+          let carapace_completer = {|spans|
+            carapace $spans.0 nushell ...$spans | from json
+          }
+
+          $env.config = {
+            show_banner: false,
+            completions: {
+              case_sensitive: false # case-sensitive completions
+              quick: true    # set to false to prevent auto-selecting completions
+              partial: true    # set to false to prevent partial filling of the prompt
+              algorithm: "fuzzy"    # prefix or fuzzy
+              external: {
+                # set to false to prevent nushell looking into $env.PATH to find more suggestions
+                enable: true
+                # set to lower can improve completion performance at the cost of omitting some options
+                max_results: 100
+                completer: $carapace_completer # check 'carapace_completer'
+              }
+            }
+
+            plugins.clipboard.NO_DAEMON = true # Needed for clipboard copy
+          }
+        ''
+        + (if cfg.useAsNixShell then "\nsource nix-your-shell.nu" else "")
         + (if cfg.fastfetch.enable then "\nfastfetch" else "");
 
-      # Enable oh-my-zsh
-      oh-my-zsh = {
-        enable = true;
-        plugins = [ "git" ];
-        theme = "robbyrussell";
+      shellAliases = {
+        vim = "vi";
+        nano = "vi";
+        cat = "bat";
+      };
+
+      plugins =
+        with pkgs.nushellPlugins;
+        let
+          inherit (flake-inputs.self.packages.${system}.nushellPlugins) clipboard; # Photo conversion app
+        in
+        [
+          units
+          semver
+          query
+          polars
+          net
+          gstat
+          formats
+          clipboard
+        ];
+    };
+
+    # --- Command Completion
+    programs.carapace = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
+
+    # --- Prompt
+    programs.starship = {
+      enable = true;
+      settings = {
+        add_newline = false;
       };
     };
 

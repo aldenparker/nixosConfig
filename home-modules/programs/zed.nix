@@ -32,6 +32,7 @@ in
         "csv"
         "bearded-icon-theme"
         "git-firefly"
+        "nu"
       ];
 
       userSettings = {

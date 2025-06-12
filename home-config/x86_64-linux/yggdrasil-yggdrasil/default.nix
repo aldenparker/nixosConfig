@@ -16,7 +16,11 @@
         userGithubToken = secrets.git.token;
       };
 
-      zsh.enable = true;
+      nushell = {
+        enable = true;
+        useAsNixShell = true;
+      };
+
       kitty.enable = true;
     };
   };

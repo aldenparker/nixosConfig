@@ -7,5 +7,6 @@
     ./kitty.nix
     ./zed.nix
     ./vesktop.nix
+    ./nushell.nix
   ];
 }

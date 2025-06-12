@@ -20,7 +20,7 @@
         userGithubToken = secrets.git.token;
       };
 
-      zsh = {
+      nushell = {
         enable = true;
         useAsNixShell = true;
       };

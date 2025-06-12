@@ -19,6 +19,7 @@
     nh
     killall
     vim
+    bat
     wget
     curl
     git
@@ -27,6 +28,7 @@
     nixfmt-rfc-style
     nix-tree
     moreutils
+    nushell
   ];
 
   programs.htop = {
@@ -34,9 +36,8 @@
     settings.show_cpu_temperature = 1;
   };
 
-  # --- Install zsh, since this is the only shell I use
-  programs.zsh.enable = true;
-  users.defaultUserShell = pkgs.zsh;
+  # --- Install nushell, since this is the only shell I use
+  users.defaultUserShell = pkgs.nushell;
 
   # --- Create installed packages file
   environment.etc."current-system-packages".text =
