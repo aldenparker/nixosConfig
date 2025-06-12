@@ -59,9 +59,9 @@ in
                 completer: $carapace_completer # check 'carapace_completer'
               }
             }
-
-            plugins.clipboard.NO_DAEMON: true # needed for clipboard copy
           }
+
+          $env.config.plugins.clipboard.NO_DAEMON = true # Add for clipboard plugin to work
         ''
         + (if cfg.useAsNixShell then "\nsource nix-your-shell.nu" else "")
         + (if cfg.fastfetch.enable then "\nfastfetch" else "");
@@ -86,6 +86,7 @@ in
           clipboard
           emoji
           vec
+          desktop_notifications
         ];
     };
 
