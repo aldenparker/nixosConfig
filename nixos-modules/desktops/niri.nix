@@ -52,7 +52,6 @@ in
       xdg-desktop-portal-gtk # For file picker portal (needs to be configured)
       kdePackages.ark # Archive manager
       swayosd # Volume and Brightness GUI
-      wlogout # Logout screen
     ];
 
     # Create startup service for swayOSD

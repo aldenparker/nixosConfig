@@ -168,10 +168,20 @@ in
           # Misc
           "Mod+Shift+Escape".action = toggle-keyboard-shortcuts-inhibit;
           "Mod+Shift+E".action = sh ''
-            if ! pgrep -x "wlogout" > /dev/null; then
-              wlogout -p layer-shell -b 4
-            fi
-          ''; # Bring up power menu, but make sure one isn't already running
+            entries="󰗽  Logout\n󰌾  Lock\n󰜉  Reboot\n  Shutdown"
+            selected=$(echo -e $entries|fuzzel -l 4 -w 10 --dmenu | awk '{print tolower($2)}')
+
+            case $selected in
+              logout)
+                niri msg action Quit { skip_confirmation: true };;
+              lock)
+                swaylock;;
+              reboot)
+                systemctl reboot;;
+              shutdown)
+                systemctl poweroff;;
+            esac
+          ''; # Bring up power menu, powered by fuzzel
           "Mod+Shift+P".action = power-off-monitors;
         };
 
@@ -310,98 +320,15 @@ in
       };
     };
 
-    # --- Enable fuzzel so that stylix can theme it
-    programs.fuzzel.enable = true;
-
-    # --- Config logout screen
-    programs.wlogout = {
+    # --- Configure fuzzel so that stylix can theme it
+    programs.fuzzel = {
       enable = true;
-      layout = [
-        {
-          label = "lock";
-          action = "swaylock";
-          text = "Lock";
-          keybind = "l";
-        }
-        {
-          label = "logout";
-          action = "niri msg action Quit { skip_confirmation: true }";
-          text = "Logout";
-          keybind = "e";
-        }
-        {
-          label = "shutdown";
-          action = "systemctl poweroff";
-          text = "Shutdown";
-          keybind = "s";
-        }
-        {
-          label = "reboot";
-          action = "systemctl reboot";
-          text = "Reboot";
-          keybind = "r";
-        }
-      ];
-      style = with config.lib.stylix.colors.withHashtag; ''
-        @define-color base00 ${base00}; @define-color base01 ${base01}; @define-color base02 ${base02}; @define-color base03 ${base03};
-        @define-color base04 ${base04}; @define-color base05 ${base05}; @define-color base06 ${base06}; @define-color base07 ${base07};
-
-        @define-color base08 ${base08}; @define-color base09 ${base09}; @define-color base0A ${base0A}; @define-color base0B ${base0B};
-        @define-color base0C ${base0C}; @define-color base0D ${base0D}; @define-color base0E ${base0E}; @define-color base0F ${base0F};
-
-        * {
-          font-family: "${config.stylix.fonts.monospace.name}";
-          font-size: ${builtins.toString config.stylix.fonts.sizes.desktop}pt;
-          background-image: none;
-        }
-
-        window {
-          background-color: alpha(@base00, 0.5);
-        }
-
-        button {
-          color: @base05;
-          font-size: 16px;
-          background-color: @base01;
-          border-style: none;
-          background-repeat: no-repeat;
-          background-position: center;
-          background-size: 35%;
-          border-radius:30px;
-          margin: 182px 5px;
-          text-shadow: 0px 0px;
-          box-shadow: 0px 0px;
-        }
-
-        button:focus, button:active, button:hover {
-          background-color: @base02;
-          outline-style: none;
-        }
-
-        #lock {
-          background-image: image(-gtk-icontheme("status_lock"), url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
-        }
-
-        #logout {
-          background-image: image(-gtk-icontheme("stock_dialog-warning"), url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
-        }
-
-        #suspend {
-          background-image: image(-gtk-icontheme("state_paused"), url("${pkgs.wlogout}/share/wlogout/icons/suspend.png"));
-        }
-
-        #hibernate {
-          background-image: image(-gtk-icontheme("weather-clear-night"), url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png"));
-        }
-
-        #shutdown {
-          background-image: image(-gtk-icontheme("state_shutoff"), url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
-        }
-
-        #reboot {
-          background-image: image(-gtk-icontheme("state_running"), url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
-        }
-      '';
+      settings.main = {
+        icon-theme = config.stylix.iconTheme.${config.stylix.polarity}; # Stylix does not set theme for some reason
+        show-actions = true;
+        terminal = "kitty";
+        exit-on-keyboard-focus-loss = true;
+      };
     };
   };
 }
