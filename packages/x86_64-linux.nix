@@ -3,10 +3,8 @@
 {
   cyberchef = pkgs.callPackage ./cyberchef.nix { };
   xnconvert = pkgs.callPackage ./xnconvert.nix { };
-  nushellPlugins = {
-    clipboard = pkgs.callPackage ./nu_plugin_clipboard.nix { };
-    emoji = pkgs.callPackage ./nu_plugin_emoji.nix { };
-    vec = pkgs.callPackage ./nu_plugin_vec.nix { };
-    desktop_notifications = pkgs.callPackage ./nu_plugin_desktop_notifications.nix { };
-  };
+  nu_plugin_clipboard = pkgs.callPackage ./nu_plugin_clipboard.nix { };
+  nu_plugin_emoji = pkgs.callPackage ./nu_plugin_emoji.nix { };
+  nu_plugin_vec = pkgs.callPackage ./nu_plugin_vec.nix { };
+  nu_plugin_desktop_notifications = pkgs.callPackage ./nu_plugin_desktop_notifications.nix { };
 }

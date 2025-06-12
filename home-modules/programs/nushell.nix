@@ -74,7 +74,7 @@ in
 
       plugins =
         with pkgs.nushellPlugins;
-        with flake-inputs.self.packages.${system}.nushellPlugins;
+        with flake-inputs.self.packages.${system};
         [
           units
           semver
@@ -83,10 +83,10 @@ in
           net
           gstat
           formats
-          clipboard
-          emoji
-          vec
-          desktop_notifications
+          nu_plugin_clipboard
+          nu_plugin_emoji
+          nu_plugin_vec
+          nu_plugin_desktop_notifications
         ];
     };
 

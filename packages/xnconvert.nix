@@ -14,11 +14,11 @@
 
 stdenv.mkDerivation rec {
   pname = "xnconvert";
-  version = "1.104.0";
+  version = "1.105.0";
 
   src = fetchurl {
     url = "https://download.xnview.com/old_versions/XnConvert/XnConvert-${version}-linux-x64.tgz";
-    sha256 = "sha256-77e7xCrN8CW5AyM1w3A9WzlrGtnSsT+QGVZbmOVaehI=";
+    sha256 = "sha256-9f66nhHNlVUDG6CNMnPJ5trSQJery+J7QxVHlV7pJcc=";
   };
 
   nativeBuildInputs = [
@@ -73,7 +73,7 @@ stdenv.mkDerivation rec {
     homepage = "https://www.xnview.com/en/xnconvert";
     description = "XnConvert is a fast, powerful and free cross-platform batch image converter. It allows to automate editing of your photo collections: you can rotate, convert and compress your images, photos and pictures easily, and apply over 80 actions (like resize, crop, color adjustments, filter, ...). All common picture and graphics formats are supported (JPEG, TIFF, PNG, GIF, WebP, PSD, JPEG2000, JPEG-XL, OpenEXR, camera RAW, HEIC, PDF, DNG, CR2). You can save and re-use your presets for another batch image conversion.";
     platforms = [ "x86_64-linux" ];
-    license = lib.licenses.free;
+    license = lib.licenses.unfree;
     # maintainers = with lib.maintainers; [ aldenparker ];
   };
 }
