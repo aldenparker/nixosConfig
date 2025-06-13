@@ -40,6 +40,7 @@ in
       extraConfig = {
         init.defaultBranch = "main";
         safe.directory = "/etc/nixos"; # Allows for configs to be owned by root
+        core.editor = "nvim";
 
         # Oauth setup
         url = {

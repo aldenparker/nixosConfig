@@ -18,6 +18,7 @@ in
   options.${namespace}.pkg-bundles.gui-essentials = {
     enable = mkEnableOption "Installs the set of gui packages I consider essential.";
     disableExtraEditors = mkEnableOption "Removes the set of gui editors for video, audio, images, and 3D models from the bundle.";
+    disableProtonSupport = mkEnableOption "Disables the Proton Mail Bridge and Proton VPN packages.";
   };
 
   # --- Set configuration
@@ -46,6 +47,15 @@ in
         picard # Music Tagger
         thunderbird # Email Client and Calender
       ]
+      ++ (
+        if !cfg.disableProtonSupport then
+          [
+            protonmail-bridge
+            protonvpn-gui
+          ]
+        else
+          [ ]
+      )
       ++ (
         if !cfg.disableExtraEditors then
           [
