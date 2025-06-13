@@ -40,7 +40,6 @@ in
       waypaper # Background GUI
       waybar # Status Bar
       swaynotificationcenter # Notifications
-      libnotify # Start notifications from terminal
       swaylock-effects # Screen locker
       pavucontrol # Audio GUI
       blueman # Bluetooth GUI
