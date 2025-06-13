@@ -50,7 +50,8 @@
     # --- PROGRAMS ---
     niri = {
       url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "unstable";
+      inputs.nixpkgs-stable.follows = "nixpkgs";
     }; # Newest version of niri desktop
 
     zen-browser = {
