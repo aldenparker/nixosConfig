@@ -27,7 +27,7 @@ rustPlatform.buildRustPackage {
   passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
-    description = "A nushell plugin for interacting with the clipboard, allowing you to copy/paste text, objects, and tables.";
+    description = "A nushell plugin for interacting with the clipboard";
     longDesription = "NOTE: Turning off the daemon may be needed for copy to work. Look at Github to see how to do this.";
     mainProgram = "nu_plugin_clipboard";
     homepage = "https://github.com/FMotalleb/nu_plugin_clipboard";

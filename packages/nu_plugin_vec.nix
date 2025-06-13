@@ -7,9 +7,12 @@
   fetchFromGitHub,
 }:
 
-rustPlatform.buildRustPackage rec {
-  pname = "nu_plugin_vec";
+let
   version = "1.1.6";
+in
+rustPlatform.buildRustPackage {
+  pname = "nu_plugin_vec";
+  inherit version;
 
   src = fetchFromGitHub {
     repo = "nu_plugin_vec";
@@ -28,8 +31,11 @@ rustPlatform.buildRustPackage rec {
   passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
-    description = "A plugin for Nushell, a cross-platform shell and scripting language. This plugin adds support for vector operations.";
-    longDescription = "NOTE: This package has been patched for the current version of nushell (0.104.0). The author of this plugin does not have a version for this particular version of nushell.";
+    description = "A nushell plugin that adds support for vector operations";
+    longDescription = ''
+      NOTE: This package has been patched for the current version of nushell (0.104.0).
+      The author of this plugin does not have a version for this particular version of nushell.
+    '';
     mainProgram = "nu_plugin_vec";
     homepage = "https://github.com/PhotonBursted/nu_plugin_vec";
     license = licenses.mit;

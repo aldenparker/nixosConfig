@@ -7,9 +7,12 @@
   fetchFromGitHub,
 }:
 
-rustPlatform.buildRustPackage rec {
-  pname = "nu_plugin_emoji";
+let
   version = "0.13.0";
+in
+rustPlatform.buildRustPackage {
+  pname = "nu_plugin_emoji";
+  inherit version;
 
   src = fetchFromGitHub {
     repo = "nu_plugin_emoji";
@@ -26,7 +29,7 @@ rustPlatform.buildRustPackage rec {
   passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
-    description = "A nushell plugin that makes finding and printing emojis easy in nushell.";
+    description = "A nushell plugin that makes finding and printing emojis easy";
     mainProgram = "nu_plugin_emoji";
     homepage = "https://github.com/fdncred/nu_plugin_emoji";
     license = licenses.mit;

@@ -26,7 +26,7 @@ rustPlatform.buildRustPackage {
   passthru.updateScript = nix-update-script { };
 
   meta = with lib; {
-    description = "A Nushell plugin for sending desktop notifications using notify-rust.";
+    description = "A nushell plugin for sending desktop notifications using notify-rust";
     mainProgram = "nu_plugin_desktop_notifications";
     homepage = "https://github.com/FMotalleb/nu_plugin_desktop_notifications";
     license = licenses.mit;

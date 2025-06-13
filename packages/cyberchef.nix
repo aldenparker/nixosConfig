@@ -1,16 +1,35 @@
 {
   lib,
   fetchzip,
+  fetchurl,
   stdenv,
+  makeDesktopItem,
 }:
 
-stdenv.mkDerivation rec {
-  pname = "cyberchef";
+let
+  icon = fetchurl {
+    url = "https://raw.githubusercontent.com/gchq/CyberChef/c57556f49f723863b9be15668fd240672cd15b09/src/web/static/images/cyberchef-512x512.png";
+    hash = "sha256-Lg9JbVHhdILdrRtxYFWSv9HNJUx98JOaTbs+IbS1eO0=";
+  };
+  desktopItem = (
+    makeDesktopItem {
+      name = "cyberchef";
+      desktopName = "Cyberchef";
+      exec = "cyberchef";
+      icon = "cyberchef";
+      comment = "Cyber Swiss Army Knife for encryption, encoding, compression and data analysis";
+      categories = [ "Development" ];
+    }
+  );
   version = "10.19.4";
+in
+stdenv.mkDerivation {
+  pname = "cyberchef";
+  inherit version;
 
   src = fetchzip {
     url = "https://github.com/gchq/CyberChef/releases/download/v${version}/CyberChef_v${version}.zip";
-    sha256 = "sha256-eOMo7kdxC5HfmMrKUhGZU3vnBXibO2Fz1ftIS9RAbjY=";
+    hash = "sha256-eOMo7kdxC5HfmMrKUhGZU3vnBXibO2Fz1ftIS9RAbjY=";
     stripRoot = false;
   };
 
@@ -27,6 +46,11 @@ stdenv.mkDerivation rec {
     INI
 
     chmod +x $out/bin/cyberchef
+
+    install -m 444 -D ${icon} $out/share/icons/hicolor/512x512/apps/cyberchef.png
+
+    mkdir -p $out/share/applications/
+    cp ${desktopItem}/share/applications/*.desktop $out/share/applications/
   '';
 
   meta = with lib; {
