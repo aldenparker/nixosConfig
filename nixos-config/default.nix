@@ -18,7 +18,7 @@
   environment.systemPackages = with pkgs; [
     nh
     killall
-    vim
+    neovim
     bat
     wget
     curl
@@ -29,6 +29,7 @@
     nix-tree
     moreutils
     nushell
+    hydra-check
   ];
 
   programs.htop = {
