@@ -67,9 +67,9 @@ in
         + (if cfg.fastfetch.enable then "\nfastfetch" else "");
 
       shellAliases = {
-        vim = "neovim";
-        nano = "neovim";
-        vi = "neovim";
+        vim = "nvim";
+        nano = "nvim";
+        vi = "nvim";
         cat = "bat";
       };
 
