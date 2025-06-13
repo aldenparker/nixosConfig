@@ -122,9 +122,9 @@ in
           "XF86AudioMute".action = sh "swayosd-client --output-volume mute-toggle";
 
           # TODO: fix brightness control so it runs for all monitors
-          "XF86MonBrightnessUp".action = sh "swayosd-client --brightness +10; asus-wmi-screenpad-ctl -a 10";
+          "XF86MonBrightnessUp".action = sh "swayosd-client --brightness +10; asus-wmi-screenpad-ctl add 10";
           "XF86MonBrightnessDown".action =
-            sh "swayosd-client --brightness -10; asus-wmi-screenpad-ctl -a -10";
+            sh "swayosd-client --brightness -10; asus-wmi-screenpad-ctl add -- -10";
 
           # Lock and Screensaver
           "Mod+L".action = sh "swaylock";

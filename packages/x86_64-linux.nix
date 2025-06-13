@@ -7,4 +7,5 @@
   nu_plugin_emoji = pkgs.callPackage ./nu_plugin_emoji.nix { };
   nu_plugin_vec = pkgs.callPackage ./nu_plugin_vec.nix { };
   nu_plugin_desktop_notifications = pkgs.callPackage ./nu_plugin_desktop_notifications.nix { };
+  asus-wmi-screenpad-ctl = pkgs.callPackage ./asus-wmi-screenpad-ctl.nix { };
 }

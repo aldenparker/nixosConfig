@@ -35,7 +35,7 @@ in
 
     # Install custom control program
     environment.systemPackages = [
-      flake-inputs.asus-wmi-screenpad-ctl.packages."${system}".default
+      flake-inputs.self.packages.${system}.asus-wmi-screenpad-ctl
     ];
   };
 }

@@ -8,7 +8,6 @@
 
     # --- HARDWARE FLAKES ---
     nixos-hardware.url = "github:NixOS/nixos-hardware/master"; # Hardware Configurations
-    asus-wmi-screenpad-ctl.url = "github:aldenparker/asus-wmi-screenpad-ctl"; # ASUS-WMI-SCREENPAD control utility
 
     asus-wmi-screenpad = {
       url = "github:MatthewCash/asus-wmi-screenpad-module";
@@ -68,14 +67,13 @@
       niri,
       nix-your-shell,
       rust-overlay,
-      asus-wmi-screenpad-ctl,
       stylix,
       ...
     }@inputs:
 
     let
       # --- Config Values
-      secrets = builtins.fromJSON (builtins.readFile "${inputs.self}/secrets.json"); # Import all secrets for configs
+      secrets = builtins.fromJSON (builtins.readFile ./secrets.json); # Import all secrets for configs
       namespace = "snowman"; # Used to put all custom config options in one place
 
       pkg-config = {

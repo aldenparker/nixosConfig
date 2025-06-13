@@ -38,24 +38,6 @@
         "type": "github"
       }
     },
-    "asus-wmi-screenpad-ctl": {
-      "inputs": {
-        "zig2nix": "zig2nix"
-      },
-      "locked": {
-        "lastModified": 1741732376,
-        "narHash": "sha256-vglgfaTABoBXeobvlu5d2lVfOy0ZlOEltikE/Mmo4z0=",
-        "owner": "aldenparker",
-        "repo": "asus-wmi-screenpad-ctl",
-        "rev": "3b55940a0cc01edf4acb641193c294bb9091c57a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "aldenparker",
-        "repo": "asus-wmi-screenpad-ctl",
-        "type": "github"
-      }
-    },
     "base16": {
       "inputs": {
         "fromYaml": "fromYaml"
@@ -246,25 +228,7 @@
     },
     "flake-utils_2": {
       "inputs": {
-        "systems": "systems_2"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_3": {
-      "inputs": {
-        "systems": "systems_5"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1705309234,
@@ -513,7 +477,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "systems": "systems_3"
+        "systems": "systems_2"
       },
       "locked": {
         "lastModified": 1744134530,
@@ -546,21 +510,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1741577841,
-        "narHash": "sha256-LhQTW8l12XtBB2nHVKWiW3X+yz9hURmQgvop8ROPRtg=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "d3ea0717ca16c41219df2f2f8f3f81f2a31d7347",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1749727998,
         "narHash": "sha256-mHv/yeUbmL91/TvV95p+mBVahm9mdQMJoqaTVTALaFw=",
@@ -605,12 +554,11 @@
     "root": {
       "inputs": {
         "asus-wmi-screenpad": "asus-wmi-screenpad",
-        "asus-wmi-screenpad-ctl": "asus-wmi-screenpad-ctl",
         "home-manager": "home-manager",
         "niri": "niri",
         "nix-your-shell": "nix-your-shell",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
         "stylix": "stylix",
         "unstable": "unstable",
@@ -655,7 +603,7 @@
           "nixpkgs"
         ],
         "nur": "nur",
-        "systems": "systems_4",
+        "systems": "systems_3",
         "tinted-foot": "tinted-foot",
         "tinted-kitty": "tinted-kitty",
         "tinted-schemes": "tinted-schemes",
@@ -723,21 +671,6 @@
       }
     },
     "systems_4": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_5": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -928,7 +861,7 @@
     "zig-overlay": {
       "inputs": {
         "flake-compat": "flake-compat_3",
-        "flake-utils": "flake-utils_3",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -944,25 +877,6 @@
       "original": {
         "owner": "mitchellh",
         "repo": "zig-overlay",
-        "type": "github"
-      }
-    },
-    "zig2nix": {
-      "inputs": {
-        "flake-utils": "flake-utils_2",
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1741590401,
-        "narHash": "sha256-ryfQop+qor16+d0fvE/KVSSUwRxCZSlnGLF15l1+mqk=",
-        "owner": "Cloudef",
-        "repo": "zig2nix",
-        "rev": "3d2d285d305b4ff35d370b40be250ebfea3118ca",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Cloudef",
-        "repo": "zig2nix",
         "type": "github"
       }
     },
