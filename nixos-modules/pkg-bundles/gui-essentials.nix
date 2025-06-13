@@ -50,8 +50,9 @@ in
       ++ (
         if !cfg.disableProtonSupport then
           [
-            protonmail-bridge
-            protonvpn-gui
+            protonmail-desktop # Secure Mail and Calendar
+            protonvpn-gui # Vpn
+            proton-pass # Password Manager
           ]
         else
           [ ]
