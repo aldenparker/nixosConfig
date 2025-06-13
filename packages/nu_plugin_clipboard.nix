@@ -28,7 +28,7 @@ rustPlatform.buildRustPackage {
 
   meta = with lib; {
     description = "A nushell plugin for interacting with the clipboard";
-    longDesription = "NOTE: Turning off the daemon may be needed for copy to work. Look at Github to see how to do this.";
+    longDesrciption = "NOTE: Turning off the daemon may be needed for copy to work. Look at Github to see how to do this.";
     mainProgram = "nu_plugin_clipboard";
     homepage = "https://github.com/FMotalleb/nu_plugin_clipboard";
     license = licenses.mit;

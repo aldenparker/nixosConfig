@@ -69,6 +69,7 @@ in
       shellAliases = {
         vim = "neovim";
         nano = "neovim";
+        vi = "neovim";
         cat = "bat";
       };
 
