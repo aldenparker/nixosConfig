@@ -89,6 +89,7 @@ in
     gittyup
     xnconvert
     vesktop
+    nixpkgs-review
     pot # Japanese Study
     tagainijisho # Japanese Study
   ];

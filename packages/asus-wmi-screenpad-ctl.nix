@@ -14,14 +14,14 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     repo = "asus-wmi-screenpad-ctl";
     owner = "aldenparker";
-    rev = "v${version}";
+    tag = "v${version}";
     hash = "sha256-TV61Kh8A7PFJPRONqeCK1xEK2AHfiV/eoZOCL0SZ+5M=";
   };
 
   cargoHash = "sha256-ZluFoV9TclY6NOB5sHBN+1ht3zovmb4H+q7qT/Ywwmc=";
 
   meta = {
-    description = "Brightness controll program for the asus-wmi-screenpad kernel module";
+    description = "Brightness control program for the asus-wmi-screenpad kernel module";
     mainProgram = "asus-wmi-screenpad-ctl";
     homepage = "https://github.com/aldenparker/asus-wmi-screenpad-ctl";
     license = lib.licenses.mit;

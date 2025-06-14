@@ -9,7 +9,7 @@
 
 rustPlatform.buildRustPackage {
   pname = "nu_plugin_desktop_notifications";
-  version = "1.2.11";
+  version = "1.2.11-unstable-2025-05-05";
 
   src = fetchFromGitHub {
     repo = "nu_plugin_desktop_notifications";
@@ -21,16 +21,20 @@ rustPlatform.buildRustPackage {
   useFetchCargoVendor = true;
   cargoHash = "sha256-DrHWdwljPsPkzbM9mok5x7gn6Op1ytwg67+HtcZg8G8=";
 
+  preConfigure = lib.optionalString stdenv.hostPlatform.isDarwin ''
+    export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
+  '';
+
   nativeBuildInputs = [ pkg-config ] ++ lib.optionals stdenv.cc.isClang [ rustPlatform.bindgenHook ];
 
   passthru.updateScript = nix-update-script { };
 
-  meta = with lib; {
-    description = "A nushell plugin for sending desktop notifications using notify-rust";
+  meta = {
+    description = "Nushell plugin for sending desktop notifications using notify-rust";
     mainProgram = "nu_plugin_desktop_notifications";
     homepage = "https://github.com/FMotalleb/nu_plugin_desktop_notifications";
-    license = licenses.mit;
-    # maintainers = with maintainers; [ aldenparker ];
-    platforms = platforms.all;
+    license = lib.licenses.mit;
+    # maintainers = with lib.maintainers; [ aldenparker ];
+    platforms = lib.platforms.all;
   };
 }
