@@ -63,8 +63,14 @@ in
 
           $env.config.plugins.clipboard.NO_DAEMON = true # Add for clipboard plugin to work
         ''
-        + (if cfg.useAsNixShell then "\nsource nix-your-shell.nu" else "")
-        + (if cfg.fastfetch.enable then "\nfastfetch" else "");
+        + (if cfg.useAsNixShell then 
+	  ''
+	    source nix-your-shell.nu
+	  '' else "")
+        + (if cfg.fastfetch.enable then 
+	  ''
+	    fastfetc
+	  '' else "");
 
       shellAliases = {
         vim = "nvim";

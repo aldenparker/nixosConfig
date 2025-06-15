@@ -9,6 +9,10 @@
 
   # --- Setup snowman modules (my custom modules)
   snowman = {
+    programs = {
+      kmscon.enable = true;
+    };
+
     services = {
       podman.enable = true;
 
