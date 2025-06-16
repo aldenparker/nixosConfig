@@ -65,9 +65,9 @@ jobs:
             gh pr create --base main --title "update-flake-${{ github.run_id }}" -F report.md
           else
             echo "# nix-update-report
-            Report generated using `flake-update.yml`
+            Report generated using \`flake-update.yml\`
 
-            `$UPDATE_OUTPUT`
+            \`$UPDATE_OUTPUT\`
             " > report.md
             cat report.md >> $GITHUB_STEP_SUMMARY
             gh pr create --base main --title "update-flake-${{ github.run_id }}" -F report.md
