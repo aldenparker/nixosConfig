@@ -14,12 +14,61 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DeterminateSystems/nix-installer-action@v17
-      - uses: DeterminateSystems/update-flake-lock@v25
+      - name: checkout my config
+        uses: actions/checkout@v4
+
+      - name: prepare runner for nix
+        uses: wimpysworld/nothing-but-nix@v6
+
+      - name: install nix
+        uses: DeterminateSystems/nix-installer-action@v17
         with:
-          pr-title: "weekly update of flake inputs - ${{ github.event.repository.updated_at}}"
-          pr-labels: |
-            dependencies
-            automated
-          token: ${{ secrets.GH_TOKEN }}
+          extra-conf: |
+            sandbox = true
+
+      - name: update nix flake and set if report needed
+        run: |
+          git checkout -b update-flake-${{ github.run_id }}
+
+          CURR_REV="$(nix-shell -p nushell --run "nu -c 'nix flake metadata ./ --json | from json | get locks.nodes.nixpkgs.locked.rev'")"
+          echo "CURR_REV=$CURR_REV" >> $GITHUB_ENV
+
+          UPDATE_OUTPUT="$(nix flake update)"
+          echo "UPDATE_OUTPUT=$UPDATE_OUTPUT" >> $GITHUB_ENV
+
+          NEXT_REV="$(nix-shell -p nushell --run "nu -c 'nix flake metadata ./ --json | from json | get locks.nodes.nixpkgs.locked.rev'")"
+          echo "NEXT_REV=$NEXT_REV" >> $GITHUB_ENV
+
+          if [ "$CURR_REV" = "$NEXT_REV" ]; then
+            echo "REPORT='NO'" >> $GITHUB_ENV
+          else
+            echo "REPORT='YES'" >> $GITHUB_ENV
+          fi
+
+      - name: create commit
+        env:
+          GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+        run: |
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git config --global user.name "${{ github.actor }}"
+          git add .
+          git commit -m "update-flake-${{ github.run_id }}"
+          git push origin update-flake-${{ github.run_id }}
+
+      - name: generate report and post pr
+        env:
+          GH_TOKEN: "${{ secrets.GH_TOKEN }}"
+        run: |
+          if [ "$REPORT" = "YES" ]; then
+            nix run github:aldenparker/nix-update-report/v1.0.0 -- $CURR_REV $NEXT_REV
+            cat report.md >> $GITHUB_STEP_SUMMARY
+            gh pr create --base main --title "update-flake-${{ github.run_id }}" -F report.md
+          else
+            echo "# nix-update-report
+            Report generated using `flake-update.yml`
+
+            `$UPDATE_OUTPUT`
+            " > report.md
+            cat report.md >> $GITHUB_STEP_SUMMARY
+            gh pr create --base main --title "update-flake-${{ github.run_id }}" -F report.md
+          fi
