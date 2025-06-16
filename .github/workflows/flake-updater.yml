@@ -33,16 +33,16 @@ jobs:
           CURR_REV="$(nix-shell -p nushell --run "nu -c 'nix flake metadata ./ --json | from json | get locks.nodes.nixpkgs.locked.rev'")"
           echo "CURR_REV=$CURR_REV" >> $GITHUB_ENV
 
-          UPDATE_OUTPUT="$(nix flake update)"
+          UPDATE_OUTPUT=$(nix flake update)
           echo "UPDATE_OUTPUT=$UPDATE_OUTPUT" >> $GITHUB_ENV
 
           NEXT_REV="$(nix-shell -p nushell --run "nu -c 'nix flake metadata ./ --json | from json | get locks.nodes.nixpkgs.locked.rev'")"
           echo "NEXT_REV=$NEXT_REV" >> $GITHUB_ENV
 
           if [ "$CURR_REV" = "$NEXT_REV" ]; then
-            echo "REPORT='NO'" >> $GITHUB_ENV
+            echo "REPORT=false" >> $GITHUB_ENV
           else
-            echo "REPORT='YES'" >> $GITHUB_ENV
+            echo "REPORT=true" >> $GITHUB_ENV
           fi
 
       - name: create commit
@@ -59,7 +59,7 @@ jobs:
         env:
           GH_TOKEN: "${{ secrets.GH_TOKEN }}"
         run: |
-          if [ "$REPORT" = "YES" ]; then
+          if [ "$REPORT" = true ]; then
             nix run github:aldenparker/nix-update-report/v1.0.0 -- $CURR_REV $NEXT_REV
             cat report.md >> $GITHUB_STEP_SUMMARY
             gh pr create --base main --title "update-flake-${{ github.run_id }}" -F report.md
